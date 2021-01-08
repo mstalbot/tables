@@ -14,7 +14,7 @@ import xml.dom.minidom
 
 class Journal_tables():
  
-    def __init__(self, get_bibcodes = False, get_online_tables = False, base_directory = '/Users/michael/Documents/lens_surveys', headers = {'user-agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.2 Safari/605.1.15'}, user = {'MNRAS':'','IOP':'','A&A':''}, password = {'MNRAS':'','IOP':'','A&A':''}, mld_auth = {'user':'','password':''}, start = 0, end = 99999, redo_pandas = False, rescan_online = False, slow_down_seconds_after_requests = 5, inspect = False, redo_inspection=False, load_processed_data = True):
+    def __init__(self, get_bibcodes = False, get_online_tables = False, base_directory = 'PATH_TO_lens_surveys', headers = {'user-agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.2 Safari/605.1.15'}, user = {'MNRAS':'','IOP':'','A&A':''}, password = {'MNRAS':'','IOP':'','A&A':''}, mld_auth = {'user':'','password':''}, start = 0, end = 99999, redo_pandas = False, rescan_online = False, slow_down_seconds_after_requests = 5, inspect = False, redo_inspection=False, load_processed_data = True):
     
         """This program retrieves tables from journals typically used in Astronomy. Data is saved as a pandas or ascii version of a JSON file.
         
