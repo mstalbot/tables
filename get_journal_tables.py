@@ -173,9 +173,9 @@ class Journal_tables():
                 
                 #Display table and overview data.
                 if 'Paper Overview' in self.ads_scrapped_data[self.query]:
-                    try: print('=========================================Paper Title=========================================\n', self.ads_scrapped_data[self.query]['Paper Overview']['Title'], '=========================================Paper Authors=========================================\n', self.ads_scrapped_data[self.query]['Paper Overview']['authors'], '=========================================Paper Abstract=========================================\n', self.ads_scrapped_data[self.query]['Paper Overview']['abstract'], '\n', 'Bibcode:', self.query)
-                    except: print('=========================================Bibcode: %s========================================='%self.query)
-                else: print('=========================================Bibcode: %s========================================='%self.query)
+                    try: print('\n=========================================Paper Title=========================================\n', self.ads_scrapped_data[self.query]['Paper Overview']['Title'], '=========================================Paper Authors=========================================\n', self.ads_scrapped_data[self.query]['Paper Overview']['authors'], '=========================================Paper Abstract=========================================\n', self.ads_scrapped_data[self.query]['Paper Overview']['abstract'], '\n', 'Bibcode:', self.query)
+                    except: print('\n=========================================Bibcode: %s=========================================\n'%self.query)
+                else: print('\n=========================================Bibcode: %s=========================================\n'%self.query)
                 
                 unbroken = True 
                 for key in sorted(self.ads_scrapped_data[self.query]['Table meta data'].keys()):
@@ -187,9 +187,9 @@ class Journal_tables():
                             redo = True
                             while redo:
                                 if self.query not in self.ads_scrapped_data[self.query]['Table meta data'][key]['Link']:
-                                    print('--------------------------------------------------Extra info--------------------------------------------------\n')
+                                    print('\n--------------------------------------------------Extra info--------------------------------------------------\n')
                                     for ekey in self.ads_scrapped_data[self.query]['Table meta data'][key]['Table captions or footers'].keys(): print('%s:'%ekey, self.ads_scrapped_data[self.query]['Table meta data'][key]['Table captions or footers'][ekey])
-                                print('----------------------------------------------------Table-----------------------------------------------------\n', self.ads_scrapped_tables[self.query][key][key2])
+                                print('\n----------------------------------------------------Table-----------------------------------------------------\n', self.ads_scrapped_tables[self.query][key][key2])
                                 #Will skip table if inspection already done and re-inspect not stated.
                                 if 'Inspection' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2] and not self.redo_inspection:
                                     print('\n\n>>>Already inspected. Skipping\n\n')
