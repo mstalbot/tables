@@ -723,7 +723,7 @@ class Journal_tables():
         
         standard_ra, standard_dec = self.convert_to_standard_ra_dec(table_row, map)
         if standard_ra is not None:
-            print('Computed Standard RA and DEC to derive a coordinate derived name')
+            #print('Computed Standard RA and DEC to derive a coordinate derived name')
             coord = SkyCoord(standard_ra, standard_dec, frame='fk5', unit='deg')
             ra_hour, ra_min, ra_sec = coord.ra.hms
             dec_sign, dec_degree, dec_arcmin, dec_arcsec = coord.dec.signed_dms
@@ -734,7 +734,7 @@ class Journal_tables():
             return standard_ra, standard_dec, standard_name
         elif name is not None and 'J' in name:
             system_name = table_row[map['System Name']]
-            print('Parsing coordinate name from system name (from table) that contains a "J" format:', system_name)
+            #print('Parsing coordinate name from system name (from table) that contains a "J" format:', system_name)
             system_name = 'J' + system_name.split('J')[1]
             
             #There are subtle character differences between signs. This code determines the sign used and splits the RA and DEC components from the system name.
