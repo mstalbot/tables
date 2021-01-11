@@ -173,7 +173,7 @@ class Journal_tables():
                 
                 #Display table and overview data.
                 if 'Paper Overview' in self.ads_scrapped_data[self.query]:
-                    try: print('\n=========================================Paper Title=========================================\n', self.ads_scrapped_data[self.query]['Paper Overview']['Title'], '=========================================Paper Authors=========================================\n', self.ads_scrapped_data[self.query]['Paper Overview']['authors'], '=========================================Paper Abstract=========================================\n', self.ads_scrapped_data[self.query]['Paper Overview']['abstract'], '\n', 'Bibcode:', self.query)
+                    try: print('\n=========================================Paper Title=========================================\n', self.ads_scrapped_data[self.query]['Paper Overview']['Title'], '\n=========================================Paper Authors=========================================\n', self.ads_scrapped_data[self.query]['Paper Overview']['authors'], '\n=========================================Paper Abstract=========================================\n', self.ads_scrapped_data[self.query]['Paper Overview']['abstract'], '\n', 'Bibcode:', self.query)
                     except: print('\n=========================================Bibcode: %s=========================================\n'%self.query)
                 else: print('\n=========================================Bibcode: %s=========================================\n'%self.query)
                 
