@@ -159,6 +159,7 @@ class Journal_tables():
     def inspect_tables(self):
         """Inspect tables"""
         
+        to_scan = 0
         #Loop through papers
         for index, self.query in enumerate(self.bibcodes[self.start:self.end]):
             print('INDEX>>>', index)
@@ -183,104 +184,115 @@ class Journal_tables():
                         print('Table link:', self.ads_scrapped_data[self.query]['Table meta data'][key]['Link'])
                         for key2 in sorted(self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'].keys()):
                             #Display table information
-                            if self.query not in self.ads_scrapped_data[self.query]['Table meta data'][key]['Link']:
-                                print('--------------------------------------------------Extra info--------------------------------------------------\n')
-                                for ekey in self.ads_scrapped_data[self.query]['Table meta data'][key]['Table captions or footers'].keys(): print('%s:'%ekey, self.ads_scrapped_data[self.query]['Table meta data'][key]['Table captions or footers'][ekey])
-                            print('----------------------------------------------------Table-----------------------------------------------------\n', self.ads_scrapped_tables[self.query][key][key2])
-                            
-                            #Will skip table if inspection already done and re-inspect not stated.
-                            if 'Inspection' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2] and not self.redo_inspection:
-                                print('\n\n>>>Already inspected. Skipping\n\n')
-                                continue
-                                
-                            if 'Inspection' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2] and ('Skip cause table not important' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes'] or 'Skipping since duplicate' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes'] or 'Problem but check. Currently skipping' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes']): continue
-                            
-                                                            
-                            if 'Inspection' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2] and 'Table map to MasterLens database' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection'] and 'Message on table quality' not in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes']: continue
-                                
-                            #Process inspection keys for inspection display and recording.
-                            columns = OrderedDict()
-                            for index, mkey in enumerate(self.ads_scrapped_tables[self.query][key][key2].keys()): columns[self.quick_column_letter[index]] = mkey
-                            print('>>>TABLE COLUMN QUICK KEY\n%s\n'%columns)
-                            
-                            
-                            try: print('Last inspection save>>>', self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection'])
-                            except: pass
-                            #Record table quality and relavence
-                            notes = {}
-                            if input('Continue?') == '': continue
-                            for action in input('TYPE OR ONE FROM THE FOLLOWING: %s'%self.table_action):
-                                if action not in ['f','p','m','-', 'r', 'n', 'k', 'g', '=']: notes[self.table_action[action]] = ''
-                                else: 
-                                    comment = input(('\nDiscoverer Name from list: %s'%self.discovery_id_inverted) if 'n' in action else ('\nLens type from: %s'%self.lens_type_id_inverted) if 'k' in action else ('Conditional statement in "Condition" column to record row (add "!" to front if to reject)') if '=' in action else '%s: '%self.table_action[action])
-                                    if comment == '': comment = input('Hmmm...if not specified, please state a custom identifier')
-                                    notes[self.table_action[action]] = comment
-                            self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection'] = {'Notes': notes}
-                            
-                            if 'Table columns are horizontal' in notes:
-                                columns = OrderedDict()
-                                columns['>'] = 'pdname' 
-                                for index, mkey in enumerate(self.ads_scrapped_tables[self.query][key][key2].T.keys()): columns[self.quick_column_letter[index]] = mkey
-                                print('Table rotated\n', self.ads_scrapped_tables[self.query][key][key2].T)
-                            #Record column info if table not specified to be skipped.
-                            if self.table_action['s'] not in notes and self.table_action['d'] not in notes and self.table_action['z'] not in notes:
-                            
-                                #Initialize a column name map
-                                map = {}
-                                
-                                #Print Table key to quick inspection key
-                                print('----------------------------------------------------------------------------------------------------------\n')
-                                print('>>>TABLE COLUMN QUICK KEY\n%s\n'%columns)
-                                print('>>>Potential column names:\n', ', '.join(['%s: %s'%(mkey, self.table_inspection_id[str(mkey)]) for mkey in self.table_inspection_id.keys()]))
-                                print('----------------------------------------------------------------------------------------------------------\n')
-                                
-                                #Record user quick key input
-                                for column_id in input('Identify columns by "number:column total key" separated by ",":\n').split(','): 
-                                    map[self.table_inspection_id[column_id.split(':')[0]]] = str(columns[column_id.split(':')[1]])
-                                    if 'z_Lens' in self.table_inspection_id[column_id.split(':')[0]] or 'z_Source(s)' in self.table_inspection_id[column_id.split(':')[0]]:
-                                        method = input('Choose zlens method type: %s'%self.z_type_id_inverted)
-                                        if method != '': method = self.z_type_id_inverted[method]
-                                        error = input('Choose zlens error column: %s'%columns)
-                                        if error != '': error = columns[error]
-                                        print(method, error, column_id.split(':'))
-                                        print(column_id.split(':')[0])
-                                        print(self.table_inspection_id[column_id.split(':')[0]])
-                                        map[self.table_inspection_id[column_id.split(':')[0]]] += ('@' + str(method) + '@' + str(error))
-                                    if 'Einstein_R ["]' in self.table_inspection_id[column_id.split(':')[0]]:
-                                        method = input('Choose method type: %s'%self.er_quality_id_inverted)
-                                        if method != '': method = self.er_quality_id_inverted[method]
-                                        else:
-                                            method = input('Is ER spec a total separation (i.e. not 1/2 sep)?')
-                                            if method == 'y': method = 'Images separation'
-                                            else: method = ''
-                                        error = input('Choose ER error column: %s'%columns)
-                                        if error != '': error = columns[error]
-                                        map[self.table_inspection_id[column_id.split(':')[0]]] += ('@' + str(method) + '@' + str(error))
-                                    if 'Stellar velocity disp' in self.table_inspection_id[column_id.split(':')[0]]:
-                                        error = input('Choose vdisp error column: %s'%columns)
-                                        if error != '': error = columns[error]
-                                        map[self.table_inspection_id[column_id.split(':')[0]]] += ('@' + '' + '@' + str(error))
-                                    if 'Lens type' in self.table_inspection_id[column_id.split(':')[0]]:
-                                        method = input('Choose lens type method type: %s'%self.lens_type_id_inverted)
-                                        if method != '': method = self.lens_type_id_inverted[method]
-                                        map[self.table_inspection_id[column_id.split(':')[0]]] += ('@' + str(method) + '@' + '')
-                                    #Records a discoverer name. NOTE table may not be standardized to MLD post form!!!!
-                                    if self.table_inspection_id[column_id.split(':')[0]] == 'Discovery':
-                                        method = input('Choose discovery method type: %s'%self.table_inspection_id_inverted)
-                                        if method != '': method = self.table_inspection_id_inverted[method]
-                                        else: method = input('Discovery not in MLD. Please set a acronym for now.')
-                                        map[self.table_inspection_id[column_id.split(':')[0]]] += ('@' + str(method) + '@' + '')
+                            redo = True
+                            while redo:
+                                if self.query not in self.ads_scrapped_data[self.query]['Table meta data'][key]['Link']:
+                                    print('--------------------------------------------------Extra info--------------------------------------------------\n')
+                                    for ekey in self.ads_scrapped_data[self.query]['Table meta data'][key]['Table captions or footers'].keys(): print('%s:'%ekey, self.ads_scrapped_data[self.query]['Table meta data'][key]['Table captions or footers'][ekey])
+                                print('----------------------------------------------------Table-----------------------------------------------------\n', self.ads_scrapped_tables[self.query][key][key2])
+                                #Will skip table if inspection already done and re-inspect not stated.
+                                if 'Inspection' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2] and not self.redo_inspection:
+                                    print('\n\n>>>Already inspected. Skipping\n\n')
+                                    redo = False
+                                    continue
                                     
-                                self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Table map to MasterLens database'] = map
-                            print('\n>>>>>>HERE if your output:', self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection'],'\n')
-                            #Save per table inspection
-                            self.save_overview()
+                                if 'Inspection' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2] and ('Skip cause table not important' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes'] or 'Skipping since duplicate' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes'] or 'Problem but check. Currently skipping' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes']):
+                                    print('Skipping cause noted to skip')
+                                    redo = False
+                                    continue
+                                     
+                                to_scan+=1
+                                #Process inspection keys for inspection display and recording.
+                                columns = OrderedDict()
+                                for index, mkey in enumerate(self.ads_scrapped_tables[self.query][key][key2].keys()): columns[self.quick_column_letter[index]] = mkey
+                                print('>>>TABLE COLUMN QUICK KEY\n%s\n'%columns)
+                                
+                                
+                                try: print('Last inspection save>>>', self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection'])
+                                except: pass
+                                #Record table quality and relavence
+                                notes = {}
+                                if input('Continue?') == '':
+                                    redo = False
+                                    continue
+                                for action in input('TYPE OR ONE FROM THE FOLLOWING: %s'%self.table_action):
+                                    if action not in ['f','p','m','-', 'r', 'n', 'k', 'g', '=']: notes[self.table_action[action]] = ''
+                                    else: 
+                                        comment = input(('\nDiscoverer Name from list: %s'%self.discovery_id_inverted) if 'n' in action else ('\nLens type from: %s'%self.lens_type_id_inverted) if 'k' in action else ('Conditional statement in "Condition" column to record row (add "!" to front if to reject)') if '=' in action else '%s: '%self.table_action[action])
+                                        if comment == '': comment = input('Hmmm...if not specified, please state a custom identifier')
+                                        notes[self.table_action[action]] = comment
+                                self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection'] = {'Notes': notes}
+                                
+                                if 'Table columns are horizontal' in notes:
+                                    columns = OrderedDict()
+                                    columns['>'] = 'pdname' 
+                                    for index, mkey in enumerate(self.ads_scrapped_tables[self.query][key][key2].T.keys()): columns[self.quick_column_letter[index]] = mkey
+                                    print('Table rotated\n', self.ads_scrapped_tables[self.query][key][key2].T)
+                                #Record column info if table not specified to be skipped.
+                                if self.table_action['s'] not in notes and self.table_action['d'] not in notes and self.table_action['z'] not in notes:
+                                
+                                    #Initialize a column name map
+                                    map = {}
+                                    
+                                    #Print Table key to quick inspection key
+                                    print('----------------------------------------------------------------------------------------------------------\n')
+                                    print('>>>TABLE COLUMN QUICK KEY\n%s\n'%columns)
+                                    print('>>>Potential column names:\n', ', '.join(['%s: %s'%(mkey, self.table_inspection_id[str(mkey)]) for mkey in self.table_inspection_id.keys()]))
+                                    print('----------------------------------------------------------------------------------------------------------\n')
+                                    
+                                    #Record user quick key input
+                                    for column_id in input('Identify columns by "number:column total key" separated by ",":\n').split(','): 
+                                        map[self.table_inspection_id[column_id.split(':')[0]]] = str(columns[column_id.split(':')[1]])
+                                        if 'z_Lens' in self.table_inspection_id[column_id.split(':')[0]] or 'z_Source(s)' in self.table_inspection_id[column_id.split(':')[0]]:
+                                            method = input('Choose zlens method type: %s'%self.z_type_id_inverted)
+                                            if method != '': method = self.z_type_id_inverted[method]
+                                            error = input('Choose zlens error column: %s'%columns)
+                                            if error != '': error = columns[error]
+                                            print(method, error, column_id.split(':'))
+                                            print(column_id.split(':')[0])
+                                            print(self.table_inspection_id[column_id.split(':')[0]])
+                                            map[self.table_inspection_id[column_id.split(':')[0]]] += ('@' + str(method) + '@' + str(error))
+                                        if 'Einstein_R ["]' in self.table_inspection_id[column_id.split(':')[0]]:
+                                            method = input('Choose method type: %s'%self.er_quality_id_inverted)
+                                            if method != '': method = self.er_quality_id_inverted[method]
+                                            else:
+                                                method = input('Is ER spec a total separation (i.e. not 1/2 sep)?')
+                                                if method == 'y': method = 'Images separation'
+                                                else: method = ''
+                                            error = input('Choose ER error column: %s'%columns)
+                                            if error != '': error = columns[error]
+                                            map[self.table_inspection_id[column_id.split(':')[0]]] += ('@' + str(method) + '@' + str(error))
+                                        if 'Stellar velocity disp' in self.table_inspection_id[column_id.split(':')[0]]:
+                                            error = input('Choose vdisp error column: %s'%columns)
+                                            if error != '': error = columns[error]
+                                            map[self.table_inspection_id[column_id.split(':')[0]]] += ('@' + '' + '@' + str(error))
+                                        if 'Lens type' in self.table_inspection_id[column_id.split(':')[0]]:
+                                            method = input('Choose lens type method type: %s'%self.lens_type_id_inverted)
+                                            if method != '': method = self.lens_type_id_inverted[method]
+                                            map[self.table_inspection_id[column_id.split(':')[0]]] += ('@' + str(method) + '@' + '')
+                                        #Records a discoverer name. NOTE table may not be standardized to MLD post form!!!!
+                                        if self.table_inspection_id[column_id.split(':')[0]] == 'Discovery':
+                                            method = input('Choose discovery method type: %s'%self.table_inspection_id_inverted)
+                                            if method != '': method = self.table_inspection_id_inverted[method]
+                                            else: method = input('Discovery not in MLD. Please set a acronym for now.')
+                                            map[self.table_inspection_id[column_id.split(':')[0]]] += ('@' + str(method) + '@' + '')
+                                        
+                                    self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Table map to MasterLens database'] = map
+                                print('\n>>>>>>HERE if your output:', self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection'],'\n')
+                                #Save per table inspection
+                                confirm = input('Please confirm correct (y=yes, n=redo)')
+                                if confirm == 'y':
+                                    self.save_overview()
+                                    redo = False
+                                else: redo = True
+                                
                     else: unbroken = False
                     
                 #Save if inspection of tables in paper is complete
                 if unbroken: self.ads_scrapped_data[self.query]['Inspection status'] = 'Complete'
                 else: self.ads_scrapped_data[self.query]['Inspection status'] = 'Incomplete'
                 self.save_overview()
+        print('Scanned', to_scan)
 
     def set_tables(self):
         """Download tables from journals"""
