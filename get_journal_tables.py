@@ -378,7 +378,7 @@ class Journal_tables():
                 elif self.journal == 'A&A':
                     if self.base == 'A&A' and 'Tables at CDS' in self.ads_scrapped_data[self.query]['Paper text']:
                         '''self.ads_scrapped_data[self.query]['Status'] = 'Skipped'
-                        self.ads_scrapped_data[self.query]['Action'] = 'Deferred to Vizier link''''
+                        self.ads_scrapped_data[self.query]['Action'] = 'Deferred to Vizier link'''
                         self.ads_scrapped_data[self.query]['Vizier link'] = BeautifulSoup(self.ads_scrapped_data[self.query]['Paper text']).find(href=True, title="Tables at CDS")['href']
                         print('NOTE> HAS Vizier link: %s\n'%self.ads_scrapped_data[self.query]['Vizier link'])
                         self.save_overview()
