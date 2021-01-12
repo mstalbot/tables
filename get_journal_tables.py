@@ -377,13 +377,14 @@ class Journal_tables():
                 elif self.journal == 'MNRAS': table_links = self.scan_MNRAS_tables(self.ads_scrapped_data[self.query]['Paper text'])
                 elif self.journal == 'A&A':
                     if self.base == 'A&A' and 'Tables at CDS' in self.ads_scrapped_data[self.query]['Paper text']:
-                        self.ads_scrapped_data[self.query]['Status'] = 'Skipped'
-                        self.ads_scrapped_data[self.query]['Action'] = 'Deferred to Vizier link'
+                        '''self.ads_scrapped_data[self.query]['Status'] = 'Skipped'
+                        self.ads_scrapped_data[self.query]['Action'] = 'Deferred to Vizier link''''
                         self.ads_scrapped_data[self.query]['Vizier link'] = BeautifulSoup(self.ads_scrapped_data[self.query]['Paper text']).find(href=True, title="Tables at CDS")['href']
-                        print('HAS Vizier link: %s\n'%self.ads_scrapped_data[self.query]['Vizier link'])
+                        print('NOTE> HAS Vizier link: %s\n'%self.ads_scrapped_data[self.query]['Vizier link'])
                         self.save_overview()
                         #continue
-                    else: table_links = self.scan_AA_tables(self.ads_scrapped_data[self.query]['Paper text'])
+                    #else:
+                    table_links = self.scan_AA_tables(self.ads_scrapped_data[self.query]['Paper text'])
                 else: input('OOOPS...some journal slipped through the cracks. Check!!!')
                 print('>>>>>Table links', table_links)
                 self.populate_query_table(table_links)
