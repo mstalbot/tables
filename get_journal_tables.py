@@ -380,9 +380,9 @@ class Journal_tables():
                         self.ads_scrapped_data[self.query]['Status'] = 'Skipped'
                         self.ads_scrapped_data[self.query]['Action'] = 'Deferred to Vizier link'
                         self.ads_scrapped_data[self.query]['Vizier link'] = BeautifulSoup(self.ads_scrapped_data[self.query]['Paper text']).find(href=True, title="Tables at CDS")['href']
-                        print('ACTION> Deferred to Vizier link: %s\n'%self.ads_scrapped_data[self.query]['Vizier link'])
+                        print('HAS Vizier link: %s\n'%self.ads_scrapped_data[self.query]['Vizier link'])
                         self.save_overview()
-                        continue
+                        #continue
                     else: table_links = self.scan_AA_tables(self.ads_scrapped_data[self.query]['Paper text'])
                 else: input('OOOPS...some journal slipped through the cracks. Check!!!')
                 print('>>>>>Table links', table_links)
