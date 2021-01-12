@@ -200,8 +200,15 @@ def valuematch(x, y):
 
 def makesvg(lensNAME, ins_name, f1, f2, pixscale, fname, zoomlevel):
     """add caption to image, including arcsec scale, lens name, filters used.  Assumes the jpg needing a caption is already in folder fitscutimages/ from current directory"""
-    pixtext = str(420.0 + 0.5 / (float(pixscale[0]) * 3600) * float(zoomlevel))
-    pixscale = str(1.0 / (float(pixscale[0]) * 3600) * float(zoomlevel))
+    
+    #Different functions might pass in pixscale different.
+    if isinstance(pixscale, str): pass
+    else:
+        try: pixscale = float(pixscale[0])
+        except: pass
+
+    pixtext = str(420.0 + 0.5 / (float(pixscale) * 3600) * float(zoomlevel))
+    pixscale = str(1.0 / (float(pixscale) * 3600) * float(zoomlevel))
     #pixtext = ''
     #pixscale = ''
 
