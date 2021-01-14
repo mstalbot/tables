@@ -88,6 +88,7 @@ from PIL import Image, ImageTk, ImageDraw
 import warnings
 import subprocess
 import pandas as pd
+from time import sleep
 
 def uploadfitscutimages(uploadID, graphic_files, user = '', password = ''):
     """Upload the fitscut images to the masterlens database website"""
@@ -524,7 +525,9 @@ def convert_svg_png(svg_fname, png_fname):
     image_file = os.path.join(svg_fname.replace('/svg/','/raw/'))
     
     subprocess.call('cp %s.jpg %s.jpg'%(image_file, svg_fname), shell=True)
+    sleep(1)
     subprocess.check_call('convert {:s}.svg {:s}.png'.format(svg_fname, png_fname), shell=True)
+    sleep(1.5)
     subprocess.call('rm {:s}.jpg'.format(svg_fname), shell=True)
 
 def gen_iphone_image(im, basename):
