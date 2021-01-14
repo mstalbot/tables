@@ -526,6 +526,7 @@ def convert_svg_png(svg_fname, png_fname):
     
     subprocess.call('cp %s.jpg %s.jpg'%(image_file, svg_fname), shell=True)
     sleep(1)
+    input('CHECK FILES EXISTS>', '%s.jpg'%svg_fname)
     subprocess.check_call('convert {:s}.svg {:s}.png'.format(svg_fname, png_fname), shell=True)
     sleep(1.5)
     subprocess.call('rm {:s}.jpg'.format(svg_fname), shell=True)
