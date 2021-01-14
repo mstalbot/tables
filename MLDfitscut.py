@@ -465,9 +465,9 @@ def getfitscut(lensNAME, instrument, df, pargs):
 
             if basename == '':
                 continue
-            
+            convert_svg_png(os.path.join('fitscutimages', 'svg', basename), os.path.join('fitscutimages', 'annotated', basename))
             try:
-                convert_svg_png(os.path.join('fitscutimages', 'svg', basename), os.path.join('fitscutimages', 'annotated', basename))
+                
 
                 try:
 
