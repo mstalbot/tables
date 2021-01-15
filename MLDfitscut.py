@@ -136,7 +136,6 @@ def fitscutimagetest(f1, x, y, name):
     imagename = 'testimage_' + str(name) + '_' + str(f1) + '.jpg'
     urlstring = 'http://hla.stsci.edu/cgi-bin/fitscut.cgi?blue=' + str(f1) + '&size=256,256&x=' + str(x) + '&y=' + str(y) + '&wcs=1&zoom=0.5&compass=0&invert=1'
     try:
-        print('Image test urlstring', urlstring)
         opener1 = urllib.request.build_opener()
         page1 = opener1.open(urlstring)
         my_picture = page1.read()
