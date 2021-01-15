@@ -53,7 +53,6 @@ REVISION HISTORY:
 02-Jan-2021 Modified by Michael S. Talbot, University of Utah. 
     -Updated "acsSIAP" to "hlaSIAP" in HLA query url to obtain target table.
     -Added "strip_bytes" function and stripped bytes in strings within the returned tables (this enabled the script to be ran on python3).
-    -Added a minimal patch to the getlenscenter function to enable the plot to be displayed in python3, though at the cost of creating a useless extra panel in the plot creation. I did not edit this more since it appears to be deprecated. Thus I left the function command as commented out.
     -Added a temporary copy/paste of the file being processed by svg to the svg location for robustness on multi-systems.
     -For these edits to work, I had to edit the lenses.xml file via the following:
         -Remove all 'Description' sections from the lenses.xml file being used since minidom does not recognize HTML entry names and these sections were not always formatted correctly.
