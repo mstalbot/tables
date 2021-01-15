@@ -109,10 +109,8 @@ def uploadfitscutimages(uploadID, graphic_files, user = '', password = ''):
 
 def getlenscenter(image_file):
     """Opens an image, waits for mouse click, returns the x,y pixel of the click"""
-    if (sys.version_info > (3, 0)):
-        #Python3 patch. Will leave an extra window but function will still work with minimal edits.
-        w = tkinter.Toplevel()
-    else: w = tkinter.Tk()
+    
+    w = tkinter.Tk()
     
     lens_center = [256, 256]
 
