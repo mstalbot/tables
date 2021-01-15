@@ -366,6 +366,7 @@ def getfitscut(lensNAME, instrument, df, pargs):
             if pargs.center: lens_center = getlenscenter('fitscutimages/raw/' + (lensNAME + '_' + instrument + '_greyimage_' + filters[imageexists][0] + '_ZOOM1.jpg').replace(' ', ''))
             if abs(lens_center[0] - 256) > 20 or abs(lens_center[1] - 256) > 20:
                 print('NEW RA/DEC: ', lensRA, lensDEC)
+                print(scales, imageexists)
                 print('(PLEASE UPDATE COORDINATES IN MASTER DATABASE!)\n')
                 lensRA = lensRA + ((256 - lens_center[0]) * scales[imageexists][0])[0]
                 lensDEC = lensDEC + ((256 - lens_center[1]) * scales[imageexists][0])[0]
