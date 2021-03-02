@@ -225,7 +225,7 @@ class Journal_tables():
                                 for action in input('TYPE OR ONE FROM THE FOLLOWING: %s'%self.table_action):
                                     if action not in ['f','p','m','-', 'r', 'n', 'k', 'g', '=']: notes[self.table_action[action]] = ''
                                     else: 
-                                        comment = input(('\nDiscoverer Name from list: %s'%self.discovery_id_inverted) if 'n' in action else ('\nLens type from: %s'%self.lens_type_id_inverted) if 'k' in action else ('Conditional statement in "Condition" column to record row (add "!" to front if to reject)') if '=' in action else '%s: '%self.table_action[action])
+                                        comment = input(('\nDiscoverer Name from list: %s'%self.discovery_id_inverted) if 'n' in action else ('\nLens type from: %s'%self.lens_type_id_inverted) if 'k' in action else ('Conditional statement in "Condition" column to record row (add "!" to front if to reject)') if '=' in action else ('Conditional statement in "Source name" column to recognize if lens name') if '-' in action else 'Name,RA,DEC of cluster lens' if '~' in action else '%s: '%self.table_action[action])
                                         if comment == '': comment = input('Hmmm...if not specified, please state a custom identifier')
                                         notes[self.table_action[action]] = comment
                                 self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection'] = {'Notes': notes}
