@@ -212,6 +212,7 @@ class Journal_tables():
                                     pass
                                 else:
                                     print('Skipping')
+                                    redo = False
                                     continue
                                      
                                 to_scan+=1
