@@ -1194,11 +1194,11 @@ class Journal_tables():
             self.lens_objects[standard_name]['z_Lens error'].append({'value': candidate['ZERR_NOQSO'], 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['z_Lens quality'].append({'value': spectroscopic', 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['z_Source(s)'].append({'value': candidate['DETECTION_Z'], 'tracer': {'update status': 'in SILO', 'weight':5}})
-            self.lens_objects[standard_name]['z_Source quality'].append({'value': 'Spectroscopic', 'tracer': {'update status': 'in SILO', 'weight':5}})
+            self.lens_objects[standard_name]['z_Source quality'].append({'value': 'spectroscopic', 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['System Name'].append({'value': 'SDSS'+standard_name, 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['References'].append('MNRAStmp(2021)303T')
                                                                                               
-    def load_kids(self):
+    def load_links(self):
         with open('references/LinKS_main.txt', 'r') as file:
             for line in file:
                 standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords({'RA [°]': str(line[4], 'Dec [°]': line[5]}, {'RA [°]':'RA [°]', 'Dec [°]':'Dec [°]'})
