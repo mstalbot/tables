@@ -94,7 +94,7 @@ class Journal_tables():
             
     def add_sugohi(self): 
      
-        sugohi_key={'SuGOHI1':'2018PASJ...70S..29S', 'SuGOHI2':'2018ApJ...867..107W', 'SuGOHI3':'2019A&A...630A..71S', 'SuGOHI4':'2020A&A...636A..87C', 'SuGOHI5':'2020MNRAS.495.1291J', 'SuGOHI6':'2020A&A...642A.148S', 'SuGOHI7':'2021MNRAS.502.1487J')
+        sugohi_key={'SuGOHI1':'PASJ70S(2018)29S', 'SuGOHI2':'ApJ867(2018)107W', 'SuGOHI3':'A&A630A(2019)71S', 'SuGOHI4':'A&A636A(2020)87C', 'SuGOHI5':'MNRAS495(2020)1291J', 'SuGOHI6':'A&A642A(2020)148S', 'SuGOHI7':'MNRAS502(2021)1487J')
         data = []
         with open('rescources/list_public.csv', newline='') as csvfile:
             csv = csv.reader(csvfile, delimiter=',')
