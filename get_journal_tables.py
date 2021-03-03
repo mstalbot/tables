@@ -1184,7 +1184,7 @@ class Journal_tables():
             
            
     def load_silo_eboss(self):
-        hdu = fits.open('rescources/silo_eboss_detections-1.0.1.fits')
+        hdu = fits.open('silo_eboss_detections-1.0.1.fits')
         for candidate in hdu['DETECTIONS'].data:
             standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords({'RA [°]': str(candidate['RA'], 'Dec [°]': candidate['DEC']}, {'RA [°]':'RA [°]', 'Dec [°]':'Dec [°]'})
             if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {'System Name':[], 'Discovery Date':[], 'RA (Hours part)':[], 'RA (Mins part)':[], 'RA (Secs part)':[], 'RA [°]': [], 'Dec (Degree part)': [], 'Dec (Arcmin part)': [], 'Dec (Arcsec part)': [], 'Dec [°]': [], 'Lens Grade': [], 'Number of images': [], 'Einstein_R ["]': [], 'z_Lens': [], 'z_Source(s)': [], 'Stellar velocity disp': [], 'Standard RA':[], 'Standard DEC':[], 'MLD_ID':[], 'Description':[], 'Lens type':[], 'Lens type MLD_ID':[], 'Discovery':[], 'Discovery_MLD_ID':[], 'MLD SDSS link':[], 'MLD ADSABS link':[], 'MLD NED link':[], 'MLD APOD link':[], 'References_MLD_ID':[], 'Has external link for SDSS':[], 'Has external link for ADSABS':[], 'Has external link for NED':[], 'Has external link for APOD':[]}
@@ -1199,25 +1199,23 @@ class Journal_tables():
             self.lens_objects[standard_name]['References'].append('MNRAStmp(2021)303T')
                                                                                               
     def load_links(self):
-        with open('references/LinKS_main.txt', 'r') as file:
+        with open('LinKS_main.txt', 'r') as file:
             for line in file:
                 standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords({'RA [°]': str(line[4], 'Dec [°]': line[5]}, {'RA [°]':'RA [°]', 'Dec [°]':'Dec [°]'})
                 if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {'System Name':[], 'Discovery Date':[], 'RA (Hours part)':[], 'RA (Mins part)':[], 'RA (Secs part)':[], 'RA [°]': [], 'Dec (Degree part)': [], 'Dec (Arcmin part)': [], 'Dec (Arcsec part)': [], 'Dec [°]': [], 'Lens Grade': [], 'Number of images': [], 'Einstein_R ["]': [], 'z_Lens': [], 'z_Source(s)': [], 'Stellar velocity disp': [], 'Standard RA':[], 'Standard DEC':[], 'MLD_ID':[], 'Description':[], 'Lens type':[], 'Lens type MLD_ID':[], 'Discovery':[], 'Discovery_MLD_ID':[], 'MLD SDSS link':[], 'MLD ADSABS link':[], 'MLD NED link':[], 'MLD APOD link':[], 'References_MLD_ID':[], 'Has external link for SDSS':[], 'Has external link for ADSABS':[], 'Has external link for NED':[], 'Has external link for APOD':[]}
                 self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in LinKS', 'weight':5}})
                 self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in LinKS', 'weight':5}})
                 self.lens_objects[standard_name]['System Name'].append({'value': line[0], 'tracer': {'update status': 'in LinKS', 'weight':5}})
-                self.lens_objects[standard_name]['References'].append('MNRAS484(2019)3879P')                                                    
+                self.lens_objects[standard_name]['References'].append('MNRAS484(2019)3879P')
                     
-        with open('references/LinKS_bonus.txt', 'r') as file:
+        with open('LinKS_bonus.txt', 'r') as file:
             for line in file:
                 standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords({'RA [°]': str(line[1], 'Dec [°]': line[2]}, {'RA [°]':'RA [°]', 'Dec [°]':'Dec [°]'})
                 if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {'System Name':[], 'Discovery Date':[], 'RA (Hours part)':[], 'RA (Mins part)':[], 'RA (Secs part)':[], 'RA [°]': [], 'Dec (Degree part)': [], 'Dec (Arcmin part)': [], 'Dec (Arcsec part)': [], 'Dec [°]': [], 'Lens Grade': [], 'Number of images': [], 'Einstein_R ["]': [], 'z_Lens': [], 'z_Source(s)': [], 'Stellar velocity disp': [], 'Standard RA':[], 'Standard DEC':[], 'MLD_ID':[], 'Description':[], 'Lens type':[], 'Lens type MLD_ID':[], 'Discovery':[], 'Discovery_MLD_ID':[], 'MLD SDSS link':[], 'MLD ADSABS link':[], 'MLD NED link':[], 'MLD APOD link':[], 'References_MLD_ID':[], 'Has external link for SDSS':[], 'Has external link for ADSABS':[], 'Has external link for NED':[], 'Has external link for APOD':[]}
                 self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in LinKS', 'weight':5}})
                 self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in LinKS', 'weight':5}})
                 self.lens_objects[standard_name]['System Name'].append({'value': line[0], 'tracer': {'update status': 'in LinKS', 'weight':5}})
-                self.lens_objects[standard_name]['References'].append('MNRAS484(2019)3879P')                                                         
-          
-        
+                self.lens_objects[standard_name]['References'].append('MNRAS484(2019)3879P')
                     
     def convert_to_mld_reference_form(self, reference, url=None):
         """Prepare and process the bibcode to be converted from ads to MLD formatted bibcode"""
