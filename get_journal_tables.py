@@ -92,13 +92,14 @@ class Journal_tables():
             self.report_overal_stats()
         if self.inspect: self.inspect_tables()
             
-    def add_sugohi(self): 
-     
+    def add_sugohi(self):
         sugohi_key={'SuGOHI1':'PASJ70S(2018)29S', 'SuGOHI2':'ApJ867(2018)107W', 'SuGOHI3':'A&A630A(2019)71S', 'SuGOHI4':'A&A636A(2020)87C', 'SuGOHI5':'MNRAS495(2020)1291J', 'SuGOHI6':'A&A642A(2020)148S', 'SuGOHI7':'MNRAS502(2021)1487J')
         data = []
         with open('rescources/list_public.csv', newline='') as csvfile:
             csv = csv.reader(csvfile, delimiter=',')
-            for row in csv: data.append(row)
+            for row in csv:
+                row[-1] = sugohi_key[row[-1]]
+                data.append(row)
             
            
     def add_silo_eboss(self):
@@ -106,8 +107,15 @@ class Journal_tables():
         hdu = fits.open('rescources/silo_eboss_detections-1.0.1.fits')
         for candidate in hdu['DETECTIONS'].data: data.append(candidate['CATALOG_ID'], candidate['Z_NOQSO'], candidate['ZERR_NOQSO'], candidate['RA'], candidate['DEC'], candidate['DETECTION_Z'], candidate['TOTAL_GRADE'], 'Talbot et al. 2020') 
         
+    def add_kids(self):
+        data = []
+        with open('references/LinKS_bonus.txt', 'r') as file:
+            for line in file: data.append(line[0],line[4],line[5])
+                    
+        with open('references/LinKS_bonus.txt', 'r') as file:
+            for line in file: data.append(line[0],line[4],line[5])
           
-          
+    
     def load_query_bibcodes(self):
         """Load bibliography codes from a json file on disk"""
         
