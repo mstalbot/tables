@@ -201,11 +201,17 @@ class Journal_tables():
                                     redo = False
                                     continue'''
                                     
-                                if 'Inspection' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2] and ('Skip cause table not important' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes'] or 'Problem but check. Currently skipping' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes']):
+                                '''if 'Inspection' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2] and ('Skip cause table not important' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes'] or 'Problem but check. Currently skipping' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes']):
                                     pass
                                 else:    
                                     print('Skipping cause noted to skip AS COMPLETE')
                                     redo = False
+                                    continue'''
+                                
+                                if 'Inspection' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2] and 'Message on table quality' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes'] and 'source' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes']['Message on table quality']:
+                                    pass
+                                else:
+                                    print('Skipping')
                                     continue
                                      
                                 to_scan+=1
