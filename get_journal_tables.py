@@ -123,6 +123,9 @@ class Journal_tables():
         self.load_MLD_kinds_ids()
         self.load_MLD_references()
         self.load_MLD_lenses()
+        self.load_sugohi()
+        self.load_silo_eboss()
+        self.load_links()
         
         #Load in processed data
         for self.query in self.bibcodes:
@@ -1189,7 +1192,7 @@ class Journal_tables():
             self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in SILO', 'weight':10}})
             self.lens_objects[standard_name]['z_lens'].append({'value': candidate['Z_NOQSO'], 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['z_Lens error'].append({'value': candidate['ZERR_NOQSO'], 'tracer': {'update status': 'in SILO', 'weight':5}})
-            self.lens_objects[standard_name]['z_Lens quality'].append({'value': 'Spectroscopic', 'tracer': {'update status': 'in SILO', 'weight':5}})
+            self.lens_objects[standard_name]['z_Lens quality'].append({'value': spectroscopic', 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['z_Source(s)'].append({'value': candidate['DETECTION_Z'], 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['z_Source quality'].append({'value': 'Spectroscopic', 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['System Name'].append({'value': 'SDSS'+standard_name, 'tracer': {'update status': 'in SILO', 'weight':5}})
