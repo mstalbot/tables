@@ -1164,7 +1164,7 @@ class Journal_tables():
             self.lens_objects[standard_name]['References'] = [r.firstChild.data for r in mld_entry.getElementsByTagName('reference')]
             self.lens_objects[standard_name]['References_MLD_ID'] = [r.getAttribute('referenceID') for r in mld_entry.getElementsByTagName('reference')]
         
-    def add_sugohi(self):
+    def load_sugohi(self):
         sugohi_key={'SuGOHI1':'PASJ70S(2018)29S', 'SuGOHI2':'ApJ867(2018)107W', 'SuGOHI3':'A&A630A(2019)71S', 'SuGOHI4':'A&A636A(2020)87C', 'SuGOHI5':'MNRAS495(2020)1291J', 'SuGOHI6':'A&A642A(2020)148S', 'SuGOHI7':'MNRAS502(2021)1487J')
         with open('rescources/list_public.csv', newline='') as csvfile:
             csv = csv.reader(csvfile, delimiter=',')
@@ -1176,29 +1176,43 @@ class Journal_tables():
                 self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
                 self.lens_objects[standard_name]['z_lens)'].append({'value': row[3], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
                 self.lens_objects[standard_name]['z_Source(s)'].append({'value': row[4], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
-                self.lens_objects[standard_name]['References'] = sugohi_key[row[-1]]
+                self.lens_objects[standard_name]['System Name'].append({'value': 'HSC'+standard_name, 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
+                self.lens_objects[standard_name]['References'].append(sugohi_key[row[-1]])
             
            
-    def add_silo_eboss(self):
+    def load_silo_eboss(self):
         hdu = fits.open('rescources/silo_eboss_detections-1.0.1.fits')
         for candidate in hdu['DETECTIONS'].data:
-            standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords({'RA [°]': str(row[1], 'Dec [°]': row[2]}, {'RA [°]':'RA [°]', 'Dec [°]':'Dec [°]'})
+            standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords({'RA [°]': str(candidate['RA'], 'Dec [°]': candidate['DEC']}, {'RA [°]':'RA [°]', 'Dec [°]':'Dec [°]'})
             if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {'System Name':[], 'Discovery Date':[], 'RA (Hours part)':[], 'RA (Mins part)':[], 'RA (Secs part)':[], 'RA [°]': [], 'Dec (Degree part)': [], 'Dec (Arcmin part)': [], 'Dec (Arcsec part)': [], 'Dec [°]': [], 'Lens Grade': [], 'Number of images': [], 'Einstein_R ["]': [], 'z_Lens': [], 'z_Source(s)': [], 'Stellar velocity disp': [], 'Standard RA':[], 'Standard DEC':[], 'MLD_ID':[], 'Description':[], 'Lens type':[], 'Lens type MLD_ID':[], 'Discovery':[], 'Discovery_MLD_ID':[], 'MLD SDSS link':[], 'MLD ADSABS link':[], 'MLD NED link':[], 'MLD APOD link':[], 'References_MLD_ID':[], 'Has external link for SDSS':[], 'Has external link for ADSABS':[], 'Has external link for NED':[], 'Has external link for APOD':[]}
-            self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
-            self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
-            self.lens_objects[standard_name]['z_lens'].append({'value': candidate['Z_NOQSO'], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
-            self.lens_objects[standard_name]['z_lens'].append({'value': candidate['Z_NOQSO'], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
-            self.lens_objects[standard_name]['z_Source(s)'].append({'value': row[4], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
-            self.lens_objects[standard_name]['References'] = sugohi_key[row[-1]]
-        , candidate['ZERR_NOQSO'], candidate['RA'], candidate['DEC'], candidate['DETECTION_Z'], candidate['TOTAL_GRADE'], 'Talbot et al. 2020')
+            self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in SILO', 'weight':10}})
+            self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in SILO', 'weight':10}})
+            self.lens_objects[standard_name]['z_lens'].append({'value': candidate['Z_NOQSO'], 'tracer': {'update status': 'in SILO', 'weight':5}})
+            self.lens_objects[standard_name]['z_Lens error'].append({'value': candidate['ZERR_NOQSO'], 'tracer': {'update status': 'in SILO', 'weight':5}})
+            self.lens_objects[standard_name]['z_Lens quality'].append({'value': 'Spectroscopic', 'tracer': {'update status': 'in SILO', 'weight':5}})
+            self.lens_objects[standard_name]['z_Source(s)'].append({'value': candidate['DETECTION_Z'], 'tracer': {'update status': 'in SILO', 'weight':5}})
+            self.lens_objects[standard_name]['z_Source quality'].append({'value': 'Spectroscopic', 'tracer': {'update status': 'in SILO', 'weight':5}})
+            self.lens_objects[standard_name]['System Name'].append({'value': 'SDSS'+standard_name, 'tracer': {'update status': 'in SILO', 'weight':5}})
+            self.lens_objects[standard_name]['References'].append('MNRAStmp(2021)303T')
                                                                                               
-    def add_kids(self):
-        data = []
-        with open('references/LinKS_bonus.txt', 'r') as file:
-            for line in file: data.append(line[0],line[4],line[5])
+    def load_kids(self):
+        with open('references/LinKS_main.txt', 'r') as file:
+            for line in file:
+                standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords({'RA [°]': str(line[4], 'Dec [°]': line[5]}, {'RA [°]':'RA [°]', 'Dec [°]':'Dec [°]'})
+                if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {'System Name':[], 'Discovery Date':[], 'RA (Hours part)':[], 'RA (Mins part)':[], 'RA (Secs part)':[], 'RA [°]': [], 'Dec (Degree part)': [], 'Dec (Arcmin part)': [], 'Dec (Arcsec part)': [], 'Dec [°]': [], 'Lens Grade': [], 'Number of images': [], 'Einstein_R ["]': [], 'z_Lens': [], 'z_Source(s)': [], 'Stellar velocity disp': [], 'Standard RA':[], 'Standard DEC':[], 'MLD_ID':[], 'Description':[], 'Lens type':[], 'Lens type MLD_ID':[], 'Discovery':[], 'Discovery_MLD_ID':[], 'MLD SDSS link':[], 'MLD ADSABS link':[], 'MLD NED link':[], 'MLD APOD link':[], 'References_MLD_ID':[], 'Has external link for SDSS':[], 'Has external link for ADSABS':[], 'Has external link for NED':[], 'Has external link for APOD':[]}
+                self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in LinKS', 'weight':5}})
+                self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in LinKS', 'weight':5}})
+                self.lens_objects[standard_name]['System Name'].append({'value': line[0], 'tracer': {'update status': 'in LinKS', 'weight':5}})
+                self.lens_objects[standard_name]['References'].append('MNRAS484(2019)3879P')                                                    
                     
         with open('references/LinKS_bonus.txt', 'r') as file:
-            for line in file: data.append(line[0],line[4],line[5])
+            for line in file:
+                standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords({'RA [°]': str(line[1], 'Dec [°]': line[2]}, {'RA [°]':'RA [°]', 'Dec [°]':'Dec [°]'})
+                if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {'System Name':[], 'Discovery Date':[], 'RA (Hours part)':[], 'RA (Mins part)':[], 'RA (Secs part)':[], 'RA [°]': [], 'Dec (Degree part)': [], 'Dec (Arcmin part)': [], 'Dec (Arcsec part)': [], 'Dec [°]': [], 'Lens Grade': [], 'Number of images': [], 'Einstein_R ["]': [], 'z_Lens': [], 'z_Source(s)': [], 'Stellar velocity disp': [], 'Standard RA':[], 'Standard DEC':[], 'MLD_ID':[], 'Description':[], 'Lens type':[], 'Lens type MLD_ID':[], 'Discovery':[], 'Discovery_MLD_ID':[], 'MLD SDSS link':[], 'MLD ADSABS link':[], 'MLD NED link':[], 'MLD APOD link':[], 'References_MLD_ID':[], 'Has external link for SDSS':[], 'Has external link for ADSABS':[], 'Has external link for NED':[], 'Has external link for APOD':[]}
+                self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in LinKS', 'weight':5}})
+                self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in LinKS', 'weight':5}})
+                self.lens_objects[standard_name]['System Name'].append({'value': line[0], 'tracer': {'update status': 'in LinKS', 'weight':5}})
+                self.lens_objects[standard_name]['References'].append('MNRAS484(2019)3879P')                                                         
           
         
                     
