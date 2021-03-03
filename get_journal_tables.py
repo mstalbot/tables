@@ -1174,15 +1174,24 @@ class Journal_tables():
                 if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {'System Name':[], 'Discovery Date':[], 'RA (Hours part)':[], 'RA (Mins part)':[], 'RA (Secs part)':[], 'RA [°]': [], 'Dec (Degree part)': [], 'Dec (Arcmin part)': [], 'Dec (Arcsec part)': [], 'Dec [°]': [], 'Lens Grade': [], 'Number of images': [], 'Einstein_R ["]': [], 'z_Lens': [], 'z_Source(s)': [], 'Stellar velocity disp': [], 'Standard RA':[], 'Standard DEC':[], 'MLD_ID':[], 'Description':[], 'Lens type':[], 'Lens type MLD_ID':[], 'Discovery':[], 'Discovery_MLD_ID':[], 'MLD SDSS link':[], 'MLD ADSABS link':[], 'MLD NED link':[], 'MLD APOD link':[], 'References_MLD_ID':[], 'Has external link for SDSS':[], 'Has external link for ADSABS':[], 'Has external link for NED':[], 'Has external link for APOD':[]}
                 self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
                 self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
-                self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
+                self.lens_objects[standard_name]['z_lens)'].append({'value': row[3], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
+                self.lens_objects[standard_name]['z_Source(s)'].append({'value': row[4], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
                 self.lens_objects[standard_name]['References'] = sugohi_key[row[-1]]
             
            
     def add_silo_eboss(self):
-        data = []
         hdu = fits.open('rescources/silo_eboss_detections-1.0.1.fits')
-        for candidate in hdu['DETECTIONS'].data: data.append(candidate['CATALOG_ID'], candidate['Z_NOQSO'], candidate['ZERR_NOQSO'], candidate['RA'], candidate['DEC'], candidate['DETECTION_Z'], candidate['TOTAL_GRADE'], 'Talbot et al. 2020') 
-        
+        for candidate in hdu['DETECTIONS'].data:
+            standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords({'RA [°]': str(row[1], 'Dec [°]': row[2]}, {'RA [°]':'RA [°]', 'Dec [°]':'Dec [°]'})
+            if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {'System Name':[], 'Discovery Date':[], 'RA (Hours part)':[], 'RA (Mins part)':[], 'RA (Secs part)':[], 'RA [°]': [], 'Dec (Degree part)': [], 'Dec (Arcmin part)': [], 'Dec (Arcsec part)': [], 'Dec [°]': [], 'Lens Grade': [], 'Number of images': [], 'Einstein_R ["]': [], 'z_Lens': [], 'z_Source(s)': [], 'Stellar velocity disp': [], 'Standard RA':[], 'Standard DEC':[], 'MLD_ID':[], 'Description':[], 'Lens type':[], 'Lens type MLD_ID':[], 'Discovery':[], 'Discovery_MLD_ID':[], 'MLD SDSS link':[], 'MLD ADSABS link':[], 'MLD NED link':[], 'MLD APOD link':[], 'References_MLD_ID':[], 'Has external link for SDSS':[], 'Has external link for ADSABS':[], 'Has external link for NED':[], 'Has external link for APOD':[]}
+            self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
+            self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
+            self.lens_objects[standard_name]['z_lens'].append({'value': candidate['Z_NOQSO'], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
+            self.lens_objects[standard_name]['z_lens'].append({'value': candidate['Z_NOQSO'], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
+            self.lens_objects[standard_name]['z_Source(s)'].append({'value': row[4], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
+            self.lens_objects[standard_name]['References'] = sugohi_key[row[-1]]
+        , candidate['ZERR_NOQSO'], candidate['RA'], candidate['DEC'], candidate['DETECTION_Z'], candidate['TOTAL_GRADE'], 'Talbot et al. 2020')
+                                                                                              
     def add_kids(self):
         data = []
         with open('references/LinKS_bonus.txt', 'r') as file:
