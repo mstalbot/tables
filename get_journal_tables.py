@@ -1168,7 +1168,7 @@ class Journal_tables():
             self.lens_objects[standard_name]['References_MLD_ID'] = [r.getAttribute('referenceID') for r in mld_entry.getElementsByTagName('reference')]
         
     def load_sugohi(self):
-        sugohi_key={'SuGOHI1':'PASJ70S(2018)29S', 'SuGOHI2':'ApJ867(2018)107W', 'SuGOHI3':'A&A630A(2019)71S', 'SuGOHI4':'A&A636A(2020)87C', 'SuGOHI5':'MNRAS495(2020)1291J', 'SuGOHI6':'A&A642A(2020)148S', 'SuGOHI7':'MNRAS502(2021)1487J')
+        sugohi_key={'SuGOHI1':'PASJ70S(2018)29S', 'SuGOHI2':'ApJ867(2018)107W', 'SuGOHI3':'A&A630A(2019)71S', 'SuGOHI4':'A&A636A(2020)87C', 'SuGOHI5':'MNRAS495(2020)1291J', 'SuGOHI6':'A&A642A(2020)148S', 'SuGOHI7':'MNRAS502(2021)1487J'}
         with open('rescources/list_public.csv', newline='') as csvfile:
             csv = csv.reader(csvfile, delimiter=',')
             for row in csv:
