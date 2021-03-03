@@ -10,6 +10,8 @@ import json
 import pandas as pd
 import re
 from time import sleep
+import csv
+from astropy.io import fits
 import xml.dom.minidom
 
 class Journal_tables():
@@ -90,7 +92,22 @@ class Journal_tables():
             self.report_overal_stats()
         if self.inspect: self.inspect_tables()
             
-
+    def add_sugohi(self): 
+     
+        sugohi_key={'SuGOHI1':'2018PASJ...70S..29S', 'SuGOHI2':'2018ApJ...867..107W', 'SuGOHI3':'2019A&A...630A..71S', 'SuGOHI4':'2020A&A...636A..87C', 'SuGOHI5':'2020MNRAS.495.1291J', 'SuGOHI6':'2020A&A...642A.148S', 'SuGOHI7':'2021MNRAS.502.1487J')
+        data = []
+        with open('rescources/list_public.csv', newline='') as csvfile:
+            csv = csv.reader(csvfile, delimiter=',')
+            for row in csv: data.append(row)
+            
+           
+    def add_silo_eboss(self):
+        data = []
+        hdu = fits.open('rescources/silo_eboss_detections-1.0.1.fits')
+        for candidate in hdu['DETECTIONS'].data: data.append(candidate['CATALOG_ID'], candidate['Z_NOQSO'], candidate['ZERR_NOQSO'], candidate['RA'], candidate['DEC'], candidate['DETECTION_Z'], candidate['TOTAL_GRADE'], 'Talbot et al. 2020') 
+        
+          
+          
     def load_query_bibcodes(self):
         """Load bibliography codes from a json file on disk"""
         
