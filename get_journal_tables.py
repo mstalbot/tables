@@ -893,7 +893,7 @@ class Journal_tables():
                         print('LINK>>>>', self.ads_scrapped_data[self.query]['Table meta data'][key]['Link'])
                         for key2 in sorted(self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'].keys()):
                             if 'Inspection' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2] and 'Table map to MasterLens database' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']:
-                                for row_index in range(0 if 'Append first table row to header' not in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes'] else 1, self.ads_scrapped_tables[self.query][key][key2].shape[0]):
+                                for row_index in range(0 if 'Append first table row to header' not in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes'] else 1, self.ads_scrapped_tables[self.query][key][key2].shape[1 if 'Table columns are horizontal' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes'] else 0]):
                                     #Get data per table row depending on if table is rotated or not
                                     if 'Table columns are horizontal' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes']: table_row = self.ads_scrapped_tables[self.query][key][key2].T.iloc[row_index]
                                     else:
