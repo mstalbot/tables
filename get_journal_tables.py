@@ -946,9 +946,9 @@ class Journal_tables():
             map[mkey] = new_value
             print('>>>>', mkey, map[mkey], new_value)
             try:
-                if table_row[map[mkey].split('@')[0]] is not None: empty = False
+                if table_row[new_value.split('@')[0]] is not None: empty = False
             except:
-                if table_row[int(map[mkey])] is not None: empty = False
+                if table_row[int(new_value.split('@')[0])] is not None: empty = False
         if empty: print('Skipping row since empty')
         else:
             #Convert to a standardized format
