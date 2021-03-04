@@ -755,7 +755,8 @@ class Journal_tables():
             standard_name = 'J%s%s' % (ra_hms.replace(':','')[:4], dec_dms.replace(':','')[:5])
             return standard_ra, standard_dec, standard_name
         elif name is not None and 'J' in name:
-            system_name = table_row[map['System Name']]
+            if map['System Name'] == 'pdname': system_name = table_row.name
+            else: system_name = table_row[map['System Name']]
             #print('Parsing coordinate name from system name (from table) that contains a "J" format:', system_name)
             system_name = 'J' + system_name.split('J')[1]
             
