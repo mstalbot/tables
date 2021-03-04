@@ -16,7 +16,7 @@ import xml.dom.minidom
 
 class Journal_tables():
  
-    def __init__(self, get_bibcodes = False, get_online_tables = False, base_directory = 'PATH_TO_lens_surveys', headers = {'user-agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.2 Safari/605.1.15'}, user = {'MNRAS':'','IOP':'','A&A':''}, password = {'MNRAS':'','IOP':'','A&A':''}, mld_auth = {'user':'','password':''}, start = 0, end = 99999, redo_pandas = False, rescan_online = False, slow_down_seconds_after_requests = 5, inspect = False, redo_inspection=False, load_processed_data = True):
+    def __init__(self, get_bibcodes = False, get_online_tables = False, base_directory = 'PATH_TO_lens_surveys', headers = {'user-agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.2 Safari/605.1.15'}, user = {'MNRAS':'','IOP':'','A&A':''}, password = {'MNRAS':'','IOP':'','A&A':''}, mld_auth = {'user':'','password':''}, start = 0, end = 99999, redo_pandas = False, rescan_online = False, slow_down_seconds_after_requests = 5, inspect = False, redo_inspection=False, load_processed_data = True, prepare_to_post_lenses_to_MLD2 = False):
     
         """This program retrieves tables from journals typically used in Astronomy. Data is saved as a pandas or ascii version of a JSON file.
         
@@ -52,6 +52,7 @@ class Journal_tables():
         self.inspect = inspect
         self.redo_inspection = redo_inspection
         self.load_processed_data = load_processed_data
+        self.prepare_to_post_lenses_to_MLD2 = prepare_to_post_lenses_to_MLD2
         self.slow_down_seconds_after_requests = slow_down_seconds_after_requests
         self.fix_messed_up_tables = {'2016ApJ...826..112S': '\n\n\n\n\n\n\n\n\t'}
         self.table_action = {'^':'Word to recognize name is of lens and NOT source', '~':'Name,Ra,Dec of cluster or group lens','+':'Cluster Sources Table', 's': 'Skip cause table not important', 'y': 'Table correctly loaded', 'h': 'Append first table row to header', 'f': 'Trim footer', 'p': 'Warn problem', 'm': 'Message on table quality', 'c': 'Check system name since may be unique', '?':'Table might not be necessary', 't':'Detection table', 'i':'Follow up table', '-': 'Double check diction', 'd':'Skipping since duplicate', 'z':'Problem but check. Currently skipping', 'r':'Repeats format horizontally', 'n':'Discovery', 'k':'Lens Kind', 'g': 'Candidate table represents a grade', 'q':'Table columns are horizontal', '=':'Word to recognize candidate in column'}
@@ -91,6 +92,7 @@ class Journal_tables():
             self.set_sessions('close')
             self.report_overal_stats()
         if self.inspect: self.inspect_tables()
+        if self.prepare_to_post_lenses_to_MLD2: self.set_system_data()
     
     def load_query_bibcodes(self):
         """Load bibliography codes from a json file on disk"""
