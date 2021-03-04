@@ -1415,15 +1415,18 @@ class Journal_tables():
         """Upload new references to Masterlens database"""
         
         #Commented out upload untill we can test this works correctly
-        #session = Session()
-        #session.auth = (self.mld_auth['user'], self.mld_auth['password'])
-        #session.post(self.masterlens_login_url)
+        session = Session()
+        session.auth = (self.mld_auth['user'], self.mld_auth['password'])
+        session.post(self.masterlens_login_url)
     
         for self.query in self.update_reference:
             po = self.ads_scrapped_data[self.query]['Paper Overview']
-            article_data = {"action":"Save", "identifier":self.ads_to_mld_reference_interpreter[self.query], "author":'; '.join(po['authors']), "title":po['Title'], "journalID":input('CHECK how to add journal id or is it by default?'), "journal":po['journal_name'], "year":po['publication_year'].split('/')[0], "pages":po['start_page'], "month":po['publication_year'].split('/')[1], "volume":po['volume'][0], "eprint":po['custom1'].replace('eprint: ',''), "ads":po['url'], "doi":po['doi'], "bibtype":po['type_of_reference'], "keywords":', '.join(po['keywords']), "abstract":po['abstract']}
+            article_data = {"action":"Save", "identifier":self.ads_to_mld_reference_interpreter[self.query], "author":'; '.join(po['authors']), "title":po['Title'], "journal":po['journal_name'], "year":po['publication_year'].split('/')[0], "pages":po['start_page'], "month":po['publication_year'].split('/')[1], "ads":po['url'], "bibtype":po['type_of_reference'], "keywords":', '.join(po['keywords']), "abstract":po['abstract']}
             if 'number' in po: article_data["number"] = po['number']
-            #session.post(self.masterlens_form_add_a_paper)
+            if 'custom1' in po: article_data["eprint"] = po['custom1'].replace('eprint: ','')
+            if "volume" in po: article_data["volume"] = po['volume'][0]
+            if "doi" in po: article_data["doi"] = po['doi']
+            session.post(self.masterlens_form_add_a_paper)
             print('WOULD SAVE REFERENCE>>>', article_data)
             
     def update_MLD_lens_entries(self):
