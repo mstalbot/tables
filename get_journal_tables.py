@@ -968,7 +968,7 @@ class Journal_tables():
                     else: standard_name = self.cluster_lens_name + '[' + table_row[map['Source names']] + ']'
                 elif 'Name,Ra,Dec of cluster or group lens' in action_map:
                     self.cluster_lens_name = action_map['Name,Ra,Dec of cluster or group lens']
-                    standard_name = self.cluster_lens_name + '[' + (table_row[map['Source names']] if 'Source names' in map else standard_name) + ']'
+                    standard_name = self.cluster_lens_name + '[' + (str(table_row[map['Source names']]) if 'Source names' in map else standard_name) + ']'
 
 
             if standard_name is '': print('Could not define system', table_row, map)
