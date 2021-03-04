@@ -1033,7 +1033,7 @@ class Journal_tables():
                         else:
                             value = table_row[mvalue]
                             error = table_row[merror] if merror != '' else ''
-                    elif mkey == 'pdname': value, method, error = table_row.name, '', ''
+                    elif map[mkey] == 'pdname': value, method, error = table_row.name, '', ''
                     else: value, method, error = table_row[map[mkey]], '', ''
 
                     #Attempt a weight system used to determine which value is best to use for MLD. Check how we want to improve this!!!
