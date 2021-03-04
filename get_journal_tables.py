@@ -790,7 +790,7 @@ class Journal_tables():
             try: float(table_row[map['RA [°]']])
             except:
                 input('yikes')
-                return None None
+                return None, None
             return float(self.remove_non_numeric_related_formats(str(table_row[map['RA [°]']]))), float(self.remove_non_numeric_related_formats(str(table_row[map['Dec [°]']])))
         elif 'RA in Hours' in map and table_row[map['RA in Hours']] is not None:
             RA_hour, RA_decimal = self.remove_non_numeric_related_formats(str(table_row[map['RA in Hours']])).split('.')
