@@ -931,14 +931,21 @@ class Journal_tables():
     def set_object_data(self, key, key2, table_row, map, action_map):
         """Get system data from a table"""
         
+       
         #These keys cause integer vs string issues in dictionary reference translations.
         oversimplified_keys = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
         
         #I have to converted several tables ids to strings during inspection process, which I reverse here. Can improve when have time to fix.
+        empty = True
         for mkey in map:
             if map[mkey] in oversimplified_keys: new_value = int(map[mkey])
             else: new_value = map[mkey]
             map[mkey] = new_value
+            if table_row[map[mkey]] is not None: empty = False
+        if empty:
+            print('Skipping row since empty')
+            continue
+            
     
         #Convert to a standardized format
         try: standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
@@ -947,6 +954,7 @@ class Journal_tables():
             standard_name, standard_ra, standard_dec = '', '', ''
             print('Problem with data:', table_row, map)
             input('Paused for you to check')
+         
          
         if 'Cluster Sources Table' in action_map:
             if 'Word to recognize name is of lens and NOT source' in action_map:
