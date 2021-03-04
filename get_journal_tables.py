@@ -1204,7 +1204,7 @@ class Journal_tables():
             self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in SILO', 'weight':10}})
             self.lens_objects[standard_name]['z_lens'].append({'value': candidate['Z_NOQSO'], 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['z_Lens error'].append({'value': candidate['ZERR_NOQSO'], 'tracer': {'update status': 'in SILO', 'weight':5}})
-            self.lens_objects[standard_name]['z_Lens quality'].append({'value': spectroscopic', 'tracer': {'update status': 'in SILO', 'weight':5}})
+            self.lens_objects[standard_name]['z_Lens quality'].append({'value': 'spectroscopic', 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['z_Source(s)'].append({'value': candidate['DETECTION_Z'], 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['z_Source quality'].append({'value': 'spectroscopic', 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['System Name'].append({'value': 'SDSS'+standard_name, 'tracer': {'update status': 'in SILO', 'weight':5}})
