@@ -936,6 +936,9 @@ class Journal_tables():
         oversimplified_keys = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
         
         #I have to converted several tables ids to strings during inspection process, which I reverse here. Can improve when have time to fix.
+        print('map===>',map)
+        print('table_row====>', table_row)
+        print('action_map====>', action_map)
         empty = True
         for mkey in map:
             if map[mkey] in oversimplified_keys: new_value = int(map[mkey])
