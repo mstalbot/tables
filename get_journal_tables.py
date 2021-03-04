@@ -786,7 +786,7 @@ class Journal_tables():
         
         #Use column map derived in inspection to convert table RA and DEC to a standard format
         if 'RA [°]' in map and table_row[map['RA [°]']] is not None:
-            print(table_row[map['RA [°]']])
+            print(table_row[map['RA [°]']], table_row[map['Dec [°]']])
             try: float(table_row[map['RA [°]']])
             except:
                 input('yikes')
