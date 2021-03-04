@@ -939,10 +939,24 @@ class Journal_tables():
             standard_name, standard_ra, standard_dec = '', '', ''
             print('Problem with data:', table_row, map)
             input('Paused for you to check')
+         
+        '^':'Word to recognize name is of lens and NOT source', '~':'Name,Ra,Dec of cluster or group lens','+':'Cluster Sources Table'
+        if 'Cluster Sources Table' in action_map:
+            if 'Word to recognize name is of lens and NOT source' in action_map:
+                if action_map['Word to recognize name is of lens and NOT source'] in table_row['Source names']:
+                    self.cluster_lens_name = table_row['Source names']
+                    standard_name = self.cluster_lens_name + ''
+                else: standard_name = self.cluster_lens_name + '[' + table_row['Source names'] + ']'
+            elif 'Word to recognize name is of lens and NOT source' in action_map and action_map['Word to recognize name is of lens and NOT source'] not in table_row['Source names']
+            elif 'Name,Ra,Dec of cluster or group lens' in action_map:
+                self.cluster_lens_name = action_map['Name,Ra,Dec of cluster or group lens']
+                standard_name = self.cluster_lens_name + '[' + table_row['Source names'] + ']'
+            
 
         if standard_name is '': print('Could not define system', table_row, map)
         else:
             if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {}
+            if 'Cluster Sources Table' in action_map: self.lens_objects[standard_name]['System Name'] = standard_name
             if 'Standard RA' not in self.lens_objects: self.lens_objects[standard_name]['Standard RA'] = []
             if 'Standard DEC' not in self.lens_objects: self.lens_objects[standard_name]['Standard DEC'] = []
 
