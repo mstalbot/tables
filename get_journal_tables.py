@@ -940,7 +940,6 @@ class Journal_tables():
             print('Problem with data:', table_row, map)
             input('Paused for you to check')
          
-        '^':'Word to recognize name is of lens and NOT source', '~':'Name,Ra,Dec of cluster or group lens','+':'Cluster Sources Table'
         if 'Cluster Sources Table' in action_map:
             if 'Word to recognize name is of lens and NOT source' in action_map:
                 if action_map['Word to recognize name is of lens and NOT source'] in table_row['Source names']:
