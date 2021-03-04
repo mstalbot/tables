@@ -954,10 +954,10 @@ class Journal_tables():
                 print(self.ads_scrapped_tables[self.query][key][key2], '\n>Standardize system Failed:', e)
                 standard_name, standard_ra, standard_dec = '', '', ''
                 print('Problem with data:', table_row, map)
-                input('Paused for you to check')
+                input('Check before skipping')
 
 
-            if 'Cluster Sources Table' in action_map:
+            if 'Cluster Sources Table' in action_map and standard_ra != '':
                 if 'Word to recognize name is of lens and NOT source' in action_map:
                     if action_map['Word to recognize name is of lens and NOT source'] in table_row[map['Source names']]:
                         self.cluster_lens_name = table_row[map['Source names']]
