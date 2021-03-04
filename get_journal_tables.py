@@ -945,7 +945,8 @@ class Journal_tables():
             if map[mkey] in oversimplified_keys: new_value = int(map[mkey])
             else: new_value = map[mkey]
             map[mkey] = new_value
-            if table_row[map[mkey].split('@')[0]] is not None: empty = False
+            try: if table_row[map[mkey].split('@')[0]] is not None: empty = False
+            except: if table_row[int(map[mkey].split('@')[0])] is not None: empty = False
         if empty: print('Skipping row since empty')
         else:
             #Convert to a standardized format
