@@ -950,13 +950,13 @@ class Journal_tables():
          
         if 'Cluster Sources Table' in action_map:
             if 'Word to recognize name is of lens and NOT source' in action_map:
-                if action_map['Word to recognize name is of lens and NOT source'] in table_row['Source names']:
-                    self.cluster_lens_name = table_row['Source names']
+                if action_map['Word to recognize name is of lens and NOT source'] in table_row[map['Source names']]:
+                    self.cluster_lens_name = table_row[map['Source names']]
                     standard_name = self.cluster_lens_name + ''
-                else: standard_name = self.cluster_lens_name + '[' + table_row['Source names'] + ']'
+                else: standard_name = self.cluster_lens_name + '[' + table_row[map['Source names']] + ']'
             elif 'Name,Ra,Dec of cluster or group lens' in action_map:
                 self.cluster_lens_name = action_map['Name,Ra,Dec of cluster or group lens']
-                standard_name = self.cluster_lens_name + '[' + table_row['Source names'] + ']'
+                standard_name = self.cluster_lens_name + '[' + table_row[map['Source names']] + ']'
             
 
         if standard_name is '': print('Could not define system', table_row, map)
