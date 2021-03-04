@@ -436,6 +436,7 @@ class Journal_tables():
     def load_saved_overview(self):
         """Load overview query from file"""
         
+        print(self.base_directory, 'overviews', '%s-overview.txt'%self.query)
         load_overview_path = join(self.base_directory, 'overviews', '%s-overview.txt'%self.query)
         if exists(load_overview_path):
             with open(load_overview_path, 'r') as json_file: self.ads_scrapped_data[self.query] = json.load(json_file)
