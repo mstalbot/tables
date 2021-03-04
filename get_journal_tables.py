@@ -954,8 +954,8 @@ class Journal_tables():
         if empty: print('Skipping row since empty')
         else:
             #Convert to a standardized format
-            standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
-            try: pass
+            
+            try: standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
             except Exception as e:
                 print(self.ads_scrapped_tables[self.query][key][key2], '\n>Standardize system Failed:', e)
                 standard_name, standard_ra, standard_dec = '', '', ''
