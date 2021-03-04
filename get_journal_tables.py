@@ -962,7 +962,7 @@ class Journal_tables():
         if standard_name is '': print('Could not define system', table_row, map)
         else:
             if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {}
-            if 'Cluster Sources Table' in action_map: self.lens_objects[standard_name]['System Name'] = standard_name
+            if 'Cluster Sources Table' in action_map: self.lens_objects[standard_name]['System Name'] = {'value': standard_name, 'tracer': {'update status': 'in SILO', 'weight':5}}
             if 'Standard RA' not in self.lens_objects: self.lens_objects[standard_name]['Standard RA'] = []
             if 'Standard DEC' not in self.lens_objects: self.lens_objects[standard_name]['Standard DEC'] = []
 
