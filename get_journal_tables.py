@@ -61,7 +61,7 @@ class Journal_tables():
         #User MLD authorization data, urls, and plain english to HTML entry conversion metadata
         self.mld_auth = mld_auth
         
-        self.masterlens_url = 'http://admin.masterlens.org'
+        self.masterlens_url = 'http://test.masterlens.org'
         self.masterlens_login_url = join(self.masterlens_url, 'member.php?action=login&')
         self.masterlens_form_extension = '/search.php?'
         self.masterlens_form_citation = '/citation.php?'
