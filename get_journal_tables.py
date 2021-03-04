@@ -865,6 +865,8 @@ class Journal_tables():
         #Look at dr16 Skyserver from SDSS for PLate, IFU, Fiberid info on RA and DEC
         sleep(1.5)
         session = Session()
+        print('<<<Accessing from DR16>>>', r'https://skyserver.sdss.org/dr16/en/tools/search/x_results.aspx?searchtool=SQL&TaskName=Skyserver.Search.SQL&syntax=NoSyntax&ReturnHtml=true&cmd=--+This+query+does+a+table+JOIN+between+the+imaging+%28PhotoObj%29+and+spectra%0D%0A--+%28SpecObj%29+tables+and+includes+the+necessary+columns+in+the+SELECT+to+upload%0D%0A--+the+results+to+the+SAS+%28Science+Archive+Server%29+for+FITS+file+retrieval.%0D%0ASELECT+TOP+10%0D%0A+++s.ra%2Cs.dec%0D%0AFROM+SpecObj+AS+s%0D%0AWHERE+%0D%0A+++s.plate%3D' + str(plate) + r'+AND+s.' + r'mjd%3D' + str(mjd) + r'+AND+s.fiberid%3D' + str(fiberid) + r'%0D%0A%0D%0A&format=html&TableName=')
+
         sky_server_get_coords = pd.read_html(session.get(r'https://skyserver.sdss.org/dr16/en/tools/search/x_results.aspx?searchtool=SQL&TaskName=Skyserver.Search.SQL&syntax=NoSyntax&ReturnHtml=true&cmd=--+This+query+does+a+table+JOIN+between+the+imaging+%28PhotoObj%29+and+spectra%0D%0A--+%28SpecObj%29+tables+and+includes+the+necessary+columns+in+the+SELECT+to+upload%0D%0A--+the+results+to+the+SAS+%28Science+Archive+Server%29+for+FITS+file+retrieval.%0D%0ASELECT+TOP+10%0D%0A+++s.ra%2Cs.dec%0D%0AFROM+SpecObj+AS+s%0D%0AWHERE+%0D%0A+++s.plate%3D' + str(plate) + r'+AND+s.' + r'mjd%3D' + str(mjd) + r'+AND+s.fiberid%3D' + str(fiberid) + r'%0D%0A%0D%0A&format=html&TableName=', headers = self.headers).text)[0].iloc[1]
         session.close()
         return float(sky_server_get_coords[0]), float(sky_server_get_coords[1])
