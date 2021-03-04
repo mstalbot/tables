@@ -946,7 +946,6 @@ class Journal_tables():
                     self.cluster_lens_name = table_row['Source names']
                     standard_name = self.cluster_lens_name + ''
                 else: standard_name = self.cluster_lens_name + '[' + table_row['Source names'] + ']'
-            elif 'Word to recognize name is of lens and NOT source' in action_map and action_map['Word to recognize name is of lens and NOT source'] not in table_row['Source names']
             elif 'Name,Ra,Dec of cluster or group lens' in action_map:
                 self.cluster_lens_name = action_map['Name,Ra,Dec of cluster or group lens']
                 standard_name = self.cluster_lens_name + '[' + table_row['Source names'] + ']'
