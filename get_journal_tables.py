@@ -1197,8 +1197,12 @@ class Journal_tables():
                 self.lens_objects[standard_name]['z_Lens'].append({'value': row[3], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
                 self.lens_objects[standard_name]['z_Source(s)'].append({'value': row[4], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
                 self.lens_objects[standard_name]['System Name'].append({'value': 'HSC'+standard_name, 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
-                if 'References' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'].append(sugohi_key[row[-1].split(' ')[0]])
-                else: self.lens_objects[standard_name]['References'] = [sugohi_key[row[-1].split(' ')[0]]]
+                for sr in sugohi_key[row[-1]].split(' '):
+                    if 'SuGOHI' in sr:
+                        reft = sr
+                        break
+                if 'References' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'].append(sugohi_key[row[-1]])
+                else: self.lens_objects[standard_name]['References'] = [sugohi_key[row[-1]]]
                 
             
            
