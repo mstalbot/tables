@@ -942,103 +942,100 @@ class Journal_tables():
             else: new_value = map[mkey]
             map[mkey] = new_value
             if table_row[map[mkey]] is not None: empty = False
-        if empty:
-            print('Skipping row since empty')
-            continue
-            
-    
-        #Convert to a standardized format
-        try: standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
-        except Exception as e:
-            print(self.ads_scrapped_tables[self.query][key][key2], '\n>Standardize system Failed:', e)
-            standard_name, standard_ra, standard_dec = '', '', ''
-            print('Problem with data:', table_row, map)
-            input('Paused for you to check')
-         
-         
-        if 'Cluster Sources Table' in action_map:
-            if 'Word to recognize name is of lens and NOT source' in action_map:
-                if action_map['Word to recognize name is of lens and NOT source'] in table_row[map['Source names']]:
-                    self.cluster_lens_name = table_row[map['Source names']]
-                    standard_name = self.cluster_lens_name + ''
-                else: standard_name = self.cluster_lens_name + '[' + table_row[map['Source names']] + ']'
-            elif 'Name,Ra,Dec of cluster or group lens' in action_map:
-                self.cluster_lens_name = action_map['Name,Ra,Dec of cluster or group lens']
-                standard_name = self.cluster_lens_name + '[' + table_row[map['Source names']] + ']'
-            
-
-        if standard_name is '': print('Could not define system', table_row, map)
+        if empty: print('Skipping row since empty')
         else:
-            if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {}
-            if 'Cluster Sources Table' in action_map:
-                if 'System Name' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['System Name'].append({'value': standard_name, 'tracer': {'update status': 'is or in cluster', 'weight':5}})
-                else: self.lens_objects[standard_name]['System Name'] = [{'value': standard_name, 'tracer': {'update status': 'is or in cluster', 'weight':5}}]
-            if 'Standard RA' not in self.lens_objects: self.lens_objects[standard_name]['Standard RA'] = []
-            if 'Standard DEC' not in self.lens_objects: self.lens_objects[standard_name]['Standard DEC'] = []
+            #Convert to a standardized format
+            try: standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
+            except Exception as e:
+                print(self.ads_scrapped_tables[self.query][key][key2], '\n>Standardize system Failed:', e)
+                standard_name, standard_ra, standard_dec = '', '', ''
+                print('Problem with data:', table_row, map)
+                input('Paused for you to check')
 
-            #Save standard coordinate info
-            self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
-            self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
-            
-            #Save reference information via a conversion from ADS bibform to MLD bibform
-            if 'References' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'] = [self.ads_to_mld_reference_interpreter[self.query]]
-            elif self.ads_to_mld_reference_interpreter[self.query] not in self.lens_objects[standard_name]['References']: self.lens_objects[standard_name]['References'].append(self.ads_to_mld_reference_interpreter[self.query])
-            
-            if 'System Name' in self.lens_objects[standard_name]:
-                print(self.lens_objects[standard_name]['System Name'])
-                system_names = [entry['value'] for entry in self.lens_objects[standard_name]['System Name']]
-            else: system_names = []
-            system_names.append(standard_name)
-            
-            self.lens_objects[standard_name]['References'] = self.get_all_papers_referenced(self.lens_objects[standard_name]['References'], system_names)
-            
-            #I wish this could work but there is no standard format that is robust across tables. Thus this method is deprecated.
-            '''if 'References' in map:
-                for reference in table_row[map['References']]:
-                    if reference not in self.lens_objects[standard_name]['References']: self.lens_objects[standard_name]['References'].append(reference)'''
-                                 
-            #Save any related method and error specified from inspection map of columns
-            for mkey in map.keys():
-                if not isinstance(map[mkey], int) and '@' in map[mkey]:
-                    mvalue, method, merror = map[mkey].split('@')
-                    if mvalue in oversimplified_keys: mvalue = int(mvalue)
-                    if merror in oversimplified_keys: merror = int(merror)
-                    if mvalue == merror:
-                        entry = self.parse_out_numbers(table_row[mvalue])
-                        if len(entry) == 2:
-                            value, error = entry
-                            print(mvalue, entry, table_row[mvalue], table_row, map)
-                        elif len(entry) == 3:
-                            value = entry[0]
-                            error = str((abs(float(entry[1])) + abs(float(entry[2])))/2)  
-                            print(mvalue, entry, table_row[mvalue], table_row, map)
+
+            if 'Cluster Sources Table' in action_map:
+                if 'Word to recognize name is of lens and NOT source' in action_map:
+                    if action_map['Word to recognize name is of lens and NOT source'] in table_row[map['Source names']]:
+                        self.cluster_lens_name = table_row[map['Source names']]
+                        standard_name = self.cluster_lens_name + ''
+                    else: standard_name = self.cluster_lens_name + '[' + table_row[map['Source names']] + ']'
+                elif 'Name,Ra,Dec of cluster or group lens' in action_map:
+                    self.cluster_lens_name = action_map['Name,Ra,Dec of cluster or group lens']
+                    standard_name = self.cluster_lens_name + '[' + table_row[map['Source names']] + ']'
+
+
+            if standard_name is '': print('Could not define system', table_row, map)
+            else:
+                if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {}
+                if 'Cluster Sources Table' in action_map:
+                    if 'System Name' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['System Name'].append({'value': standard_name, 'tracer': {'update status': 'is or in cluster', 'weight':5}})
+                    else: self.lens_objects[standard_name]['System Name'] = [{'value': standard_name, 'tracer': {'update status': 'is or in cluster', 'weight':5}}]
+                if 'Standard RA' not in self.lens_objects: self.lens_objects[standard_name]['Standard RA'] = []
+                if 'Standard DEC' not in self.lens_objects: self.lens_objects[standard_name]['Standard DEC'] = []
+
+                #Save standard coordinate info
+                self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
+                self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
+
+                #Save reference information via a conversion from ADS bibform to MLD bibform
+                if 'References' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'] = [self.ads_to_mld_reference_interpreter[self.query]]
+                elif self.ads_to_mld_reference_interpreter[self.query] not in self.lens_objects[standard_name]['References']: self.lens_objects[standard_name]['References'].append(self.ads_to_mld_reference_interpreter[self.query])
+
+                if 'System Name' in self.lens_objects[standard_name]:
+                    print(self.lens_objects[standard_name]['System Name'])
+                    system_names = [entry['value'] for entry in self.lens_objects[standard_name]['System Name']]
+                else: system_names = []
+                system_names.append(standard_name)
+
+                self.lens_objects[standard_name]['References'] = self.get_all_papers_referenced(self.lens_objects[standard_name]['References'], system_names)
+
+                #I wish this could work but there is no standard format that is robust across tables. Thus this method is deprecated.
+                '''if 'References' in map:
+                    for reference in table_row[map['References']]:
+                        if reference not in self.lens_objects[standard_name]['References']: self.lens_objects[standard_name]['References'].append(reference)'''
+
+                #Save any related method and error specified from inspection map of columns
+                for mkey in map.keys():
+                    if not isinstance(map[mkey], int) and '@' in map[mkey]:
+                        mvalue, method, merror = map[mkey].split('@')
+                        if mvalue in oversimplified_keys: mvalue = int(mvalue)
+                        if merror in oversimplified_keys: merror = int(merror)
+                        if mvalue == merror:
+                            entry = self.parse_out_numbers(table_row[mvalue])
+                            if len(entry) == 2:
+                                value, error = entry
+                                print(mvalue, entry, table_row[mvalue], table_row, map)
+                            elif len(entry) == 3:
+                                value = entry[0]
+                                error = str((abs(float(entry[1])) + abs(float(entry[2])))/2)  
+                                print(mvalue, entry, table_row[mvalue], table_row, map)
+                            else:
+                                print(mvalue, entry, table_row[mvalue], table_row, map)
+                                input('Paused for you to check error parsing')
+                                try:
+                                    value = str(float(entry[0]))
+                                    error = ''
+                                except:
+                                    value = ''
+                                    error = ''
                         else:
-                            print(mvalue, entry, table_row[mvalue], table_row, map)
-                            input('Paused for you to check error parsing')
-                            try:
-                                value = str(float(entry[0]))
-                                error = ''
-                            except:
-                                value = ''
-                                error = ''
-                    else:
-                        value = table_row[mvalue]
-                        error = table_row[merror] if merror != '' else ''
-                elif mkey == 'pdname': value, method, error = table_row.name, '', ''
-                else: value, method, error = table_row[map[mkey]], '', ''
-                 
-                #Attempt a weight system used to determine which value is best to use for MLD. Check how we want to improve this!!!
-                weight = 0
-                weight += (1 if error != '' else 0)
-                weight += (1 if method in ["spectroscopic", "SIE model", "MLD"] else -1 if method in ["Reference redshift", ""] else 0)
-                
-                #Save system information. The "replace(2,'') is to allow inspection of repeated column types (i.e. Plate, Plate2, Plate3)
-                if value not in ['', 'NaN', ' NaN', None]:
-                    if mkey not in self.lens_objects[standard_name]: self.lens_objects[standard_name][mkey.replace('2','').replace('3','')] = []
-                    self.lens_objects[standard_name][mkey.replace('2','').replace('3','')].append({'value': str(value).replace(' NaN','').replace('NaN',''), 'method': str(method).replace(' NaN','').replace('NaN',''), 'error': str(error).replace(' NaN','').replace('NaN',''), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':weight}})
-                    print('lens object values', self.lens_objects[standard_name])
-            if 'Lens type' in action_map: self.lens_objects[standard_name]['Lens type'] = action_map['Lens type']
-            if 'Discovery' in action_map: self.lens_objects[standard_name]['Discovery'] = action_map['Discovery']
+                            value = table_row[mvalue]
+                            error = table_row[merror] if merror != '' else ''
+                    elif mkey == 'pdname': value, method, error = table_row.name, '', ''
+                    else: value, method, error = table_row[map[mkey]], '', ''
+
+                    #Attempt a weight system used to determine which value is best to use for MLD. Check how we want to improve this!!!
+                    weight = 0
+                    weight += (1 if error != '' else 0)
+                    weight += (1 if method in ["spectroscopic", "SIE model", "MLD"] else -1 if method in ["Reference redshift", ""] else 0)
+
+                    #Save system information. The "replace(2,'') is to allow inspection of repeated column types (i.e. Plate, Plate2, Plate3)
+                    if value not in ['', 'NaN', ' NaN', None]:
+                        if mkey not in self.lens_objects[standard_name]: self.lens_objects[standard_name][mkey.replace('2','').replace('3','')] = []
+                        self.lens_objects[standard_name][mkey.replace('2','').replace('3','')].append({'value': str(value).replace(' NaN','').replace('NaN',''), 'method': str(method).replace(' NaN','').replace('NaN',''), 'error': str(error).replace(' NaN','').replace('NaN',''), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':weight}})
+                        print('lens object values', self.lens_objects[standard_name])
+                if 'Lens type' in action_map: self.lens_objects[standard_name]['Lens type'] = action_map['Lens type']
+                if 'Discovery' in action_map: self.lens_objects[standard_name]['Discovery'] = action_map['Discovery']
             
     def write_pdfs(self):
         """Write pdfs of each paper"""
