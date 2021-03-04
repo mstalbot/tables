@@ -947,7 +947,7 @@ class Journal_tables():
             map[mkey] = new_value
             print('>>>>', mkey, map[mkey], new_value)
             try:
-                if new_vale == 'pdname' and table_row.name is not None: empty = False
+                if new_value == 'pdname' and table_row.name is not None: empty = False
                 elif table_row[new_value.split('@')[0] if '@' in str(new_value) else new_value] is not None: empty = False
             except:
                 if table_row[int(new_value.split('@')[0]) if '@' in str(new_value) else int(new_value)] is not None: empty = False
