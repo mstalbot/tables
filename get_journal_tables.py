@@ -938,6 +938,7 @@ class Journal_tables():
         #I have to converted several tables ids to strings during inspection process, which I reverse here. Can improve when have time to fix.
         print('map===>',map)
         print('table_row====>', table_row)
+        print('table_row====>', table_row.keys())
         print('action_map====>', action_map)
         empty = True
         for mkey in map:
