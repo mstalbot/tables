@@ -790,11 +790,6 @@ class Journal_tables():
         
         #Use column map derived in inspection to convert table RA and DEC to a standard format
         if 'RA [°]' in map and table_row[map['RA [°]']] is not None:
-            print(table_row[map['RA [°]']], table_row[map['Dec [°]']])
-            try: float(table_row[map['RA [°]']])
-            except:
-                input('yikes')
-                return None, None
             return float(self.remove_non_numeric_related_formats(str(table_row[map['RA [°]']]))), float(self.remove_non_numeric_related_formats(str(table_row[map['Dec [°]']])))
         elif 'RA in Hours' in map and table_row[map['RA in Hours']] is not None:
             RA_hour, RA_decimal = self.remove_non_numeric_related_formats(str(table_row[map['RA in Hours']])).split('.')
