@@ -945,7 +945,10 @@ class Journal_tables():
             else: new_value = map[mkey]
             map[mkey] = new_value
             print('>>>>', mkey, map[mkey], new_value)
-            if table_row[new_value.split('@')[0] if '@' in str(new_value) else new_value] is not None: empty = False
+            try:
+                if table_row[new_value.split('@')[0] if '@' in str(new_value) else new_value] is not None: empty = False
+            except:
+                if table_row[int(new_value.split('@')[0]) if '@' in str(new_value) else int(new_value)] is not None: empty = False
         if empty: print('Skipping row since empty')
         else:
             #Convert to a standardized format
