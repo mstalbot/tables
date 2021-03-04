@@ -784,9 +784,10 @@ class Journal_tables():
     def convert_to_standard_ra_dec(self, table_row, map):
         """Convert input coordinate formats to a standard format"""
         
-        
         #Use column map derived in inspection to convert table RA and DEC to a standard format
-        if 'RA [°]' in map and table_row[map['RA [°]']] is not None: return float(self.remove_non_numeric_related_formats(str(table_row[map['RA [°]']]))), float(self.remove_non_numeric_related_formats(str(table_row[map['Dec [°]']])))
+        if 'RA [°]' in map and table_row[map['RA [°]']] is not None:
+            print(table_row[map['RA [°]']])
+            return float(self.remove_non_numeric_related_formats(str(table_row[map['RA [°]']]))), float(self.remove_non_numeric_related_formats(str(table_row[map['Dec [°]']])))
         elif 'RA in Hours' in map and table_row[map['RA in Hours']] is not None:
             RA_hour, RA_decimal = self.remove_non_numeric_related_formats(str(table_row[map['RA in Hours']])).split('.')
             dec_degree, dec_decimal = self.remove_non_numeric_related_formats(str(table_row[map['DEC in Degrees']])).split('.')
