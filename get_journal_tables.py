@@ -792,7 +792,7 @@ class Journal_tables():
                 input('yikes')
                 return None, None
             if 'E-' in table_row[map['RA [°]']]: table_row[map['RA [°]']] = 0
-            if 'E-' in table_row[map['DEC [°]']]: table_row[map['DEC [°]']] = 0
+            if 'E-' in table_row[map['Dec [°]']]: table_row[map['Dec [°]']] = 0
             return float(self.remove_non_numeric_related_formats(str(table_row[map['RA [°]']]))), float(self.remove_non_numeric_related_formats(str(table_row[map['Dec [°]']])))
         elif 'RA in Hours' in map and table_row[map['RA in Hours']] is not None:
             RA_hour, RA_decimal = self.remove_non_numeric_related_formats(str(table_row[map['RA in Hours']])).split('.')
