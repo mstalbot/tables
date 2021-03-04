@@ -1232,7 +1232,6 @@ class Journal_tables():
         with open('LinKS_main.txt', 'r') as file:
             for line in file:
                 line = line.split(',')
-                print(line)
                 if 'E-' in line[4]: line[4] = str(float(line[4]))
                 if 'E-' in line[5]: line[5] = str(float(line[5]))
                 standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords({'RA [°]': line[4], 'Dec [°]': line[5]}, {'RA [°]':'RA [°]', 'Dec [°]':'Dec [°]'})
