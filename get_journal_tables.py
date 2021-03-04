@@ -1196,7 +1196,9 @@ class Journal_tables():
                 self.lens_objects[standard_name]['z_Lens'].append({'value': row[3], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
                 self.lens_objects[standard_name]['z_Source(s)'].append({'value': row[4], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
                 self.lens_objects[standard_name]['System Name'].append({'value': 'HSC'+standard_name, 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
-                self.lens_objects[standard_name]['References'].append(sugohi_key[row[-1]])
+                if 'References' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'].append(sugohi_key[row[-1]])
+                else: self.lens_objects[standard_name]['References'] = [sugohi_key[row[-1]]]
+                
             
            
     def load_silo_eboss(self):
@@ -1212,7 +1214,9 @@ class Journal_tables():
             self.lens_objects[standard_name]['z_Source(s)'].append({'value': candidate['DETECTION_Z'], 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['z_Source quality'].append({'value': 'spectroscopic', 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['System Name'].append({'value': 'SDSS'+standard_name, 'tracer': {'update status': 'in SILO', 'weight':5}})
-            self.lens_objects[standard_name]['References'].append('MNRAStmp(2021)303T')
+            if 'References' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'].append('MNRAStmp(2021)303T')
+            else: self.lens_objects[standard_name]['References'] = ['MNRAStmp(2021)303T']
+            
                                                                                               
     def load_links(self):
         with open('LinKS_main.txt', 'r') as file:
@@ -1222,7 +1226,8 @@ class Journal_tables():
                 self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in LinKS', 'weight':0}})
                 self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in LinKS', 'weight':0}})
                 self.lens_objects[standard_name]['System Name'].append({'value': line[0], 'tracer': {'update status': 'in LinKS', 'weight':0}})
-                self.lens_objects[standard_name]['References'].append('MNRAS484(2019)3879P')
+                if 'References' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'].append('MNRAS484(2019)3879P')
+                else: self.lens_objects[standard_name]['References'] = ['MNRAS484(2019)3879P']
                     
         with open('LinKS_bonus.txt', 'r') as file:
             for line in file:
@@ -1231,7 +1236,8 @@ class Journal_tables():
                 self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in LinKS', 'weight':0}})
                 self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in LinKS', 'weight':0}})
                 self.lens_objects[standard_name]['System Name'].append({'value': line[0], 'tracer': {'update status': 'in LinKS', 'weight':0}})
-                self.lens_objects[standard_name]['References'].append('MNRAS484(2019)3879P')
+                if 'References' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'].append('MNRAS484(2019)3879P')
+                else: self.lens_objects[standard_name]['References'] = ['MNRAS484(2019)3879P']
                     
     def convert_to_mld_reference_form(self, reference, url=None):
         """Prepare and process the bibcode to be converted from ads to MLD formatted bibcode"""
