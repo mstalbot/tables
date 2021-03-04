@@ -974,7 +974,9 @@ class Journal_tables():
             if 'References' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'] = [self.ads_to_mld_reference_interpreter[self.query]]
             elif self.ads_to_mld_reference_interpreter[self.query] not in self.lens_objects[standard_name]['References']: self.lens_objects[standard_name]['References'].append(self.ads_to_mld_reference_interpreter[self.query])
             
-            if 'System Name' in self.lens_objects[standard_name]: system_names = [entry['value'] for entry in self.lens_objects[standard_name]['System Name']]
+            if 'System Name' in self.lens_objects[standard_name]:
+                print(self.lens_objects[standard_name]['System Name'])
+                system_names = [entry['value'] for entry in self.lens_objects[standard_name]['System Name']]
             else: system_names = []
             system_names.append(standard_name)
             
