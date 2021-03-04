@@ -938,7 +938,8 @@ class Journal_tables():
         #I have to converted several tables ids to strings during inspection process, which I reverse here. Can improve when have time to fix.
         print('map===>',map)
         print('table_row====>', table_row)
-        print('table_row====>', table_row.keys())
+        print('table_row keys====>', table_row.keys())
+        print('action_map====>', action_map)
         empty = True
         for mkey in map:
             if map[mkey] in oversimplified_keys: new_value = int(map[mkey])
@@ -969,7 +970,7 @@ class Journal_tables():
                     else: standard_name = self.cluster_lens_name + '[' + table_row[map['Source names']] + ']'
                 elif 'Name,Ra,Dec of cluster or group lens' in action_map:
                     self.cluster_lens_name = action_map['Name,Ra,Dec of cluster or group lens']
-                    standard_name = self.cluster_lens_name + '[' + table_row[map['Source names']] + ']'
+                    standard_name = self.cluster_lens_name + '[' + (table_row[map['Source names']] if 'Source names' in map else standard_name) + ']'
 
 
             if standard_name is '': print('Could not define system', table_row, map)
