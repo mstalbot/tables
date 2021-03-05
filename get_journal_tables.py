@@ -226,7 +226,7 @@ class Journal_tables():
                                 #Process inspection keys for inspection display and recording.
                                 columns = OrderedDict()
                                 for index, mkey in enumerate(self.ads_scrapped_tables[self.query][key][key2].keys()): columns[self.quick_column_letter[index]] = mkey
-                                print('>>>TABLE COLUMN QUICK KEY\n%s\n'%('\n'.join(columns))
+                                print('>>>TABLE COLUMN QUICK KEY\n%s\n'%('\n'.join(columns)))
                                 
                                 
                                 try: print('Last inspection save>>>', self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection'])
