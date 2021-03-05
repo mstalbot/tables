@@ -63,11 +63,11 @@ class Journal_tables():
         
         self.masterlens_url = 'http://test.masterlens.org'
         self.masterlens_login_url = join(self.masterlens_url, 'member.php?action=login&')
-        self.masterlens_form_extension = '/search.php?'
-        self.masterlens_form_citation = '/citation.php?'
+        self.masterlens_form_extension = 'search.php?'
+        self.masterlens_form_citation = 'citation.php?'
         self.masterlens_form_mode = 'mode=add&'
         self.masterlens_form_add_a_lens = join(self.masterlens_url, self.masterlens_form_extension, self.masterlens_form_mode)
-        self.masterlens_form_add_a_paper = join(self.masterlens_url, self.masterlens_form_citation)
+        self.masterlens_form_add_a_paper = join(self.masterlens_url, self.masterlens_form_citation, self.masterlens_form_mode)
         self.masterlens_phrases_to_input_converter = {"Submit":"inputaction", "Has external link for SDSS":"query_has_sdss", "Has external link for ADS":"query_has_adsabs", "Has external link for NED":"query_has_ned", "Has external link for APOD":"query_has_apod", "APOD link":"query_apod_link", "Lens Grade":"query_lensgrade", 'Einstein_R ["]':"query_theta_e", 'Einstein_R ["] error':"query_theta_e_err", 'Einstein_R ["] quality':"query_theta_e_quality", "z_Lens":"query_z_lens", "z_Lens error":"query_z_lens_err", "z_Lens quality":"query_z_lens_quality", "z_Source(s)":"query_z_source", "z_Source error":"query_z_source_err", "z_Source quality":"query_z_source_quality", "Stellar velocity disp":"query_vdisp", "Stellar velocity disp error":"query_vdisp_err", "Discovery count":"query_discovery_count", "query_discoveryID_num1":"0", "Lens type":"query_kindID", "Description":"query_description", "Standard Name":"query_system_name", "Discovery Date":"query_discovery_date", "System Name":"query_alternate_name", "RA (Hours part)":"query_ra_hrs", "RA (Mins part)":"query_ra_mins", "RA (Secs part)":"query_ra_secs", "RA [°]":"query_ra_coord", "Dec (Degree part)":"query_dec_degrees", "Dec (Arcmin part)":"query_dec_arcmin", "Dec (Arcsec part)":"query_dec_arcsec", "Dec [°]":"query_dec_coord", "killref":"killreferences", "addreferences": "addreferences", "killreferences":"referencestokill[]", "reference":"referencestoadd[]", "Kind_MLD_ID": "query_kindID", "Discovery_MLD_ID": "query_discoveryID_num1"}
         
         #This enables diction keys for the inspection process, including MLD post keys that are not loaded in an MLD xml file.
@@ -1426,7 +1426,8 @@ class Journal_tables():
             if 'custom1' in po: article_data["eprint"] = po['custom1'].replace('eprint: ','')
             if "volume" in po: article_data["volume"] = po['volume'][0]
             if "doi" in po: article_data["doi"] = po['doi']
-            session.post(self.masterlens_form_add_a_paper)
+            #session.post(self.masterlens_form_add_a_paper, data = article_data)
+            break
             print('WOULD SAVE REFERENCE>>>', article_data)
             
     def update_MLD_lens_entries(self):
