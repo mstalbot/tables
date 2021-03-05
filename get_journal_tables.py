@@ -1426,7 +1426,7 @@ class Journal_tables():
             if 'custom1' in po: article_data["eprint"] = po['custom1'].replace('eprint: ','')
             if "volume" in po: article_data["volume"] = po['volume'][0]
             if "doi" in po: article_data["doi"] = po['doi']
-            #session.post(self.masterlens_form_add_a_paper, data = article_data)
+            #session.post(self.masterlens_form_add_a_paper, data = article_data, headers = self.headers)
             break
             print('WOULD SAVE REFERENCE>>>', article_data)
             
