@@ -1435,10 +1435,6 @@ class Journal_tables():
             
     def update_MLD_lens_entries(self):
         """Update Masterlens database lens entries"""
-    
-        #session = Session()
-        #session.auth = (self.mld_auth['user'], self.mld_auth['password'])
-        #session.post(self.masterlens_login_url)
         
         for system in self.lens_objects.keys():            
             add_system_dict = {"inputaction":"Save", "query_system_name": system}
@@ -1475,8 +1471,7 @@ class Journal_tables():
                 continue
             elif none_favoured_in_MLD:
                 print('WOULD SAVE NEW SYSTEM>>>>>', system)
-            else: print('System in MLD but new information should be verified as to which entry to include:', system)
-                
-            #CHECK HOW TO TRACE AND KEEP WHO DISCOVERED WHAT
-            #self.session['MLD'].post(url = self.masterlens_form_add_a_lens, data = add_system_dict, headers = self.headers)
-        #session.close()
+file.write("INSERT INTO lens ( discovery_acronym,discovery_count,kind_acronym,kindID,filterID,system_name,lensgrade,multiplicity,morphology,reference_frame,equinox,description,alternate_name,z_lens,z_source,d_lens,d_source,vdisp,vdisp_err,time_delay0,time_delay1,mag_lens,mag_source,filter_lens,filter_source,theta_e,theta_e_err,theta_e_quality,theta_e_redshift,fluxes,ra_decimal,ra_hrs,ra_mins,ra_secs,ra_coord,ra_coord_err,dec_decimal,dec_degrees,dec_arcmin,dec_arcsec,dec_coord,dec_coord_err,number_images,reference_identifier,status,modified,created_by_member_name,modified_by_member_name,discovery_date,created,has_sdss,sdss_link,has_apod,apod_link,z_lens_err,z_lens_quality,z_source_err,z_source_quality,vett_status,released_status,hidden_status,vetted_by_member_name,released_as_of_version,released_by_member_name,hidden_by_member_name,vetted,released,hidden,repeats,graphic_status,coord_label,has_adsabs,adsabs_link,has_ned,ned_link,sdss_ObjID,sdss_specObjID,lens_name )
+'%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s'%s(
+ (
+           else: print('System in MLD but new information should be verified as to which entry to include:', system)
