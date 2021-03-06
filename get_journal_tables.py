@@ -47,6 +47,7 @@ class Journal_tables():
         self.get_online_tables = get_online_tables
         self.base_links = {'ADS': 'https://ui.adsabs.harvard.edu', 'IOP': 'https://iopscience.iop.org', 'MNRAS': 'https://academic.oup.com', 'A&A':'https://www.aanda.org'}
         self.journal_id_converter = {"0":"", "44":"Astrofizicheskie Issledovaniia Izvestiya Spetsial'noj Astrofizicheskoj Observatorii", "37":"arXiv e-prints", "11":"Astronomy and Astrophysics", "10":"The Astronomical Journal", "1":"The Astrophysical Journal", "8":"Astrophys. J. Lett.", "42":"The Astrophysical Journal Supplement Series", "45":"Bulletin d'information du telescope Canada-France-Hawaii", "2":"Monthly Notices of the Royal Astronomical Society", "39":"Nat", "38":"Nuc. Phy. B Proc. S.", "40":"Publications of the Astronomical Society of Japan", "43":"Revista Mexicana de Astronomia y Astrofisica", "41":"Science"}
+        self.journal_id_converter_inverted = {self.journal_id_converter[key]:key for key in self.journal_id_converter}
         self.start = start
         self.end = end
         self.redo_pandas = redo_pandas
@@ -1425,7 +1426,7 @@ class Journal_tables():
                 if 'custom1' in po: file.write(',eprint')
                 if "volume" in po: file.write(',volume')
                 if "doi" in po: file.write(',doi')
-                file.write(' ) VALUES ( %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,NOW()"%(1, self.ads_to_mld_reference_interpreter[self.query], po['abstract'], ', '.join(po['authors']), po['Title'], po['journal_name'], po['publication_year'].split('/')[0], po['start_page'], po['publication_year'].split('/')[1], po['start_page'], po['url'], ': '.join(po['keywords']), '', '', '', '', '', '', 'article', '', self.journal_id_converter[po['journalID']), 1)))
+                file.write(' ) VALUES ( %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,NOW()"%(1, self.ads_to_mld_reference_interpreter[self.query], po['abstract'], ', '.join(po['authors']), po['Title'], po['journal_name'], po['publication_year'].split('/')[0], po['start_page'], po['publication_year'].split('/')[1], po['start_page'], po['url'], ': '.join(po['keywords']), '', '', '', '', '', '', 'article', '', self.journal_id_converter_inverted[po['journalID']), 1)))
                 if 'number' in po: file.write(','+po['number'])
                 if 'custom1' in po: file.write(','+po['custom1'].replace('eprint: ',''))
                 if "volume" in po: file.write(','+po['volume'][0])
