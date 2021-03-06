@@ -1473,42 +1473,42 @@ class Journal_tables():
         """Update Masterlens database lens entries"""
         
         with open(join(self.base_directory, 'batch_update_mysql_lenses.txt'), 'w') as file:
-        for system in self.lens_objects.keys():            
-            add_system_dict = {"inputaction":"Save", "query_system_name": system}
-            all_favoured_MLD = True
-            none_favoured_in_MLD = True
-            for key in self.lens_objects[system].keys():
-                if key not in self.masterlens_phrases_to_input_converter:
-                    print('KEY>>>', key)
-                    input('CHECK key should not be considered for upload')
+            for system in self.lens_objects.keys():            
+                add_system_dict = {"inputaction":"Save", "query_system_name": system}
+                all_favoured_MLD = True
+                none_favoured_in_MLD = True
+                for key in self.lens_objects[system].keys():
+                    if key not in self.masterlens_phrases_to_input_converter:
+                        print('KEY>>>', key)
+                        input('CHECK key should not be considered for upload')
+                        continue
+                    if len(self.lens_objects[system][key]) == 0: continue
+
+                    weight = -9999
+                    for data in self.lens_objects[system][key]:
+                        if data['tracer']['weight'] >= weight:
+                            if 'error' in data: value, method, error, weight, status = data['value'], data['method'], data['error'], data['tracer']['weight'], data['tracer']['update status']
+                            else: value, method, error, weight, status = data['value'], '', '', data['tracer']['weight'], data['tracer']['update status']
+                    if 'MLD' in status: none_favoured_in_MLD = False
+                    elif 'MLD' not in status: all_favoured_MLD = False
+                    methodid = '' if method in ['', 'MLD', 'NaN', ' NaN', None] else self.z_type_id[method] if 'z_lens' in key else self.z_type_id[method] if 'z_Source(s)' in key else self.er_quality_id[method] if 'Einstein_R ["]' in key else self.lens_type_id[method] if 'Lens type' in key else self.discovery_id[method] if 'Discovery' in key else ''
+
+                    #THE MLD flag is a precaution for now that we can remove once a consensus on how we can update these correctly
+                    if value == '': continue
+                    add_system_dict[self.masterlens_phrases_to_input_converter[key]] = value
+                    if (key + ' quality') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' quality']] = methodid
+                    if (key + ' error') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' error']] = error
+
+                add_system_dict['referencestoadd[]'] = '[' + ','.join([self.reference_id[reference] for reference in self.lens_objects[system]['References']]) + ']'
+                add_system_dict['addreferences'] = 'addreferences'
+
+                print('What POST looks like', add_system_dict)
+                if all_favoured_MLD: 
+                    print('Skipping since all entries in MLD for system:', system)
                     continue
-                if len(self.lens_objects[system][key]) == 0: continue
-                
-                weight = -9999
-                for data in self.lens_objects[system][key]:
-                    if data['tracer']['weight'] >= weight:
-                        if 'error' in data: value, method, error, weight, status = data['value'], data['method'], data['error'], data['tracer']['weight'], data['tracer']['update status']
-                        else: value, method, error, weight, status = data['value'], '', '', data['tracer']['weight'], data['tracer']['update status']
-                if 'MLD' in status: none_favoured_in_MLD = False
-                elif 'MLD' not in status: all_favoured_MLD = False
-                methodid = '' if method in ['', 'MLD', 'NaN', ' NaN', None] else self.z_type_id[method] if 'z_lens' in key else self.z_type_id[method] if 'z_Source(s)' in key else self.er_quality_id[method] if 'Einstein_R ["]' in key else self.lens_type_id[method] if 'Lens type' in key else self.discovery_id[method] if 'Discovery' in key else ''
-                
-                #THE MLD flag is a precaution for now that we can remove once a consensus on how we can update these correctly
-                if value == '': continue
-                add_system_dict[self.masterlens_phrases_to_input_converter[key]] = value
-                if (key + ' quality') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' quality']] = methodid
-                if (key + ' error') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' error']] = error
-            
-            add_system_dict['referencestoadd[]'] = '[' + ','.join([self.reference_id[reference] for reference in self.lens_objects[system]['References']]) + ']'
-            add_system_dict['addreferences'] = 'addreferences'
-            
-            print('What POST looks like', add_system_dict)
-            if all_favoured_MLD: 
-                print('Skipping since all entries in MLD for system:', system)
-                continue
-            elif none_favoured_in_MLD:
-                file.write("INSERT INTO lens ( discovery_acronym,discovery_count,kind_acronym,kindID,filterID,system_name,lensgrade,multiplicity,morphology,reference_frame,equinox,description,alternate_name,z_lens,z_source,d_lens,d_source,vdisp,vdisp_err,time_delay0,time_delay1,mag_lens,mag_source,filter_lens,filter_source,theta_e,theta_e_err,theta_e_quality,theta_e_redshift,fluxes,ra_decimal,ra_hrs,ra_mins,ra_secs,ra_coord,ra_coord_err,dec_decimal,dec_degrees,dec_arcmin,dec_arcsec,dec_coord,dec_coord_err,number_images,reference_identifier,status,modified,created_by_member_name,modified_by_member_name,discovery_date,created,has_sdss,sdss_link,has_apod,apod_link,z_lens_err,z_lens_quality,z_source_err,z_source_quality,vett_status,released_status,hidden_status,vetted_by_member_name,released_as_of_version,released_by_member_name,hidden_by_member_name,vetted,released,hidden,repeats,graphic_status,coord_label,has_adsabs,adsabs_link,has_ned,ned_link,sdss_ObjID,sdss_specObjID,lens_name ) Values ")
-                file.write('%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s'%(( self.discovery_id[add_system_dict['query_discoveryID_num1']], add_system_dict['query_discovery_count'],  self.lens_type_id[add_system_dict['query_kindID']], add_system_dict['query_kindID'],0,  add_system_dict['query_system_name'], add_system_dict['query_lensgrade'],  ’’,’’,’’,’J2000’,  add_system_dict['query_description'], add_system_dict['query_alternate_name'],  add_system_dict['query_z_lens'], add_system_dict['query_z_source'],  ’’,’’, add_system_dict['query_vdisp'],  add_system_dict['query_vdisp_err'], ’’,’’,’’,’’,’’,’’, add_system_dict['query_theta_e'],  add_system_dict['query_theta_e_err'], add_system_dict['query_theta_e_quality'], ’’,’’,’’,  add_system_dict['query_ra_hrs'], add_system_dict['query_ra_mins'], add_system_dict['query_ra_secs'],  add_system_dict['query_ra_coord'], add_system_dict['ra_coord_err'],  ’’, add_system_dict['query_dec_degrees'],  add_system_dict['query_dec_arcmin'], add_system_dict['query_dec_arcsec'], add_system_dict['query_dec_coord'], ’’,’’,referances[0],1,’NOW()’, self.user_name, self.user_name,  add_system_dict['query_discovery_date'],’NOW()’,None,None,None,None, add_system_dict['query_z_lens_err'],  add_system_dict['query_z_lens_quality'], add_system_dict['query_z_source_err'],  add_system_dict['query_z_source_quality'],0,1,0,’’,’’,’’,’’,’’,’’,’’,0,0,’Manual’,True,(”https://ui.adsabs.harvard.edu/link_gateway/%s/PUB_HTML”%add_system_dict['referances'][0]),None,None,None,None, add_system_dict['query_system_name'].split(‘[‘)[0]))
-                file.write('\n')
-                print('SAVED SAVE NEW SYSTEM>>>>>', system)
-            else: print('System in MLD but new information should be verified as to which entry to include...if any:', system)
+                elif none_favoured_in_MLD:
+                    file.write("INSERT INTO lens ( discovery_acronym,discovery_count,kind_acronym,kindID,filterID,system_name,lensgrade,multiplicity,morphology,reference_frame,equinox,description,alternate_name,z_lens,z_source,d_lens,d_source,vdisp,vdisp_err,time_delay0,time_delay1,mag_lens,mag_source,filter_lens,filter_source,theta_e,theta_e_err,theta_e_quality,theta_e_redshift,fluxes,ra_decimal,ra_hrs,ra_mins,ra_secs,ra_coord,ra_coord_err,dec_decimal,dec_degrees,dec_arcmin,dec_arcsec,dec_coord,dec_coord_err,number_images,reference_identifier,status,modified,created_by_member_name,modified_by_member_name,discovery_date,created,has_sdss,sdss_link,has_apod,apod_link,z_lens_err,z_lens_quality,z_source_err,z_source_quality,vett_status,released_status,hidden_status,vetted_by_member_name,released_as_of_version,released_by_member_name,hidden_by_member_name,vetted,released,hidden,repeats,graphic_status,coord_label,has_adsabs,adsabs_link,has_ned,ned_link,sdss_ObjID,sdss_specObjID,lens_name ) Values ")
+                    file.write('%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s'%(( self.discovery_id[add_system_dict['query_discoveryID_num1']], add_system_dict['query_discovery_count'],  self.lens_type_id[add_system_dict['query_kindID']], add_system_dict['query_kindID'],0,  add_system_dict['query_system_name'], add_system_dict['query_lensgrade'],  ’’,’’,’’,’J2000’,  add_system_dict['query_description'], add_system_dict['query_alternate_name'],  add_system_dict['query_z_lens'], add_system_dict['query_z_source'],  ’’,’’, add_system_dict['query_vdisp'],  add_system_dict['query_vdisp_err'], ’’,’’,’’,’’,’’,’’, add_system_dict['query_theta_e'],  add_system_dict['query_theta_e_err'], add_system_dict['query_theta_e_quality'], ’’,’’,’’,  add_system_dict['query_ra_hrs'], add_system_dict['query_ra_mins'], add_system_dict['query_ra_secs'],  add_system_dict['query_ra_coord'], add_system_dict['ra_coord_err'],  ’’, add_system_dict['query_dec_degrees'],  add_system_dict['query_dec_arcmin'], add_system_dict['query_dec_arcsec'], add_system_dict['query_dec_coord'], ’’,’’,referances[0],1,’NOW()’, self.user_name, self.user_name,  add_system_dict['query_discovery_date'],’NOW()’,None,None,None,None, add_system_dict['query_z_lens_err'],  add_system_dict['query_z_lens_quality'], add_system_dict['query_z_source_err'],  add_system_dict['query_z_source_quality'],0,1,0,’’,’’,’’,’’,’’,’’,’’,0,0,’Manual’,True,(”https://ui.adsabs.harvard.edu/link_gateway/%s/PUB_HTML”%add_system_dict['referances'][0]),None,None,None,None, add_system_dict['query_system_name'].split(‘[‘)[0]))
+                    file.write('\n')
+                    print('SAVED SAVE NEW SYSTEM>>>>>', system)
+                else: print('System in MLD but new information should be verified as to which entry to include...if any:', system)
