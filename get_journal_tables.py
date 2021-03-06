@@ -796,13 +796,13 @@ class Journal_tables():
         #Use column map derived in inspection to convert table RA and DEC to a standard format
         if 'RA [°]' in map and table_row[map['RA [°]']] is not None:
             #return float(self.remove_non_numeric_related_formats(str(table_row[map['RA [°]']]))), float(self.remove_non_numeric_related_formats(str(table_row[map['Dec [°]']])))
-            coords = SkyCoord("%s, %s"%(float(self.remove_non_numeric_related_formats(str(table_row[map['RA [°]']]))),float(self.remove_non_numeric_related_formats(str(table_row[map['Dec [°]']])))), frame='fk5', unit=(units.hourangle, units.deg))
+            coords = SkyCoord(float(self.remove_non_numeric_related_formats(str(table_row[map['RA [°]']]))),float(self.remove_non_numeric_related_formats(str(table_row[map['Dec [°]']]))), frame='fk5', unit=(units.hourangle, units.deg))
             return coords.ra.deg, coords.dec.deg
         elif 'RA in Hours' in map and table_row[map['RA in Hours']] is not None:
-            RA_hour, RA_decimal = self.remove_non_numeric_related_formats(str(table_row[map['RA in Hours']])).split('.')
-            dec_degree, dec_decimal = self.remove_non_numeric_related_formats(str(table_row[map['DEC in Degrees']])).split('.')
+            RA = float(self.remove_non_numeric_related_formats(str(table_row[map['RA in Hours']])))
+            Dec = float(self.remove_non_numeric_related_formats(str(table_row[map['DEC in Degrees']])))
             #return float(RA_hour)/24*360 + float(RA_decimal)/24*360, float(dec_degree) + float(dec_decimal)
-            coords = SkyCoord("%s.%s, %s.%s"%(RA_hour,RA_decimal,dec_degree,dec_decimal), frame='fk5', unit=(units.hourangle, units.deg))
+            coords = SkyCoord(RA, Dec, frame='fk5', unit=(units.hourangle, units.deg))
             return coords.ra.deg, coords.dec.deg
         elif 'RA in Hours:Min:Sec' in map and table_row[map['RA in Hours:Min:Sec']] is not None:
             splitter = ':' if ':' in str(table_row[map['RA in Hours:Min:Sec']]) else ' '
