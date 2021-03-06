@@ -1193,12 +1193,15 @@ class Journal_tables():
             standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords({'RA [°]': str(mld_entry.getElementsByTagName('ra_coord')[0].childNodes[0].nodeValue), 'Dec [°]': str(mld_entry.getElementsByTagName('dec_coord')[0].childNodes[0].nodeValue)}, {'RA [°]':'RA [°]', 'Dec [°]':'Dec [°]'})
             if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {'System Name':[], 'Discovery Date':[], 'RA (Hours part)':[], 'RA (Mins part)':[], 'RA (Secs part)':[], 'RA [°]': [], 'Dec (Degree part)': [], 'Dec (Arcmin part)': [], 'Dec (Arcsec part)': [], 'Dec [°]': [], 'Lens Grade': [], 'Number of images': [], 'Einstein_R ["]': [], 'z_Lens': [], 'z_Lens error':[], 'z_Lens quality':[], 'z_Source error':[], 'z_Source quality':[], 'z_Source(s)': [], 'Stellar velocity disp': [], 'Standard RA':[], 'Standard DEC':[], 'MLD_ID':[], 'Description':[], 'Lens type':[], 'Lens type MLD_ID':[], 'Discovery':[], 'Discovery_MLD_ID':[], 'MLD SDSS link':[], 'MLD ADSABS link':[], 'MLD NED link':[], 'MLD APOD link':[], 'References_MLD_ID':[], 'Has external link for SDSS':[], 'Has external link for ADSABS':[], 'Has external link for NED':[], 'Has external link for APOD':[]}
             
+            self.lens_objects[standard_name]['References'] = [r.firstChild.data for r in mld_entry.getElementsByTagName('reference')]
+            self.lens_objects[standard_name]['References_MLD_ID'] = [r.getAttribute('referenceID') for r in mld_entry.getElementsByTagName('reference')]
+            
             self.lens_objects[standard_name]['MLD_ID'].append({'value': mld_entry.getAttribute('lensID'), 'tracer': {'update status': 'in MLD', 'weight':10}})
             self.lens_objects[standard_name]['Lens type MLD_ID'].append({'value': mld_entry.getElementsByTagName('kind')[0].getAttribute('kindID'), 'tracer': {'update status': 'in MLD', 'weight':10}})
             self.lens_objects[standard_name]['Discovery_MLD_ID'].append({'value': mld_entry.getElementsByTagName('discovery')[0].getAttribute('discoveryID'), 'tracer': {'update status': 'in MLD', 'weight':10}})
             self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in MLD', 'weight':10}})
             self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in MLD', 'weight':10}})
-            self.set_coord_details(standard_name, 10, 'MLD', 'MLD', 'in MLD', 'MLD')
+            self.set_coord_details(standard_name, 10, 'MLD', 'MLD', 'in MLD', self.lens_objects[standard_name]['References'][0])
             mld_entry_load_types = {'System Name': 'system_name', 'Discovery Date': 'discovery_date', 'Description': 'description', 'Lens type': 'kind', 'Discovery': 'discovery', 'RA (Hours part)': 'ra_hrs', 'RA (Mins part)': 'ra_mins', 'RA (Secs part)': 'ra_secs', 'RA [°]': 'ra_coord', 'Dec (Degree part)': 'dec_degrees', 'Dec (Arcmin part)': 'dec_arcsec', 'Dec (Arcsec part)': 'dec_arcsec', 'Dec [°]': 'dec_coord', 'Lens Grade': 'lensgrade', 'Number of images': 'number_images'}
             for tkey in mld_entry_load_types.keys():
                 try: self.lens_objects[standard_name][tkey].append({'value': mld_entry.getElementsByTagName(mld_entry_load_types[tkey])[0].childNodes[0].nodeValue, 'tracer': {'update status': 'in MLD', 'weight':1 if tkey in ['Lens Grade', 'Number of images'] else 10}})
@@ -1238,8 +1241,6 @@ class Journal_tables():
                     weight = -1
                 
                 self.lens_objects[standard_name][values_with_errors_dict[key]].append({'value': value, 'method':'MLD', 'error': error, 'tracer': {'update status': 'in MLD', 'weight':weight}})
-            self.lens_objects[standard_name]['References'] = [r.firstChild.data for r in mld_entry.getElementsByTagName('reference')]
-            self.lens_objects[standard_name]['References_MLD_ID'] = [r.getAttribute('referenceID') for r in mld_entry.getElementsByTagName('reference')]
         
     def load_sugohi(self):
         sugohi_key={'SuGOHI1':'PASJ70S(2018)29S', 'SuGOHI2':'ApJ867(2018)107W', 'SuGOHI3':'A&A630A(2019)71S', 'SuGOHI4':'A&A636A(2020)87C', 'SuGOHI5':'MNRAS495(2020)1291J', 'SuGOHI6':'A&A642A(2020)148S', 'SuGOHI7':'MNRAS502(2021)1487J'}
