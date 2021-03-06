@@ -992,7 +992,7 @@ class Journal_tables():
                 self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
                 self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
 
-                self.set_coord_details(standard_name, 0, key, key2, 'Not yet included')
+                self.set_coord_details(standard_name, 0, key, key2, 'Not yet included', self.query)
                 #Save reference information via a conversion from ADS bibform to MLD bibform
                 if 'References' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'] = [self.ads_to_mld_reference_interpreter[self.query]]
                 elif self.ads_to_mld_reference_interpreter[self.query] not in self.lens_objects[standard_name]['References']: self.lens_objects[standard_name]['References'].append(self.ads_to_mld_reference_interpreter[self.query])
@@ -1197,7 +1197,7 @@ class Journal_tables():
             self.lens_objects[standard_name]['Discovery_MLD_ID'].append({'value': mld_entry.getElementsByTagName('discovery')[0].getAttribute('discoveryID'), 'tracer': {'update status': 'in MLD', 'weight':10}})
             self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in MLD', 'weight':10}})
             self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in MLD', 'weight':10}})
-            self.set_coord_details(standard_name, 10, 'MLD', 'MLD', 'in MLD')
+            self.set_coord_details(standard_name, 10, 'MLD', 'MLD', 'in MLD', 'MLD')
             mld_entry_load_types = {'System Name': 'system_name', 'Discovery Date': 'discovery_date', 'Description': 'description', 'Lens type': 'kind', 'Discovery': 'discovery', 'RA (Hours part)': 'ra_hrs', 'RA (Mins part)': 'ra_mins', 'RA (Secs part)': 'ra_secs', 'RA [°]': 'ra_coord', 'Dec (Degree part)': 'dec_degrees', 'Dec (Arcmin part)': 'dec_arcsec', 'Dec (Arcsec part)': 'dec_arcsec', 'Dec [°]': 'dec_coord', 'Lens Grade': 'lensgrade', 'Number of images': 'number_images'}
             for tkey in mld_entry_load_types.keys():
                 try: self.lens_objects[standard_name][tkey].append({'value': mld_entry.getElementsByTagName(mld_entry_load_types[tkey])[0].childNodes[0].nodeValue, 'tracer': {'update status': 'in MLD', 'weight':1 if tkey in ['Lens Grade', 'Number of images'] else 10}})
@@ -1250,7 +1250,7 @@ class Journal_tables():
                 if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {'System Name':[], 'Discovery Date':[], 'RA (Hours part)':[], 'RA (Mins part)':[], 'RA (Secs part)':[], 'RA [°]': [], 'Dec (Degree part)': [], 'Dec (Arcmin part)': [], 'Dec (Arcsec part)': [], 'Dec [°]': [], 'Lens Grade': [], 'Number of images': [], 'Einstein_R ["]': [], 'z_Lens': [], 'z_Lens error':[], 'z_Lens quality':[], 'z_Source error':[], 'z_Source quality':[], 'z_Source(s)': [], 'Stellar velocity disp': [], 'Standard RA':[], 'Standard DEC':[], 'MLD_ID':[], 'Description':[], 'Lens type':[], 'Lens type MLD_ID':[], 'Discovery':[], 'Discovery_MLD_ID':[], 'MLD SDSS link':[], 'MLD ADSABS link':[], 'MLD NED link':[], 'MLD APOD link':[], 'References_MLD_ID':[], 'Has external link for SDSS':[], 'Has external link for ADSABS':[], 'Has external link for NED':[], 'Has external link for APOD':[]}
                 self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
                 self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
-                self.set_coord_details(standard_name, 5, 'SuGOHI', 'SuGOHI', 'in SuGOHI')
+                self.set_coord_details(standard_name, 5, 'SuGOHI', 'SuGOHI', 'in SuGOHI', 'SuGOHI')
                 self.lens_objects[standard_name]['z_Lens'].append({'value': row[3], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
                 self.lens_objects[standard_name]['z_Source(s)'].append({'value': row[4], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
                 self.lens_objects[standard_name]['System Name'].append({'value': 'HSC'+standard_name, 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
@@ -1268,7 +1268,7 @@ class Journal_tables():
             if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {'System Name':[], 'Discovery Date':[], 'RA (Hours part)':[], 'RA (Mins part)':[], 'RA (Secs part)':[], 'RA [°]': [], 'Dec (Degree part)': [], 'Dec (Arcmin part)': [], 'Dec (Arcsec part)': [], 'Dec [°]': [], 'Lens Grade': [], 'Number of images': [], 'Einstein_R ["]': [], 'z_Lens': [], 'z_Lens error':[], 'z_Lens quality':[], 'z_Source error':[], 'z_Source quality':[], 'z_Source(s)': [], 'Stellar velocity disp': [], 'Standard RA':[], 'Standard DEC':[], 'MLD_ID':[], 'Description':[], 'Lens type':[], 'Lens type MLD_ID':[], 'Discovery':[], 'Discovery_MLD_ID':[], 'MLD SDSS link':[], 'MLD ADSABS link':[], 'MLD NED link':[], 'MLD APOD link':[], 'References_MLD_ID':[], 'Has external link for SDSS':[], 'Has external link for ADSABS':[], 'Has external link for NED':[], 'Has external link for APOD':[]}
             self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in SILO', 'weight':10}})
             self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in SILO', 'weight':10}})
-            self.set_coord_details(standard_name, 5, 'SILO', 'SILO', 'in SILO')
+            self.set_coord_details(standard_name, 5, 'SILO', 'SILO', 'in SILO', 'SILO')
             self.lens_objects[standard_name]['z_Lens'].append({'value': candidate['Z_NOQSO'], 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['z_Lens error'].append({'value': candidate['ZERR_NOQSO'], 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['z_Lens quality'].append({'value': 'spectroscopic', 'tracer': {'update status': 'in SILO', 'weight':5}})
@@ -1289,7 +1289,7 @@ class Journal_tables():
                 if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {'System Name':[], 'Discovery Date':[], 'RA (Hours part)':[], 'RA (Mins part)':[], 'RA (Secs part)':[], 'RA [°]': [], 'Dec (Degree part)': [], 'Dec (Arcmin part)': [], 'Dec (Arcsec part)': [], 'Dec [°]': [], 'Lens Grade': [], 'Number of images': [], 'Einstein_R ["]': [], 'z_Lens': [], 'z_Lens error':[], 'z_Lens quality':[], 'z_Source error':[], 'z_Source quality':[], 'z_Source(s)': [], 'Stellar velocity disp': [], 'Standard RA':[], 'Standard DEC':[], 'MLD_ID':[], 'Description':[], 'Lens type':[], 'Lens type MLD_ID':[], 'Discovery':[], 'Discovery_MLD_ID':[], 'MLD SDSS link':[], 'MLD ADSABS link':[], 'MLD NED link':[], 'MLD APOD link':[], 'References_MLD_ID':[], 'Has external link for SDSS':[], 'Has external link for ADSABS':[], 'Has external link for NED':[], 'Has external link for APOD':[]}
                 self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in LinKS', 'weight':0}})
                 self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in LinKS', 'weight':0}})
-                self.set_coord_details(standard_name, 5, 'LinKS', 'LinKS', 'in LinKS')
+                self.set_coord_details(standard_name, 5, 'LinKS', 'LinKS', 'in LinKS', 'LinKS')
                 self.lens_objects[standard_name]['System Name'].append({'value': line[0], 'tracer': {'update status': 'in LinKS', 'weight':0}})
                 if 'References' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'].append('MNRAS484(2019)3879P')
                 else: self.lens_objects[standard_name]['References'] = ['MNRAS484(2019)3879P']
@@ -1301,7 +1301,7 @@ class Journal_tables():
                 if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {'System Name':[], 'Discovery Date':[], 'RA (Hours part)':[], 'RA (Mins part)':[], 'RA (Secs part)':[], 'RA [°]': [], 'Dec (Degree part)': [], 'Dec (Arcmin part)': [], 'Dec (Arcsec part)': [], 'Dec [°]': [], 'Lens Grade': [], 'Number of images': [], 'Einstein_R ["]': [], 'z_Lens': [], 'z_Lens error':[], 'z_Lens quality':[], 'z_Source error':[], 'z_Source quality':[], 'Stellar velocity disp': [], 'Standard RA':[], 'Standard DEC':[], 'MLD_ID':[], 'Description':[], 'Lens type':[], 'Lens type MLD_ID':[], 'Discovery':[], 'Discovery_MLD_ID':[], 'MLD SDSS link':[], 'MLD ADSABS link':[], 'MLD NED link':[], 'MLD APOD link':[], 'References_MLD_ID':[], 'Has external link for SDSS':[], 'Has external link for ADSABS':[], 'Has external link for NED':[], 'Has external link for APOD':[]}
                 self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in LinKS', 'weight':0}})
                 self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in LinKS', 'weight':0}})
-                self.set_coord_details(standard_name, 5, 'LinKS', 'LinKS', 'in LinKS')
+                self.set_coord_details(standard_name, 5, 'LinKS', 'LinKS', 'in LinKS', 'LinKS')
                 self.lens_objects[standard_name]['System Name'].append({'value': line[0], 'tracer': {'update status': 'in LinKS', 'weight':0}})
                 if 'References' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'].append('MNRAS484(2019)3879P')
                 else: self.lens_objects[standard_name]['References'] = ['MNRAS484(2019)3879P']
