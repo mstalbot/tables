@@ -1414,22 +1414,26 @@ class Journal_tables():
             
     def update_MLD_references(self):
         """Upload new references to Masterlens database"""
+        #Trying session method failed, thus resorting to creating batch file for mysql update
         
-        #Commented out upload untill we can test this works correctly
-        session = Session()
-        session.auth = (self.mld_auth['user'], self.mld_auth['password'])
-        session.post(self.masterlens_login_url)
-    
-        for self.query in self.update_reference:
-            po = self.ads_scrapped_data[self.query]['Paper Overview']
-            article_data = {"action":"Save", "identifier":self.ads_to_mld_reference_interpreter[self.query], "author":'; '.join(po['authors']), "title":po['Title'], "journal":po['journal_name'], "year":po['publication_year'].split('/')[0], "pages":po['start_page'], "month":po['publication_year'].split('/')[1], "ads":po['url'], "bibtype":po['type_of_reference'], "keywords":', '.join(po['keywords']), "abstract":po['abstract']}
-            if 'number' in po: article_data["number"] = po['number']
-            if 'custom1' in po: article_data["eprint"] = po['custom1'].replace('eprint: ','')
-            if "volume" in po: article_data["volume"] = po['volume'][0]
-            if "doi" in po: article_data["doi"] = po['doi']
-            #session.post(self.masterlens_form_add_a_paper, data = article_data, headers = self.headers)
-            break
-            print('WOULD SAVE REFERENCE>>>', article_data)
+        with open(join(self.base_directory, 'batch_update_mysql.txt'), 'w') as file:
+            for self.query in self.update_reference:
+                po = self.ads_scrapped_data[self.query]['Paper Overview']
+            
+            
+            
+            
+                file.write("INSERT INTO reference ( siteID,identifier,abstract,author,title,journal,year,month,page,ads,keywords,editor,publisher,address,school,booktitle,series,bibtype,bibauthor,journalID,bibkey,public,modified"
+                if 'number' in po: file.write(',number')
+                if 'custom1' in po: file.write(',eprint')
+                if "volume" in po: file.write(',volume')
+                if "doi" in po: file.write(',doi')
+                file.write(' ) VALUES ( %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,NOW()"%(1, self.ads_to_mld_reference_interpreter[self.query], po['abstract'], ', '.join(po['authors']), po['Title'], po['journal_name'], po['publication_year'].split('/')[0], po['start_page'], po['publication_year'].split('/')[1], po['start_page'], po['url'], ': '.join(po['keywords']), '', '', '', '', '', '', 'article', '', input(journalID),'po['type_of_reference'], 1)))
+  "pages":, "month":, "ads":, "bibtype":, "keywords":, "abstract":}
+                if 'number' in po: article_data["number"] = po['number']
+                if 'custom1' in po: article_data["eprint"] = po['custom1'].replace('eprint: ','')
+                if "volume" in po: article_data["volume"] = po['volume'][0]
+                if "doi" in po: article_data["doi"] = po['doi']
             
     def update_MLD_lens_entries(self):
         """Update Masterlens database lens entries"""
