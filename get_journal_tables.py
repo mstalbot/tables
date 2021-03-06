@@ -1066,7 +1066,7 @@ class Journal_tables():
             self.lens_objects[standard_name]['RA (Secs part)'].append({'value': sec, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
             
             
-            if 'Dec (Degree part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name][Dec (Degree part)'] = []
+            if 'Dec (Degree part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Dec (Degree part)'] = []
             if 'Dec (Arcmin part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Dec (Arcmin part)'] = []
             if 'Dec (Arcsec part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Dec (Arcsec part)'] = []
             dec_sign,deg, mn, sec = coord.dec.signed_dms
