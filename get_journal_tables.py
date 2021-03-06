@@ -1054,7 +1054,7 @@ class Journal_tables():
                 if 'Discovery' in action_map: self.lens_objects[standard_name]['Discovery'] = action_map['Discovery']
                  
     def set_coord_details(self, standard_name, weight, key, key2, update_status, query):
-        if self.lens_objects[standard_name]['Standard RA']:
+        if self.lens_objects[standard_name]['Standard RA'][0]['value']:
             print('Standard RA and DEC', self.lens_objects[standard_name]['Standard RA'][0]['value'], self.lens_objects[standard_name]['Standard DEC'][0]['value'])
             coord = SkyCoord(self.lens_objects[standard_name]['Standard RA'][0]['value'], self.lens_objects[standard_name]['Standard DEC'][0]['value'], frame='fk5', unit='deg')
             
