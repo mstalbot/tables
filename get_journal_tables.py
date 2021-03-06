@@ -1453,7 +1453,7 @@ class Journal_tables():
         """Upload new references to Masterlens database"""
         #Trying session method failed, thus resorting to creating batch file for mysql update
         
-        with open(join(self.base_directory, 'batch_update_mysql.txt'), 'w') as file:
+        with open(join(self.base_directory, 'batch_update_mysql_references.txt'), 'w') as file:
             for self.query in self.update_reference:
                 po = self.ads_scrapped_data[self.query]['Paper Overview']
                 file.write("INSERT INTO reference ( siteID,identifier,abstract,author,title,journal,year,month,page,ads,keywords,editor,publisher,address,school,booktitle,series,bibtype,bibauthor,journalID,bibkey,public,modified"
@@ -1471,6 +1471,7 @@ class Journal_tables():
     def update_MLD_lens_entries(self):
         """Update Masterlens database lens entries"""
         
+        with open(join(self.base_directory, 'batch_update_mysql_lenses.txt'), 'w') as file:
         for system in self.lens_objects.keys():            
             add_system_dict = {"inputaction":"Save", "query_system_name": system}
             all_favoured_MLD = True
