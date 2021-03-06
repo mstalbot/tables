@@ -992,6 +992,7 @@ class Journal_tables():
                 self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
                 self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
 
+                self.self.set_coord_details(standard_name, 0, key, key2, 'Not yet included')
                 #Save reference information via a conversion from ADS bibform to MLD bibform
                 if 'References' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'] = [self.ads_to_mld_reference_interpreter[self.query]]
                 elif self.ads_to_mld_reference_interpreter[self.query] not in self.lens_objects[standard_name]['References']: self.lens_objects[standard_name]['References'].append(self.ads_to_mld_reference_interpreter[self.query])
@@ -1052,26 +1053,33 @@ class Journal_tables():
                 if 'Lens type' in action_map: self.lens_objects[standard_name]['Lens type'] = action_map['Lens type']
                 if 'Discovery' in action_map: self.lens_objects[standard_name]['Discovery'] = action_map['Discovery']
                  
-    def set_coord_details(self, standard_name):
+    def set_coord_details(self, standard_name, tracer, weight, key, key2, update_status):
         if self.lens_objects[standard_name]['Standard RA']:
             coord = SkyCoord(self.lens_objects[standard_name]['Standard RA'], self.lens_objects[standard_name]['Standard Dec'], frame='fk5', unit='deg')
-            self.lens_objects[standard_name]['RA (Hours part)'], self.lens_objects[standard_name]['RA (Mins part)'], self.lens_objects[standard_name]['RA (Secs part)'] = coord.ra.hms
-            dec_sign, self.lens_objects[standard_name]['Dec (Degree part)'], self.lens_objects[standard_name]['Dec (Arcmin part)'], self.lens_objects[standard_name]['Dec (Arcsec part)'] = coord.dec.signed_dms
-            dec_sign = '-' if dec_sign<0 else '+'
-            self.lens_objects[standard_name]['RA [°]'] = coord.ra.deg
-            self.lens_objects[standard_name]['Dec [°]'] = coord.dec.deg
-         
-            #Check added in
-            self.lens_objects[standard_name]['RA H:M:S'] = "{ra_hour:02.0f}:{ra_min:02.0f}:{ra_sec:05.2f}".format(ra_hour=ra_hour,ra_min=ra_min,ra_sec=ra_sec)
-            self.lens_objects[standard_name]['Dec D:M:S'] = "{dec_sign}{dec_degree:02.0f}:{dec_arcmin:02.0f}:{dec_arcsec:05.2f}".format(dec_sign=dec_sign,dec_degree=dec_degree,dec_arcmin=dec_arcmin,dec_arcsec=dec_arcsec)
-            self.lens_objects[standard_name]['RA (int part only)'] = int(coord.ra.deg)
-            self.lens_objects[standard_name]['Dec (int part only)'] = int(coord.dec.deg)
-            self.lens_objects[standard_name]['RA (decimal part only)'] = coord.ra.deg - self.lens_objects[standard_name]['RA (int only)']
-            self.lens_objects[standard_name]['Dec (decimal part only)'] = coord.dec.deg - self.lens_objects[standard_name]['Dec (int only)']
-                    
-            #self.sdss_name = 'SDSS~J%s%s' % (self.ra_hms.replace(':',''), self.dec_dms.replace(':',''))
-            #self.sdss_paper_name = 'SDSS~J%s%s' % (self.ra_hms.replace(':','')[:4], self.dec_dms.replace(':','')[:5])        
             
+            hour, mn, sec = coord.ra.hms
+            if 'RA (Hours part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['RA (Hours part)'] = []
+            if 'RA (Mins part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['RA (Mins part)'] = []
+            if 'RA (Secs part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['RA (Secs part)'] = []
+            self.lens_objects[standard_name]['RA (Hours part)'].append({'value': hour, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+            self.lens_objects[standard_name]['RA (Mins part)'].append({'value': mn, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+            self.lens_objects[standard_name]['RA (Secs part)'].append({'value': sec, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+            
+            
+            if 'Dec (Degree part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name][Dec (Degree part)'] = []
+            if 'Dec (Arcmin part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Dec (Arcmin part)'] = []
+            if 'Dec (Arcsec part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Dec (Arcsec part)'] = []
+            dec_sign,deg, mn, sec = coord.dec.signed_dms
+            dec_sign = '-' if dec_sign<0 else '+'
+            dec_sign, self.lens_objects[standard_name]['Dec (Degree part)'].append({'value': dec_sign+deg, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+            self.lens_objects[standard_name]['Dec (Arcmin part)'].append({'value': mn, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+            self.lens_objects[standard_name]['Dec (Arcsec part)'].append({'value': sec, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+            
+            if 'Dec [°]' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Dec [°]'] = []
+            if 'RA [°]' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['RA [°]'] = []
+            self.lens_objects[standard_name]['Dec [°]'].append({'value': coord.dec.deg, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+            self.lens_objects[standard_name]['RA [°]'].append({'value': coord.ra.deg, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+                        
     def write_pdfs(self):
         """Write pdfs of each paper"""
         
@@ -1188,7 +1196,7 @@ class Journal_tables():
             self.lens_objects[standard_name]['Discovery_MLD_ID'].append({'value': mld_entry.getElementsByTagName('discovery')[0].getAttribute('discoveryID'), 'tracer': {'update status': 'in MLD', 'weight':10}})
             self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in MLD', 'weight':10}})
             self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in MLD', 'weight':10}})
-            
+            self.set_coord_details(standard_name, 10, 'MLD', 'MLD', 'in MLD')
             mld_entry_load_types = {'System Name': 'system_name', 'Discovery Date': 'discovery_date', 'Description': 'description', 'Lens type': 'kind', 'Discovery': 'discovery', 'RA (Hours part)': 'ra_hrs', 'RA (Mins part)': 'ra_mins', 'RA (Secs part)': 'ra_secs', 'RA [°]': 'ra_coord', 'Dec (Degree part)': 'dec_degrees', 'Dec (Arcmin part)': 'dec_arcsec', 'Dec (Arcsec part)': 'dec_arcsec', 'Dec [°]': 'dec_coord', 'Lens Grade': 'lensgrade', 'Number of images': 'number_images'}
             for tkey in mld_entry_load_types.keys():
                 try: self.lens_objects[standard_name][tkey].append({'value': mld_entry.getElementsByTagName(mld_entry_load_types[tkey])[0].childNodes[0].nodeValue, 'tracer': {'update status': 'in MLD', 'weight':1 if tkey in ['Lens Grade', 'Number of images'] else 10}})
@@ -1241,6 +1249,7 @@ class Journal_tables():
                 if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {'System Name':[], 'Discovery Date':[], 'RA (Hours part)':[], 'RA (Mins part)':[], 'RA (Secs part)':[], 'RA [°]': [], 'Dec (Degree part)': [], 'Dec (Arcmin part)': [], 'Dec (Arcsec part)': [], 'Dec [°]': [], 'Lens Grade': [], 'Number of images': [], 'Einstein_R ["]': [], 'z_Lens': [], 'z_Lens error':[], 'z_Lens quality':[], 'z_Source error':[], 'z_Source quality':[], 'z_Source(s)': [], 'Stellar velocity disp': [], 'Standard RA':[], 'Standard DEC':[], 'MLD_ID':[], 'Description':[], 'Lens type':[], 'Lens type MLD_ID':[], 'Discovery':[], 'Discovery_MLD_ID':[], 'MLD SDSS link':[], 'MLD ADSABS link':[], 'MLD NED link':[], 'MLD APOD link':[], 'References_MLD_ID':[], 'Has external link for SDSS':[], 'Has external link for ADSABS':[], 'Has external link for NED':[], 'Has external link for APOD':[]}
                 self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
                 self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
+                self.set_coord_details(standard_name, 5, 'SuGOHI', 'SuGOHI', 'in SuGOHI')
                 self.lens_objects[standard_name]['z_Lens'].append({'value': row[3], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
                 self.lens_objects[standard_name]['z_Source(s)'].append({'value': row[4], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
                 self.lens_objects[standard_name]['System Name'].append({'value': 'HSC'+standard_name, 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
@@ -1258,6 +1267,7 @@ class Journal_tables():
             if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {'System Name':[], 'Discovery Date':[], 'RA (Hours part)':[], 'RA (Mins part)':[], 'RA (Secs part)':[], 'RA [°]': [], 'Dec (Degree part)': [], 'Dec (Arcmin part)': [], 'Dec (Arcsec part)': [], 'Dec [°]': [], 'Lens Grade': [], 'Number of images': [], 'Einstein_R ["]': [], 'z_Lens': [], 'z_Lens error':[], 'z_Lens quality':[], 'z_Source error':[], 'z_Source quality':[], 'z_Source(s)': [], 'Stellar velocity disp': [], 'Standard RA':[], 'Standard DEC':[], 'MLD_ID':[], 'Description':[], 'Lens type':[], 'Lens type MLD_ID':[], 'Discovery':[], 'Discovery_MLD_ID':[], 'MLD SDSS link':[], 'MLD ADSABS link':[], 'MLD NED link':[], 'MLD APOD link':[], 'References_MLD_ID':[], 'Has external link for SDSS':[], 'Has external link for ADSABS':[], 'Has external link for NED':[], 'Has external link for APOD':[]}
             self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in SILO', 'weight':10}})
             self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in SILO', 'weight':10}})
+            self.set_coord_details(standard_name, 5, 'SILO', 'SILO', 'in SILO')
             self.lens_objects[standard_name]['z_Lens'].append({'value': candidate['Z_NOQSO'], 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['z_Lens error'].append({'value': candidate['ZERR_NOQSO'], 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['z_Lens quality'].append({'value': 'spectroscopic', 'tracer': {'update status': 'in SILO', 'weight':5}})
@@ -1278,6 +1288,7 @@ class Journal_tables():
                 if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {'System Name':[], 'Discovery Date':[], 'RA (Hours part)':[], 'RA (Mins part)':[], 'RA (Secs part)':[], 'RA [°]': [], 'Dec (Degree part)': [], 'Dec (Arcmin part)': [], 'Dec (Arcsec part)': [], 'Dec [°]': [], 'Lens Grade': [], 'Number of images': [], 'Einstein_R ["]': [], 'z_Lens': [], 'z_Lens error':[], 'z_Lens quality':[], 'z_Source error':[], 'z_Source quality':[], 'z_Source(s)': [], 'Stellar velocity disp': [], 'Standard RA':[], 'Standard DEC':[], 'MLD_ID':[], 'Description':[], 'Lens type':[], 'Lens type MLD_ID':[], 'Discovery':[], 'Discovery_MLD_ID':[], 'MLD SDSS link':[], 'MLD ADSABS link':[], 'MLD NED link':[], 'MLD APOD link':[], 'References_MLD_ID':[], 'Has external link for SDSS':[], 'Has external link for ADSABS':[], 'Has external link for NED':[], 'Has external link for APOD':[]}
                 self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in LinKS', 'weight':0}})
                 self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in LinKS', 'weight':0}})
+                self.self.set_coord_details(standard_name, 5, 'LinKS', 'LinKS', 'in LinKS')
                 self.lens_objects[standard_name]['System Name'].append({'value': line[0], 'tracer': {'update status': 'in LinKS', 'weight':0}})
                 if 'References' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'].append('MNRAS484(2019)3879P')
                 else: self.lens_objects[standard_name]['References'] = ['MNRAS484(2019)3879P']
@@ -1289,6 +1300,7 @@ class Journal_tables():
                 if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {'System Name':[], 'Discovery Date':[], 'RA (Hours part)':[], 'RA (Mins part)':[], 'RA (Secs part)':[], 'RA [°]': [], 'Dec (Degree part)': [], 'Dec (Arcmin part)': [], 'Dec (Arcsec part)': [], 'Dec [°]': [], 'Lens Grade': [], 'Number of images': [], 'Einstein_R ["]': [], 'z_Lens': [], 'z_Lens error':[], 'z_Lens quality':[], 'z_Source error':[], 'z_Source quality':[], 'Stellar velocity disp': [], 'Standard RA':[], 'Standard DEC':[], 'MLD_ID':[], 'Description':[], 'Lens type':[], 'Lens type MLD_ID':[], 'Discovery':[], 'Discovery_MLD_ID':[], 'MLD SDSS link':[], 'MLD ADSABS link':[], 'MLD NED link':[], 'MLD APOD link':[], 'References_MLD_ID':[], 'Has external link for SDSS':[], 'Has external link for ADSABS':[], 'Has external link for NED':[], 'Has external link for APOD':[]}
                 self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'update status': 'in LinKS', 'weight':0}})
                 self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'update status': 'in LinKS', 'weight':0}})
+                self.self.set_coord_details(standard_name, 5, 'LinKS', 'LinKS', 'in LinKS')
                 self.lens_objects[standard_name]['System Name'].append({'value': line[0], 'tracer': {'update status': 'in LinKS', 'weight':0}})
                 if 'References' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'].append('MNRAS484(2019)3879P')
                 else: self.lens_objects[standard_name]['References'] = ['MNRAS484(2019)3879P']
@@ -1493,8 +1505,7 @@ class Journal_tables():
                 print('Skipping since all entries in MLD for system:', system)
                 continue
             elif none_favoured_in_MLD:
-                print('WOULD SAVE NEW SYSTEM>>>>>', system)
-file.write("INSERT INTO lens ( discovery_acronym,discovery_count,kind_acronym,kindID,filterID,system_name,lensgrade,multiplicity,morphology,reference_frame,equinox,description,alternate_name,z_lens,z_source,d_lens,d_source,vdisp,vdisp_err,time_delay0,time_delay1,mag_lens,mag_source,filter_lens,filter_source,theta_e,theta_e_err,theta_e_quality,theta_e_redshift,fluxes,ra_decimal,ra_hrs,ra_mins,ra_secs,ra_coord,ra_coord_err,dec_decimal,dec_degrees,dec_arcmin,dec_arcsec,dec_coord,dec_coord_err,number_images,reference_identifier,status,modified,created_by_member_name,modified_by_member_name,discovery_date,created,has_sdss,sdss_link,has_apod,apod_link,z_lens_err,z_lens_quality,z_source_err,z_source_quality,vett_status,released_status,hidden_status,vetted_by_member_name,released_as_of_version,released_by_member_name,hidden_by_member_name,vetted,released,hidden,repeats,graphic_status,coord_label,has_adsabs,adsabs_link,has_ned,ned_link,sdss_ObjID,sdss_specObjID,lens_name )
-'%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s'%s(
-( discovery_acronym,discovery_count,kind_acronym,kindID,filterID,system_name,lensgrade,multiplicity,morphology,reference_frame,equinox,description,alternate_name,z_lens,z_source,d_lens,d_source,vdisp,vdisp_err,time_delay0,time_delay1,mag_lens,mag_source,filter_lens,filter_source,theta_e,theta_e_err,theta_e_quality,theta_e_redshift,fluxes,ra_decimal,ra_hrs,ra_mins,ra_secs,ra_coord,ra_coord_err,dec_decimal,dec_degrees,dec_arcmin,dec_arcsec,dec_coord,dec_coord_err,number_images,reference_identifier,status,modified,created_by_member_name,modified_by_member_name,discovery_date,created,has_sdss,sdss_link,has_apod,apod_link,z_lens_err,z_lens_quality,z_source_err,z_source_quality,vett_status,released_status,hidden_status,vetted_by_member_name,released_as_of_version,released_by_member_name,hidden_by_member_name,vetted,released,hidden,repeats,graphic_status,coord_label,has_adsabs,adsabs_link,has_ned,ned_link,sdss_ObjID,sdss_specObjID,lens_name )
-           else: print('System in MLD but new information should be verified as to which entry to include:', system)
+                file.write("INSERT INTO lens ( discovery_acronym,discovery_count,kind_acronym,kindID,filterID,system_name,lensgrade,multiplicity,morphology,reference_frame,equinox,description,alternate_name,z_lens,z_source,d_lens,d_source,vdisp,vdisp_err,time_delay0,time_delay1,mag_lens,mag_source,filter_lens,filter_source,theta_e,theta_e_err,theta_e_quality,theta_e_redshift,fluxes,ra_decimal,ra_hrs,ra_mins,ra_secs,ra_coord,ra_coord_err,dec_decimal,dec_degrees,dec_arcmin,dec_arcsec,dec_coord,dec_coord_err,number_images,reference_identifier,status,modified,created_by_member_name,modified_by_member_name,discovery_date,created,has_sdss,sdss_link,has_apod,apod_link,z_lens_err,z_lens_quality,z_source_err,z_source_quality,vett_status,released_status,hidden_status,vetted_by_member_name,released_as_of_version,released_by_member_name,hidden_by_member_name,vetted,released,hidden,repeats,graphic_status,coord_label,has_adsabs,adsabs_link,has_ned,ned_link,sdss_ObjID,sdss_specObjID,lens_name ) Values ")
+                file.write('%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s'%(( self.discovery_id[add_system_dict['query_discoveryID_num1']], add_system_dict['query_discovery_count'],  self.lens_type_id[add_system_dict['query_kindID']], add_system_dict['query_kindID'],0,  add_system_dict['query_system_name'], add_system_dict['query_lensgrade'],  ’’,’’,’’,’J2000’,  add_system_dict['query_description'], add_system_dict['query_alternate_name'],  add_system_dict['query_z_lens'], add_system_dict['query_z_source'],  ’’,’’, add_system_dict['query_vdisp'],  add_system_dict['query_vdisp_err'], ’’,’’,’’,’’,’’,’’, add_system_dict['query_theta_e'],  add_system_dict['query_theta_e_err'], add_system_dict['query_theta_e_quality'], ’’,’’,’’,  add_system_dict['query_ra_hrs'], add_system_dict['query_ra_mins'], add_system_dict['query_ra_secs'],  add_system_dict['query_ra_coord'], add_system_dict['ra_coord_err'],  ’’, add_system_dict['query_dec_degrees'],  add_system_dict['query_dec_arcmin'], add_system_dict['query_dec_arcsec'], add_system_dict['query_dec_coord'], ’’,’’,referances[0],1,’NOW()’, self.user_name, self.user_name,  add_system_dict['query_discovery_date'],’NOW()’,None,None,None,None, add_system_dict['query_z_lens_err'],  add_system_dict['query_z_lens_quality'], add_system_dict['query_z_source_err'],  add_system_dict['query_z_source_quality'],0,1,0,’’,’’,’’,’’,’’,’’,’’,0,0,’Manual’,True,(”https://ui.adsabs.harvard.edu/link_gateway/%s/PUB_HTML”%add_system_dict['referances'][0]),None,None,None,None, add_system_dict['query_system_name'].split(‘[‘)[0]))
+                print('SAVED SAVE NEW SYSTEM>>>>>', system) 
+            else: print('System in MLD but new information should be verified as to which entry to include...if any:', system)
