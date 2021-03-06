@@ -1461,7 +1461,7 @@ class Journal_tables():
                 if 'custom1' in po: file.write(',eprint')
                 if "volume" in po: file.write(',volume')
                 if "doi" in po: file.write(',doi')
-                file.write(' ) VALUES ( %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,NOW()"%(1, self.ads_to_mld_reference_interpreter[self.query], po['abstract'], ', '.join(po['authors']), po['Title'], po['journal_name'], po['publication_year'].split('/')[0], po['start_page'], po['publication_year'].split('/')[1], po['start_page'], po['url'], ': '.join(po['keywords']), '', '', '', '', '', '', 'article', '', self.journal_id_converter_inverted[po['journalID']), 1)))
+                file.write(' ) VALUES ( %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,NOW()"%(1, self.ads_to_mld_reference_interpreter[self.query], po['abstract'], ', '.join(po['authors']), po['Title'], po['journal_name'], po['publication_year'].split('/')[0], po['start_page'], po['publication_year'].split('/')[1], po['start_page'], po['url'], ': '.join(po['keywords']), '', '', '', '', '', '', 'article', '', self.journal_id_converter_inverted[po['journalID']), 1))
                 if 'number' in po: file.write(','+po['number'])
                 if 'custom1' in po: file.write(','+po['custom1'].replace('eprint: ',''))
                 if "volume" in po: file.write(','+po['volume'][0])
