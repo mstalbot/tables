@@ -1027,7 +1027,7 @@ class Journal_tables():
                                 print(mvalue, entry, table_row[mvalue], table_row, map)
                             else:
                                 print(mvalue, entry, table_row[mvalue], table_row, map)
-                                input('Paused for you to check error parsing')
+                                #input('Paused for you to check error parsing')
                                 try:
                                     value = str(float(entry[0]))
                                     error = ''
