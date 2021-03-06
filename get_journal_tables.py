@@ -1055,8 +1055,8 @@ class Journal_tables():
                  
     def set_coord_details(self, standard_name, weight, key, key2, update_status):
         if self.lens_objects[standard_name]['Standard RA']:
-            print('Standard RA and DEC', self.lens_objects[standard_name]['Standard RA'], self.lens_objects[standard_name]['Standard DEC'])
-            coord = SkyCoord(self.lens_objects[standard_name]['Standard RA'], self.lens_objects[standard_name]['Standard DEC'], frame='fk5', unit='deg')
+            print('Standard RA and DEC', self.lens_objects[standard_name]['Standard RA'][0]['value'], self.lens_objects[standard_name]['Standard DEC'][0]['value'])
+            coord = SkyCoord(self.lens_objects[standard_name]['Standard RA'][0]['value'], self.lens_objects[standard_name]['Standard DEC'][0]['value'], frame='fk5', unit='deg')
             
             hour, mn, sec = coord.ra.hms
             if 'RA (Hours part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['RA (Hours part)'] = []
