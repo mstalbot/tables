@@ -1053,7 +1053,7 @@ class Journal_tables():
                 if 'Lens type' in action_map: self.lens_objects[standard_name]['Lens type'] = action_map['Lens type']
                 if 'Discovery' in action_map: self.lens_objects[standard_name]['Discovery'] = action_map['Discovery']
                  
-    def set_coord_details(self, standard_name, tracer, weight, key, key2, update_status):
+    def set_coord_details(self, standard_name, weight, key, key2, update_status):
         if self.lens_objects[standard_name]['Standard RA']:
             coord = SkyCoord(self.lens_objects[standard_name]['Standard RA'], self.lens_objects[standard_name]['Standard Dec'], frame='fk5', unit='deg')
             
