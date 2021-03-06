@@ -1473,6 +1473,10 @@ class Journal_tables():
         """Update Masterlens database lens entries"""
         
         with open(join(self.base_directory, 'batch_update_mysql_lenses.txt'), 'w') as file:
+            print('yep')
+          
+         
+        if True:
             for system in self.lens_objects.keys():            
                 add_system_dict = {"inputaction":"Save", "query_system_name": system}
                 all_favoured_MLD = True
