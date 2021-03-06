@@ -1419,21 +1419,17 @@ class Journal_tables():
         with open(join(self.base_directory, 'batch_update_mysql.txt'), 'w') as file:
             for self.query in self.update_reference:
                 po = self.ads_scrapped_data[self.query]['Paper Overview']
-            
-            
-            
-            
                 file.write("INSERT INTO reference ( siteID,identifier,abstract,author,title,journal,year,month,page,ads,keywords,editor,publisher,address,school,booktitle,series,bibtype,bibauthor,journalID,bibkey,public,modified"
                 if 'number' in po: file.write(',number')
                 if 'custom1' in po: file.write(',eprint')
                 if "volume" in po: file.write(',volume')
                 if "doi" in po: file.write(',doi')
-                file.write(' ) VALUES ( %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,NOW()"%(1, self.ads_to_mld_reference_interpreter[self.query], po['abstract'], ', '.join(po['authors']), po['Title'], po['journal_name'], po['publication_year'].split('/')[0], po['start_page'], po['publication_year'].split('/')[1], po['start_page'], po['url'], ': '.join(po['keywords']), '', '', '', '', '', '', 'article', '', input(journalID),'po['type_of_reference'], 1)))
-  "pages":, "month":, "ads":, "bibtype":, "keywords":, "abstract":}
-                if 'number' in po: article_data["number"] = po['number']
-                if 'custom1' in po: article_data["eprint"] = po['custom1'].replace('eprint: ','')
-                if "volume" in po: article_data["volume"] = po['volume'][0]
-                if "doi" in po: article_data["doi"] = po['doi']
+                file.write(' ) VALUES ( %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,NOW()"%(1, self.ads_to_mld_reference_interpreter[self.query], po['abstract'], ', '.join(po['authors']), po['Title'], po['journal_name'], po['publication_year'].split('/')[0], po['start_page'], po['publication_year'].split('/')[1], po['start_page'], po['url'], ': '.join(po['keywords']), '', '', '', '', '', '', 'article', '', input(journalID),po['journalID'], 1)))
+                if 'number' in po: file.write(','+po['number'])
+                if 'custom1' in po: file.write(','+po['custom1'].replace('eprint: ',''))
+                if "volume" in po: file.write(','+po['volume'][0])
+                if "doi" in po: file.write(','+po['doi'])
+                file.write(' )\n')
             
     def update_MLD_lens_entries(self):
         """Update Masterlens database lens entries"""
