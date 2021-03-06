@@ -829,8 +829,8 @@ class Journal_tables():
                 Rh, Rm, Rs = self.remove_non_numeric_related_formats(str(table_row[map['RA in Hours:Min:Sec']])).split(splitter)
                 Dd, Dm, Ds = self.remove_non_numeric_related_formats(str(table_row[map['Dec (+/-) Degree:Min:Sec']])).split(splitter)
                 print(Rh, Rm, Rs, Dd, Dm, Ds)
-            >>> coords = ["1:12:43.2 +31:12:43", "1 12 43.2 +31 12 43"], frame='fk5', unit='deg'
             coords = SkyCoord("%s:%s:%s, %s:%s:%s"%(Rh,Rm,Rs,Dd,Dm,Ds), frame='fk5', unit=(u.hourangle, u.deg))
+            return coords.ra.deg, coords.dec.deg
         elif 'RA in Degrees:Min:Sec' in map and table_row[map['RA in Degrees:Min:Sec']] is not None:
             splitter = ':' if ':' in str(table_row[map['RA in Degrees:Min:Sec']]) else ' '
             if splitter not in str(table_row[map['RA in Degrees:Min:Sec']]):
@@ -839,13 +839,14 @@ class Journal_tables():
             else:
                 Rd, Rm, Rs = self.remove_non_numeric_related_formats(str(table_row[map['RA in Degrees:Min:Sec']])).split(splitter)
                 Dd, Dm, Ds = self.remove_non_numeric_related_formats(str(table_row[map['Dec (+/-) Degree:Min:Sec']])).split(splitter)
-            return float(Rd) + float(Rm)/60 + float(Rs)/3600, float(Dd) + float(Dm)/60 + float(Ds)/3600
+            coords = SkyCoord("%s:%s:%s, %s:%s:%s"%(Rh,Rm,Rs,Dd,Dm,Ds), frame='fk5', unit=(u.deg, u.deg))
+            return coords.ra.deg, coords.dec.deg
         elif 'RA (Hours part)' in map and table_row[map['RA (Hours part)']] is not None:
-            R_degrees = self.remove_non_numeric_related_formats(str(table_row[map['RA (Hours part)']])) if 'RA (Hours part)' in map else self.remove_non_numeric_related_formats(str(table_row[map['RA (Degree part)']]))
+            Rh = self.remove_non_numeric_related_formats(str(table_row[map['RA (Hours part)']])) if 'RA (Hours part)' in map else self.remove_non_numeric_related_formats(str(table_row[map['RA (Degree part)']]))
             Rm, Rs = self.remove_non_numeric_related_formats(str(table_row[map['RA (Mins part)']])), self.remove_non_numeric_related_formats(str(table_row[map['RA (Secs part)']]))
             Dd, Dm, Ds = self.remove_non_numeric_related_formats(str(table_row[map['Dec (Degree part)']])), self.remove_non_numeric_related_formats(str(table_row[map['Dec (Arcmin part)']])), self.remove_non_numeric_related_formats(str(table_row[map['Dec (Arcsec part)']]))
-            print(R_degrees, Rm, Rs, Dd, Dm, Ds)
-            return float(R_degrees)/((24*360) if 'RA (Hours part)' in map else 1) + float(Rm)/60 + float(Rs)/3600, float(Dd) + float(Dm)/60 + float(Ds)/3600
+            coords = SkyCoord("%s:%s:%s, %s:%s:%s"%(Rh,Rm,Rs,Dd,Dm,Ds), frame='fk5', unit=(u.hourangle, u.deg))
+            return coords.ra.deg, coords.dec.deg
         elif 'Position' in map and table_row[map['Position']] is not None:
             splitter = ':' if ':' in str(table_row[map['Position']]) else ' '
             for sign in ['-', '+', ' ']:
@@ -854,7 +855,8 @@ class Journal_tables():
             Rh, Rm, Rs = coords[0].split(splitter)
             Dd, Dm, Ds = coords[1].split(splitter)
             Dd = sign + Dd
-            return float(Rh)/24*360 + float(Rm)/60 + float(Rs)/3600, float(Dd) + float(Dm)/60 + float(Ds)/3600
+            coords = SkyCoord("%s:%s:%s, %s:%s:%s"%(Rh,Rm,Rs,Dd,Dm,Ds), frame='fk5', unit=(u.hourangle, u.deg))
+            return coords.ra.deg, coords.dec.deg
         elif 'RA-Dec (Degrees)' in map and table_row[map['RA-Dec (Degrees)']] is not None:
             for sign in ['-', '+', ' ']:
                 coords = self.remove_non_numeric_related_formats(str(table_row[map['RA-Dec (Degrees)']]), remove_plus = False).split(sign)
