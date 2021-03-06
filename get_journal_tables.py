@@ -813,14 +813,14 @@ class Journal_tables():
                     Rh, Rm, Rs, decimal = rcord
                     Rs += ('.' + decimal)
                 else:
-                    input('Failed RA coord')
+                    #input('Failed RA coord')
                     return None, None
                 if len(deccord) == 3: Dd, Dm, Ds = deccord
                 elif len(deccord) == 4:
                     Dd, Dm, Ds, decimal = deccord
                     Ds += ('.' + decimal)
                 else:
-                    input('Failed DEC coord')
+                    #input('Failed DEC coord')
                     return None, None
 
                 print('======splitter', splitter)
