@@ -13,7 +13,6 @@ from time import sleep
 import csv
 from astropy.io import fits
 import xml.dom.minidom
-from astropy.coordinates import SkyCoord
 from astropy.coordinates.angles import hms_tuple, dms_tuple
 from astropy import units
 
@@ -830,7 +829,8 @@ class Journal_tables():
                 Rh, Rm, Rs = self.remove_non_numeric_related_formats(str(table_row[map['RA in Hours:Min:Sec']])).split(splitter)
                 Dd, Dm, Ds = self.remove_non_numeric_related_formats(str(table_row[map['Dec (+/-) Degree:Min:Sec']])).split(splitter)
                 print(Rh, Rm, Rs, Dd, Dm, Ds)
-            return float(Rh)/24*360 + float(Rm)/60 + float(Rs)/3600, float(Dd) + float(Dm)/60 + float(Ds)/3600
+            >>> coords = ["1:12:43.2 +31:12:43", "1 12 43.2 +31 12 43"], frame='fk5', unit='deg'
+            coords = SkyCoord("%s:%s:%s, %s:%s:%s"%(Rh,Rm,Rs,Dd,Dm,Ds), frame='fk5', unit=(u.hourangle, u.deg))
         elif 'RA in Degrees:Min:Sec' in map and table_row[map['RA in Degrees:Min:Sec']] is not None:
             splitter = ':' if ':' in str(table_row[map['RA in Degrees:Min:Sec']]) else ' '
             if splitter not in str(table_row[map['RA in Degrees:Min:Sec']]):
