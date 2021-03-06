@@ -1052,26 +1052,25 @@ class Journal_tables():
                 if 'Lens type' in action_map: self.lens_objects[standard_name]['Lens type'] = action_map['Lens type']
                 if 'Discovery' in action_map: self.lens_objects[standard_name]['Discovery'] = action_map['Discovery']
                  
-    def log_coord_details(self, standard_name):
+    def set_coord_details(self, standard_name):
         if self.lens_objects[standard_name]['Standard RA']:
             coord = SkyCoord(self.lens_objects[standard_name]['Standard RA'], self.lens_objects[standard_name]['Standard Dec'], frame='fk5', unit='deg')
-            ra_hour, ra_min, ra_sec = coord.ra.hms
-            dec_sign, dec_degree, dec_arcmin, dec_arcsec = coord.dec.signed_dms
+            self.lens_objects[standard_name]['RA (Hours part)'], self.lens_objects[standard_name]['RA (Mins part)'], self.lens_objects[standard_name]['RA (Secs part)'] = coord.ra.hms
+            dec_sign, self.lens_objects[standard_name]['Dec (Degree part)'], self.lens_objects[standard_name]['Dec (Arcmin part)'], self.lens_objects[standard_name]['Dec (Arcsec part)'] = coord.dec.signed_dms
             dec_sign = '-' if dec_sign<0 else '+'
-            ra_hms = "{ra_hour:02.0f}:{ra_min:02.0f}:{ra_sec:05.2f}".format(ra_hour=ra_hour,ra_min=ra_min,ra_sec=ra_sec)
-            dec_dms = "{dec_sign}{dec_degree:02.0f}:{dec_arcmin:02.0f}:{dec_arcsec:05.2f}".format(dec_sign=dec_sign,dec_degree=dec_degree,dec_arcmin=dec_arcmin,dec_arcsec=dec_arcsec)
-            ra = coord.ra.deg
-            dec = coord.dec.deg
-            ra_int = int(coord.ra.deg)
-            dec_int = int(coord.dec.deg)
-            ra_decimal = coord.ra.deg - ra_int
-            dec_decimal = coord.dec.deg - dec_int
+            self.lens_objects[standard_name]['RA [°]'] = coord.ra.deg
+            self.lens_objects[standard_name]['Dec [°]'] = coord.dec.deg
+         
+            #Check added in
+            self.lens_objects[standard_name]['RA H:M:S'] = "{ra_hour:02.0f}:{ra_min:02.0f}:{ra_sec:05.2f}".format(ra_hour=ra_hour,ra_min=ra_min,ra_sec=ra_sec)
+            self.lens_objects[standard_name]['Dec D:M:S'] = "{dec_sign}{dec_degree:02.0f}:{dec_arcmin:02.0f}:{dec_arcsec:05.2f}".format(dec_sign=dec_sign,dec_degree=dec_degree,dec_arcmin=dec_arcmin,dec_arcsec=dec_arcsec)
+            self.lens_objects[standard_name]['RA (int part only)'] = int(coord.ra.deg)
+            self.lens_objects[standard_name]['Dec (int part only)'] = int(coord.dec.deg)
+            self.lens_objects[standard_name]['RA (decimal part only)'] = coord.ra.deg - self.lens_objects[standard_name]['RA (int only)']
+            self.lens_objects[standard_name]['Dec (decimal part only)'] = coord.dec.deg - self.lens_objects[standard_name]['Dec (int only)']
                     
-        #self.sdss_name = 'SDSS~J%s%s' % (self.ra_hms.replace(':',''), self.dec_dms.replace(':',''))
-        #self.sdss_paper_name = 'SDSS~J%s%s' % (self.ra_hms.replace(':','')[:4], self.dec_dms.replace(':','')[:5])
-    
-    #####
-        
+            #self.sdss_name = 'SDSS~J%s%s' % (self.ra_hms.replace(':',''), self.dec_dms.replace(':',''))
+            #self.sdss_paper_name = 'SDSS~J%s%s' % (self.ra_hms.replace(':','')[:4], self.dec_dms.replace(':','')[:5])        
             
     def write_pdfs(self):
         """Write pdfs of each paper"""
