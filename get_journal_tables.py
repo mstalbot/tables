@@ -39,7 +39,6 @@ class Journal_tables():
         mld_auth: Masterlens database login in format of {'user':'Your user login', 'password':'Your password'}.
         load_processed_data: Load previous processed data and relavent MLD database information
         """ 
-        
         #Set class globals
         self.user_name = user_name
         self.headers = headers
@@ -1536,10 +1535,15 @@ class Journal_tables():
                 file.write(' );\n')
                 
     def update_MLD_discovery_surveys(self):
+        
         with open(join(self.base_directory, 'batch_update_mysql_surveys.txt'), 'w') as file:
             for survey in self.detection_surveys:
                 file.write("INSERT INTO discovery ( title,acronym,description,lens_count,modified,gradeA_count,gradeB_count,gradeC_count,ungraded_count ) Values ( '',%r,'','',NOW(),'','','','' );\n"%survey)
             
+    def update_MLD_lens_discovery_connection(self):
+        
+           
+           
     def update_MLD_lens_entries(self):
         """Update Masterlens database lens entries"""
         self.detection_surveys = [] 
