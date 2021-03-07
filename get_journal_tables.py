@@ -1513,9 +1513,8 @@ class Journal_tables():
             
     def update_MLD_lens_entries(self):
         """Update Masterlens database lens entries"""
-       self.detection_surveys = [] 
-       
-       
+        self.detection_surveys = [] 
+
         with open(join(self.base_directory, 'batch_update_mysql_lenses.txt'), 'w') as file:
             for system in self.lens_objects.keys():            
                 add_system_dict = {"inputaction":"Save", "query_system_name": system}
