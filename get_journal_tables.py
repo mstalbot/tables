@@ -1065,8 +1065,8 @@ class Journal_tables():
                         if mkey not in self.lens_objects[standard_name]: self.lens_objects[standard_name][mkey.replace('2','').replace('3','')] = []
                         self.lens_objects[standard_name][mkey.replace('2','').replace('3','')].append({'value': str(value).replace(' NaN','').replace('NaN',''), 'method': str(method).replace(' NaN','').replace('NaN',''), 'error': str(error).replace(' NaN','').replace('NaN',''), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':weight}})
                         print('lens object values', self.lens_objects[standard_name])
-                if 'Lens type' in action_map: self.lens_objects[standard_name]['Lens type'] = action_map['Lens type']
-                if 'Discovery' in action_map: self.lens_objects[standard_name]['Discovery'] = action_map['Discovery']
+                if 'Lens type' in action_map: self.lens_objects[standard_name]['Lens type'].append({'value': action_map['Lens type'], 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
+                if 'Discovery' in action_map: self.lens_objects[standard_name]['Discovery'] = {'value': action_map['Discovery'], 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
                  
     def set_coord_details(self, standard_name, weight, key, key2, update_status, query):
         if self.lens_objects[standard_name]['Standard RA'][0]['value']:
@@ -1274,11 +1274,13 @@ class Journal_tables():
                 self.lens_objects[standard_name]['z_Lens'].append({'value': row[3], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
                 self.lens_objects[standard_name]['z_Source(s)'].append({'value': row[4], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
                 self.lens_objects[standard_name]['System Name'].append({'value': 'HSC'+standard_name, 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
+                i=0
                 for sr in row[-1].split(' '):
                     if 'SuGOHI' in sr: break
-                if 'References' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'].append(sr)
-                else: self.lens_objects[standard_name]['References'] = [sr]
-                
+                    i+=1
+                if 'References' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'].append(sugohi_key[sr])
+                else: self.lens_objects[standard_name]['References'] = [sugohi_key[sr]]
+                if i == 0: self.lens_objects[standard_name]['Discovery'].append({'value': 'SuGOHI', 'tracer': {'bibcode':sugohi_key[sr], 'update status': 'in SuGOHI', 'weight':5}})
             
            
     def load_silo_eboss(self):
@@ -1300,7 +1302,8 @@ class Journal_tables():
             self.lens_objects[standard_name]['System Name'].append({'value': 'SDSS'+standard_name, 'tracer': {'update status': 'in SILO', 'weight':5}})
             if 'References' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'].append('MNRAStmp(2021)303T')
             else: self.lens_objects[standard_name]['References'] = ['MNRAStmp(2021)303T']
-            
+            self.lens_objects[standard_name]['Lens type'].append({'value': 'GAL-GAL', 'tracer': {'bibcode':'MNRAStmp(2021)303T', 'update status': 'in SILO', 'weight':5}})
+            if candidate['FIRST_DETECTION_FROM'] == '': self.lens_objects[standard_name]['Discovery'].append({'value': 'SILO', 'tracer': {'bibcode':'MNRAStmp(2021)303T', 'update status': 'in SILO', 'weight':5}})
                                                                                               
     def load_links(self):
         with open('LinKS_main.txt', 'r') as file:
@@ -1319,6 +1322,8 @@ class Journal_tables():
                 self.lens_objects[standard_name]['System Name'].append({'value': line[0], 'tracer': {'update status': 'in LinKS', 'weight':0}})
                 if 'References' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'].append('MNRAS484(2019)3879P')
                 else: self.lens_objects[standard_name]['References'] = ['MNRAS484(2019)3879P']
+                #self.lens_objects[standard_name]['Discovery'].append({'value': 'LinKS', 'tracer': {'bibcode':'MNRAS484(2019)3879P', 'update status': 'in LinKS', 'weight':5}})
+
                     
         with open('LinKS_bonus.txt', 'r') as file:
             for line in file:
@@ -1334,6 +1339,8 @@ class Journal_tables():
                 self.lens_objects[standard_name]['System Name'].append({'value': line[0], 'tracer': {'update status': 'in LinKS', 'weight':0}})
                 if 'References' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'].append('MNRAS484(2019)3879P')
                 else: self.lens_objects[standard_name]['References'] = ['MNRAS484(2019)3879P']
+                #self.lens_objects[standard_name]['Discovery'].append({'value': 'LinKS', 'tracer': {'bibcode':'MNRAS484(2019)3879P', 'update status': 'in LinKS', 'weight':5}})
+
                     
     def convert_to_mld_reference_form(self, reference, url=None):
         """Prepare and process the bibcode to be converted from ads to MLD formatted bibcode"""
@@ -1539,7 +1546,9 @@ class Journal_tables():
                 if 'Discovery' in self.lens_objects[system] and self.lens_objects[system]['Discovery']:
                     try: add_system_dict['Discovery'] = self.discovery_id_inverted[str(self.lens_objects[system]['Discovery']['value'])]
                     except: add_system_dict['Discovery'] = self.lens_objects[system]['Discovery']['value']
+                    if add_system_dict['Discovery'] not in self.detection_surveys: self.detection_surveys.append(add_system_dict['Discovery'])
                 else: add_system_dict['Discovery'] = ''
+                
                  
                 #add_system_dict['referencestoadd[]'] = '[' + ','.join([self.reference_id[reference] for reference in self.lens_objects[system]['References']]) + ']'
                 #add_system_dict['addreferences'] = 'addreferences'
