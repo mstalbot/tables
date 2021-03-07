@@ -1224,8 +1224,8 @@ class Journal_tables():
         self.discovery_id_inverted = {self.discovery_id[key]:key for key in self.discovery_id}'''
         
         #MT Temp fix. Undo when update xml files.
-        self = {'SLACS':'1', 'BELLS':'2', 'SWELLS':'3', 'SLACSextra':'4', 'SQLS':'5', 'UKIDSS':'6', 'CLASS':'7', 'COSMOS':'8', 'JVAS':'9', 'EGS':'10', 'DES':'11', 'PanSTARRS':'12', 'SL2S':'13', 'CLASSextra':'14', 'CASSOWARY':'16', 'SBAS':'17', 'CLASH':'18', 'GEMS':'19', 'Serendipitous':'20', 'RCS2':'22', 'H-ATLAS':'25', 'EELs':'26', 'OLS':'28', 'SGAS':'29', 'MACS Lenses':'31', 'HE survey':'32', 'SOGRAS':'33', 'CS82':'34', 'VICS82':'35', 'SPT':'36', 'BELLS GALLERY':'38', 'SuGOHI':'39', 'SILO':'40', 'LinKS':'41', 'Space Warps':'42', 'MNELLS':'43', 'Gaia GraL':'44', 'S4TM':'45', 'STRIDES':'46', 'RELICS':'47'}
-        
+        self.discovery_id = {'SLACS':'1', 'BELLS':'2', 'SWELLS':'3', 'SLACSextra':'4', 'SQLS':'5', 'UKIDSS':'6', 'CLASS':'7', 'COSMOS':'8', 'JVAS':'9', 'EGS':'10', 'DES':'11', 'PanSTARRS':'12', 'SL2S':'13', 'CLASSextra':'14', 'CASSOWARY':'16', 'SBAS':'17', 'CLASH':'18', 'GEMS':'19', 'Serendipitous':'20', 'RCS2':'22', 'H-ATLAS':'25', 'EELs':'26', 'OLS':'28', 'SGAS':'29', 'MACS Lenses':'31', 'HE survey':'32', 'SOGRAS':'33', 'CS82':'34', 'VICS82':'35', 'SPT':'36', 'BELLS GALLERY':'38', 'SuGOHI':'39', 'SILO':'40', 'LinKS':'41', 'Space Warps':'42', 'MNELLS':'43', 'Gaia GraL':'44', 'S4TM':'45', 'STRIDES':'46', 'RELICS':'47'}
+        self.discovery_id_inverted = {self.discovery_id[key]:key for key in self.discovery_id}
                                   
                 
     def load_MLD_lenses(self):
