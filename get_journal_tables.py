@@ -1561,7 +1561,7 @@ class Journal_tables():
            
     def update_MLD_lens_entries(self):
         """Update Masterlens database lens entries"""
-        start = int(input('To start this section, you need to first set the AUTO increpent ID in database))
+        start = int(input('To start this section, you need to first set the AUTO increpent ID in database: start lensID='))
         self.detection_surveys = []
         self.lens_detection_connection = []
         self.lens_reference_connection = []
