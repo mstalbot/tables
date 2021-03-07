@@ -1065,8 +1065,12 @@ class Journal_tables():
                         if mkey not in self.lens_objects[standard_name]: self.lens_objects[standard_name][mkey.replace('2','').replace('3','')] = []
                         self.lens_objects[standard_name][mkey.replace('2','').replace('3','')].append({'value': str(value).replace(' NaN','').replace('NaN',''), 'method': str(method).replace(' NaN','').replace('NaN',''), 'error': str(error).replace(' NaN','').replace('NaN',''), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':weight}})
                         print('lens object values', self.lens_objects[standard_name])
-                if 'Lens type' in action_map: self.lens_objects[standard_name]['Lens type'].append({'value': action_map['Lens type'], 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
-                if 'Discovery' in action_map: self.lens_objects[standard_name]['Discovery'].append({'value': action_map['Discovery'], 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
+                if 'Lens type' in action_map:
+                    if 'Lens type' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Lens type'] = []
+                    self.lens_objects[standard_name]['Lens type'].append({'value': action_map['Lens type'], 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
+                if 'Discovery' in action_map:
+                    if 'Discovery' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Discovery'] = []
+                    self.lens_objects[standard_name]['Discovery'].append({'value': action_map['Discovery'], 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
                  
     def set_coord_details(self, standard_name, weight, key, key2, update_status, query):
         if self.lens_objects[standard_name]['Standard RA'][0]['value']:
