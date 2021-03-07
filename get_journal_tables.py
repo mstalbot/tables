@@ -977,16 +977,15 @@ class Journal_tables():
             
             try:
                 standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
-                rh,rm,rs,dd,dm,ds = self.set_coord_details(standard_name, 0, key, key2, 'Not yet included', self.query, save=False, ra=standard_ra, dec=standard_dec)
+                if standard_ra: rh,rm,rs,dd,dm,ds = self.set_coord_details(standard_name, 0, key, key2, 'Not yet included', self.query, save=False, ra=standard_ra, dec=standard_dec)
+                else: rh,rm,rs,dd,dm,ds = '', '', '', '', '', ''
             except Exception as e:
                 print(self.ads_scrapped_tables[self.query][key][key2], '\n>Standardize system Failed:', e)
                 standard_name, standard_ra, standard_dec = '', '', ''
                 rh,rm,rs,dd,dm,ds = '', '', '', '', '', ''
                 print('Problem with data:', table_row, map)
                 testi = input('Retry to see bug? (type y for yes):')
-                if testi == 'y':
-                    standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
-                    rh,rm,rs,dd,dm,ds = self.set_coord_details(standard_name, 0, key, key2, 'Not yet included', self.query, save=False, ra=standard_ra, dec=standard_dec)
+                if testi == 'y': standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
 
             
             if 'Cluster Sources Table' in action_map and standard_ra != '':
