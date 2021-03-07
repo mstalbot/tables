@@ -984,8 +984,8 @@ class Journal_tables():
                 standard_name, standard_ra, standard_dec = '', '', ''
                 rh,rm,rs,dd,dm,ds = '', '', '', '', '', ''
                 print('Problem with data:', table_row, map)
-                testi = input('Retry to see bug? (type y for yes):')
-                if testi == 'y': standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
+                #testi = input('Retry to see bug? (type y for yes):')
+                #if testi == 'y': standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
 
             
             if 'Cluster Sources Table' in action_map and standard_ra != '':
@@ -993,11 +993,11 @@ class Journal_tables():
                     if action_map['Word to recognize name is of lens and NOT source'] in table_row[map['Source names']]:
                         self.cluster_lens_name = table_row[map['Source names']]
                         standard_name = self.cluster_lens_name + ''
-                    elif rh: standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,rs,dd,dm,ds)) + ']'
+                    elif rh: standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,int(rs),dd,dm,int(ds))) + ']'
                     else: standard_name = self.cluster_lens_name + '[' + str(table_row[map['Source names']]) + ']'
                 elif 'Name,Ra,Dec of cluster or group lens' in action_map:
                     self.cluster_lens_name = action_map['Name,Ra,Dec of cluster or group lens']
-                    if rh: standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,rs,dd,dm,ds)) + ']'
+                    if rh: standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,int(rs),dd,dm,int(ds))) + ']'
                     else: standard_name = self.cluster_lens_name + '[' + str(table_row[map['Source names']]) + ']'
 
 
