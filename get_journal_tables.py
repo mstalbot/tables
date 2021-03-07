@@ -1081,7 +1081,6 @@ class Journal_tables():
                  
     def set_coord_details(self, standard_name, weight, key, key2, update_status, query, save=True, ra='', dec=''):
         if (save and self.lens_objects[standard_name]['Standard RA'][0]['value']) or (not save and ra):
-            print('Standard RA and DEC', self.lens_objects[standard_name]['Standard RA'][0]['value'], self.lens_objects[standard_name]['Standard DEC'][0]['value'])
             if ra: coord = SkyCoord(ra, dec, frame='fk5', unit='deg')
             else: coord = SkyCoord(self.lens_objects[standard_name]['Standard RA'][0]['value'], self.lens_objects[standard_name]['Standard DEC'][0]['value'], frame='fk5', unit='deg')
             
