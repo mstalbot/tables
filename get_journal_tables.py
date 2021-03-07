@@ -974,8 +974,8 @@ class Journal_tables():
         if empty: print('Skipping row since empty')
         else:
             #Convert to a standardized format
-            
-            try: standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
+            standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
+            try: pass
             except Exception as e:
                 print(self.ads_scrapped_tables[self.query][key][key2], '\n>Standardize system Failed:', e)
                 standard_name, standard_ra, standard_dec = '', '', ''
@@ -983,7 +983,7 @@ class Journal_tables():
                 #testi = input('Retry to see bug? (type y for yes):')
                 #if testi == 'y': standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
                 
-            rh,rm,rs,dd,dm,ds = self.set_coord_details(standard_name, 0, key, key2, 'Not yet included', self.query, save=False)
+            rh,rm,rs,dd,dm,ds = self.set_coord_details(standard_name, 0, key, key2, 'Not yet included', self.query, save=False, ra=standard_ra, dec=standard_dec)
             
             
             if 'Cluster Sources Table' in action_map and standard_ra != '':
@@ -1079,10 +1079,11 @@ class Journal_tables():
                     if 'Discovery' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Discovery'] = []
                     self.lens_objects[standard_name]['Discovery'].append({'value': action_map['Discovery'], 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
                  
-    def set_coord_details(self, standard_name, weight, key, key2, update_status, query, save=True):
-        if self.lens_objects[standard_name]['Standard RA'][0]['value']:
+    def set_coord_details(self, standard_name, weight, key, key2, update_status, query, save=True, ra='', dec=''):
+        if (save and self.lens_objects[standard_name]['Standard RA'][0]['value']) or (not save and ra):
             print('Standard RA and DEC', self.lens_objects[standard_name]['Standard RA'][0]['value'], self.lens_objects[standard_name]['Standard DEC'][0]['value'])
-            coord = SkyCoord(self.lens_objects[standard_name]['Standard RA'][0]['value'], self.lens_objects[standard_name]['Standard DEC'][0]['value'], frame='fk5', unit='deg')
+            if ra: coord = SkyCoord(ra, dec, frame='fk5', unit='deg')
+            else: coord = SkyCoord(self.lens_objects[standard_name]['Standard RA'][0]['value'], self.lens_objects[standard_name]['Standard DEC'][0]['value'], frame='fk5', unit='deg')
             
             rhour, rmn, rsec = coord.ra.hms
             ddec_sign, ddeg, dmn, dsec = coord.dec.signed_dms
