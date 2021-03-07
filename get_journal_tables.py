@@ -1544,11 +1544,15 @@ class Journal_tables():
                             else: value, method, error, weight, status = data['value'], '', '', data['tracer']['weight'], data['tracer']['update status']
                     if 'MLD' in status: none_favoured_in_MLD = False
                     elif 'MLD' not in status: all_favoured_MLD = False
-                    methodid = '' if method in ['', 'MLD', 'NaN', ' NaN', None] else self.z_type_id[method] if 'z_lens' in key else self.z_type_id[method] if 'z_Source(s)' in key else self.er_quality_id[method] if 'Einstein_R ["]' in key else self.lens_type_id[method] if 'Lens type' in key else self.discovery_id[method] if 'Discovery' in key else ''
+                    methodid = '' if method in ['', 'MLD', 'NaN', ' NaN', None] else self.z_type_id[method] if 'z_lens' in key else self.z_type_id[method] if 'z_Source(s)' in key else self.er_quality_id[method.replace('Images separation',"1/2 image separation")] if 'Einstein_R ["]' in key else self.lens_type_id[method] if 'Lens type' in key else self.discovery_id[method] if 'Discovery' in key else ''
 
                     #THE MLD flag is a precaution for now that we can remove once a consensus on how we can update these correctly
                     if value == '': continue
                     add_system_dict[self.masterlens_phrases_to_input_converter[key]] = value
+                    if method == 'Images separation':
+                        try: add_system_dict[self.masterlens_phrases_to_input_converter[key]] = float(value)/2
+                        except: pass
+                    else: add_system_dict[self.masterlens_phrases_to_input_converter[key]] = value
                     if (key + ' quality') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' quality']] = methodid
                     if (key + ' error') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' error']] = error
                 if 'Discovery' in self.lens_objects[system] and self.lens_objects[system]['Discovery']:
