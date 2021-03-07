@@ -979,17 +979,19 @@ class Journal_tables():
                 print('Problem with data:', table_row, map)
                 #testi = input('Retry to see bug? (type y for yes):')
                 #if testi == 'y': standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
-
-
+                
+            rh,rm,rs,dd,dm,ds = self.set_coord_details(standard_name, 0, key, key2, 'Not yet included', self.query, save=False)
+            
+            
             if 'Cluster Sources Table' in action_map and standard_ra != '':
                 if 'Word to recognize name is of lens and NOT source' in action_map:
                     if action_map['Word to recognize name is of lens and NOT source'] in table_row[map['Source names']]:
                         self.cluster_lens_name = table_row[map['Source names']]
                         standard_name = self.cluster_lens_name + ''
-                    else: standard_name = self.cluster_lens_name + '[' + table_row[map['Source names']] + ']'
+                    else: standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,rs,dd,dm,ds)) + ']'
                 elif 'Name,Ra,Dec of cluster or group lens' in action_map:
                     self.cluster_lens_name = action_map['Name,Ra,Dec of cluster or group lens']
-                    standard_name = self.cluster_lens_name + '[' + (str(table_row[map['Source names']]) if 'Source names' in map else standard_name) + ']'
+                    standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,rs,dd,dm,ds)) + ']'
 
 
             if standard_name is '': print('Could not define system', table_row, map)
@@ -1008,7 +1010,6 @@ class Journal_tables():
                 self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
                 self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
 
-                self.set_coord_details(standard_name, 0, key, key2, 'Not yet included', self.query)
                 #Save reference information via a conversion from ADS bibform to MLD bibform
                 if 'References' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'] = [self.ads_to_mld_reference_interpreter[self.query]]
                 elif self.ads_to_mld_reference_interpreter[self.query] not in self.lens_objects[standard_name]['References']: self.lens_objects[standard_name]['References'].append(self.ads_to_mld_reference_interpreter[self.query])
@@ -1018,7 +1019,9 @@ class Journal_tables():
                     system_names = [entry['value'] for entry in self.lens_objects[standard_name]['System Name']]
                 else: system_names = []
                 system_names.append(standard_name)
-
+                
+                self.set_coord_details(standard_name, 0, key, key2, 'Not yet included', self.query)
+                                       
                 self.lens_objects[standard_name]['References'] = self.get_all_papers_referenced(self.lens_objects[standard_name]['References'], system_names)
 
                 #I wish this could work but there is no standard format that is robust across tables. Thus this method is deprecated.
@@ -1073,34 +1076,39 @@ class Journal_tables():
                     if 'Discovery' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Discovery'] = []
                     self.lens_objects[standard_name]['Discovery'].append({'value': action_map['Discovery'], 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
                  
-    def set_coord_details(self, standard_name, weight, key, key2, update_status, query):
+    def set_coord_details(self, standard_name, weight, key, key2, update_status, query, save=True):
         if self.lens_objects[standard_name]['Standard RA'][0]['value']:
             print('Standard RA and DEC', self.lens_objects[standard_name]['Standard RA'][0]['value'], self.lens_objects[standard_name]['Standard DEC'][0]['value'])
             coord = SkyCoord(self.lens_objects[standard_name]['Standard RA'][0]['value'], self.lens_objects[standard_name]['Standard DEC'][0]['value'], frame='fk5', unit='deg')
             
-            hour, mn, sec = coord.ra.hms
-            if 'RA (Hours part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['RA (Hours part)'] = []
-            if 'RA (Mins part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['RA (Mins part)'] = []
-            if 'RA (Secs part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['RA (Secs part)'] = []
-            self.lens_objects[standard_name]['RA (Hours part)'].append({'value': str(int(hour)), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
-            self.lens_objects[standard_name]['RA (Mins part)'].append({'value': str(int(mn)), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
-            self.lens_objects[standard_name]['RA (Secs part)'].append({'value': str(sec), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+            rhour, rmn, rsec = coord.ra.hms
+            ddec_sign, ddeg, dmn, dsec = coord.dec.signed_dms
+            ddec_sign = '-' if ddec_sign<0 else '+'
+            ddeg = ddec_sign+str(int(ddeg))
+            if save:
+                if 'RA (Hours part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['RA (Hours part)'] = []
+                if 'RA (Mins part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['RA (Mins part)'] = []
+                if 'RA (Secs part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['RA (Secs part)'] = []
+
+                self.lens_objects[standard_name]['RA (Hours part)'].append({'value': str(int(rhour)), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+                self.lens_objects[standard_name]['RA (Mins part)'].append({'value': str(int(rmn)), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+                self.lens_objects[standard_name]['RA (Secs part)'].append({'value': str(rsec), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
             
-            
-            if 'Dec (Degree part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Dec (Degree part)'] = []
-            if 'Dec (Arcmin part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Dec (Arcmin part)'] = []
-            if 'Dec (Arcsec part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Dec (Arcsec part)'] = []
-            dec_sign,deg, mn, sec = coord.dec.signed_dms
-            dec_sign = '-' if dec_sign<0 else '+'
-            dec_sign, self.lens_objects[standard_name]['Dec (Degree part)'].append({'value': dec_sign+str(int(deg)), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
-            self.lens_objects[standard_name]['Dec (Arcmin part)'].append({'value': str(int(mn)), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
-            self.lens_objects[standard_name]['Dec (Arcsec part)'].append({'value': str(sec), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
-            
-            if 'Dec [°]' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Dec [°]'] = []
-            if 'RA [°]' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['RA [°]'] = []
-            self.lens_objects[standard_name]['Dec [°]'].append({'value': str(coord.dec.deg), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
-            self.lens_objects[standard_name]['RA [°]'].append({'value': str(coord.ra.deg), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
-                        
+                if 'Dec (Degree part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Dec (Degree part)'] = []
+                if 'Dec (Arcmin part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Dec (Arcmin part)'] = []
+                if 'Dec (Arcsec part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Dec (Arcsec part)'] = []
+
+                self.lens_objects[standard_name]['Dec (Degree part)'].append({'value': ddeg, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+                self.lens_objects[standard_name]['Dec (Arcmin part)'].append({'value': str(int(dmn)), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+                self.lens_objects[standard_name]['Dec (Arcsec part)'].append({'value': str(dsec), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+
+                if 'Dec [°]' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Dec [°]'] = []
+                if 'RA [°]' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['RA [°]'] = []
+                self.lens_objects[standard_name]['Dec [°]'].append({'value': str(coord.dec.deg), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+                self.lens_objects[standard_name]['RA [°]'].append({'value': str(coord.ra.deg), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+            else: return rhour, rmn, rsec, ddeg, dmn, dsec       
+                 
+                 
     def write_pdfs(self):
         """Write pdfs of each paper"""
         
@@ -1514,12 +1522,12 @@ class Journal_tables():
                 if 'custom1' in po: file.write(','+po['custom1'].replace('eprint: ',''))
                 if "volume" in po: file.write(','+po['volume'][0])
                 if "doi" in po: file.write(','+po['doi'])
-                file.write(' )\n')
+                file.write(' );\n')
                 
     def update_MLD_discovery_surveys(self):
         with open(join(self.base_directory, 'batch_update_mysql_surveys.txt'), 'w') as file:
             for survey in self.detection_surveys:
-                file.write("INSERT INTO discovery ( title,acronym,description,lens_count,modified,gradeA_count,gradeB_count,gradeC_count,ungraded_count ) Values ( '',%s,'','',NOW(),'','','','' )\n"%survey)
+                file.write("INSERT INTO discovery ( title,acronym,description,lens_count,modified,gradeA_count,gradeB_count,gradeC_count,ungraded_count ) Values ( '',%s,'','',NOW(),'','','','' );\n"%survey)
             
     def update_MLD_lens_entries(self):
         """Update Masterlens database lens entries"""
@@ -1557,11 +1565,9 @@ class Journal_tables():
                     if (key + ' error') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' error']] = error
                 if 'Discovery' in self.lens_objects[system] and self.lens_objects[system]['Discovery']:
                     try: add_system_dict['Discovery'] = self.discovery_id_inverted[str(self.lens_objects[system]['Discovery'][0]['value'])]
-                    except: add_system_dict['Discovery'] = self.lens_objects[system]['Discovery'][0]['value']
-                    if add_system_dict['Discovery'] not in self.detection_surveys and add_system_dict['Discovery'] not in self.discovery_id_inverted: self.detection_surveys.append(add_system_dict['Discovery'])
+                    except: add_system_dict['Discovery'] = self.lens_objects[system]['Discovery'][0]['value'].replace(': check','')
+                    if add_system_dict['Discovery'] not in self.detection_surveys and add_system_dict['Discovery'] not in self.discovery_id: self.detection_surveys.append(add_system_dict['Discovery'])
                 else: add_system_dict['Discovery'] = ''
-                
-                 
                 #add_system_dict['referencestoadd[]'] = '[' + ','.join([self.reference_id[reference] for reference in self.lens_objects[system]['References']]) + ']'
                 #add_system_dict['addreferences'] = 'addreferences'
 
@@ -1572,6 +1578,6 @@ class Journal_tables():
                 elif none_favoured_in_MLD:
                     file.write("INSERT INTO lens ( discovery_acronym,discovery_count,kind_acronym,kindID,filterID,system_name,lensgrade,multiplicity,morphology,reference_frame,equinox,description,alternate_name,z_lens,z_source,d_lens,d_source,vdisp,vdisp_err,time_delay0,time_delay1,mag_lens,mag_source,filter_lens,filter_source,theta_e,theta_e_err,theta_e_quality,theta_e_redshift,fluxes,ra_decimal,ra_hrs,ra_mins,ra_secs,ra_coord,ra_coord_err,dec_decimal,dec_degrees,dec_arcmin,dec_arcsec,dec_coord,dec_coord_err,number_images,reference_identifier,status,modified,created_by_member_name,modified_by_member_name,discovery_date,created,has_sdss,sdss_link,has_apod,apod_link,z_lens_err,z_lens_quality,z_source_err,z_source_quality,vett_status,released_status,hidden_status,vetted_by_member_name,released_as_of_version,released_by_member_name,hidden_by_member_name,vetted,released,hidden,repeats,graphic_status,coord_label,has_adsabs,adsabs_link,has_ned,ned_link,sdss_ObjID,sdss_specObjID,lens_name ) Values ( ")
                     file.write('%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s'%(add_system_dict['Discovery'] if 'Discovery' in add_system_dict else '', add_system_dict['query_discovery_count'] if 'query_discovery_count' in add_system_dict else '', self.lens_type_id[add_system_dict['query_kindID']] if 'query_kindID' in add_system_dict else '', add_system_dict['query_kindID'] if 'query_kindID' in add_system_dict else '',0, add_system_dict['query_system_name'] if 'query_system_name' in add_system_dict else '', add_system_dict['query_lensgrade'] if 'query_lensgrade' in add_system_dict else '', '','','','J2000',  add_system_dict['query_description'] if 'query_description' in add_system_dict else '', add_system_dict['query_alternate_name'] if 'query_alternate_name' in add_system_dict else '',  add_system_dict['query_z_lens'] if 'query_z_lens' in add_system_dict else '', add_system_dict['query_z_source'] if 'query_z_source' in add_system_dict else '', '','', add_system_dict['query_vdisp'] if 'query_vdisp' in add_system_dict else '',  add_system_dict['query_vdisp_err'] if 'query_vdisp_err' in add_system_dict else '', '','','','','','', add_system_dict['query_theta_e'] if 'query_theta_e' in add_system_dict else '',  add_system_dict['query_theta_e_err'] if 'query_theta_e_err' in add_system_dict else '', add_system_dict['query_theta_e_quality'] if 'query_theta_e_quality' in add_system_dict else '', '','','', add_system_dict['query_ra_hrs'] if 'query_ra_hrs' in add_system_dict else '', add_system_dict['query_ra_mins'] if 'query_ra_mins' in add_system_dict else '', add_system_dict['query_ra_secs'] if 'query_ra_secs' in add_system_dict else '',  add_system_dict['query_ra_coord'] if 'query_ra_coord' in add_system_dict else '', add_system_dict['ra_coord_err'] if 'ra_coord_err' in add_system_dict else '', '', add_system_dict['query_dec_degrees'] if 'query_dec_degrees' in add_system_dict else '',  add_system_dict['query_dec_arcmin'] if 'query_dec_arcmin' in add_system_dict else '', add_system_dict['query_dec_arcsec'] if 'query_dec_arcsec' in add_system_dict else '', add_system_dict['query_dec_coord'] if 'query_dec_coord' in add_system_dict else '', '','',self.lens_objects[system]['References'][0] if 'References' in self.lens_objects[system] else '',1,'NOW()', self.user_name, self.user_name, add_system_dict['query_discovery_date'] if 'query_discovery_date' in add_system_dict else '','NOW()','','','','', add_system_dict['query_z_lens_err'] if 'query_z_lens_err' in add_system_dict else '',  add_system_dict['query_z_lens_quality'] if 'query_z_lens_quality' in add_system_dict else '', add_system_dict['query_z_source_err'] if 'query_z_source_err' in add_system_dict else '', add_system_dict['query_z_source_quality'] if 'query_z_source_quality' in add_system_dict else '',0,1,0,'','','','','','','',0,0,'Manual',True,'','','','','', add_system_dict['query_system_name'].split('[')[0] if 'query_system_name' in add_system_dict else ''))
-                    file.write(' )\n')
+                    file.write(' );\n')
                     print('SAVED SAVE NEW SYSTEM>>>>>', system)
                 else: print('System in MLD but new information should be verified as to which entry to include...if any:', system)
