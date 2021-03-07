@@ -1568,8 +1568,9 @@ class Journal_tables():
         self.detection_surveys = []
         self.lens_detection_connection = []
         self.lens_reference_connection = []
-
+        
         with open(join(self.base_directory, 'batch_update_mysql_lenses.txt'), 'w') as file:
+            file.write('ALTER TABLE lens AUTO_INCREMENT = %s;\n'%str(start+1))
             for index, system in enumerate(self.lens_objects.keys()):
                 lensID = start+index
                 add_system_dict = {"inputaction":"Save", "query_system_name": system}
