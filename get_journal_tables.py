@@ -1533,9 +1533,13 @@ class Journal_tables():
                     add_system_dict[self.masterlens_phrases_to_input_converter[key]] = value
                     if (key + ' quality') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' quality']] = methodid
                     if (key + ' error') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' error']] = error
-
-                add_system_dict['referencestoadd[]'] = '[' + ','.join([self.reference_id[reference] for reference in self.lens_objects[system]['References']]) + ']'
-                add_system_dict['addreferences'] = 'addreferences'
+                
+                if self.lens_objects[system]['Discovery']:
+                    if 
+                else: add_system_dict['Discovery'] = ''
+                 
+                #add_system_dict['referencestoadd[]'] = '[' + ','.join([self.reference_id[reference] for reference in self.lens_objects[system]['References']]) + ']'
+                #add_system_dict['addreferences'] = 'addreferences'
 
                 print('What POST looks like', add_system_dict)
                 if all_favoured_MLD: 
