@@ -1518,6 +1518,7 @@ class Journal_tables():
                         input('CHECK key should not be considered for upload')
                         continue
                     if len(self.lens_objects[system][key]) == 0: continue
+                    reference = self.lens_objects[system]['Standard RA']['tracer'
 
                     weight = -9999
                     for data in self.lens_objects[system][key]:
