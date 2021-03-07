@@ -1514,6 +1514,11 @@ class Journal_tables():
                 if "volume" in po: file.write(','+po['volume'][0])
                 if "doi" in po: file.write(','+po['doi'])
                 file.write(' )\n')
+                
+    def update_MLD_discovery_surveys(self):
+        with open(join(self.base_directory, 'batch_update_mysql_surveys.txt'), 'w') as file:
+            for survey in self.detection_surveys:
+                file.write("INSERT INTO discovery ( title,acronym,description,lens_count,modified,gradeA_count,gradeB_count,gradeC_count,ungraded_count ) Values ( '',%s,'','',NOW(),'','','','' )\n"%survey)
             
     def update_MLD_lens_entries(self):
         """Update Masterlens database lens entries"""
@@ -1545,11 +1550,10 @@ class Journal_tables():
                     add_system_dict[self.masterlens_phrases_to_input_converter[key]] = value
                     if (key + ' quality') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' quality']] = methodid
                     if (key + ' error') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' error']] = error
-                self.discovery_id_inverted
                 if 'Discovery' in self.lens_objects[system] and self.lens_objects[system]['Discovery']:
                     try: add_system_dict['Discovery'] = self.discovery_id_inverted[str(self.lens_objects[system]['Discovery']['value'])]
                     except: add_system_dict['Discovery'] = self.lens_objects[system]['Discovery']['value']
-                    if add_system_dict['Discovery'] not in self.detection_surveys: self.detection_surveys.append(add_system_dict['Discovery'])
+                    if add_system_dict['Discovery'] not in self.detection_surveys and add_system_dict['Discovery'] not in self.discovery_id_inverted: self.detection_surveys.append(add_system_dict['Discovery'])
                 else: add_system_dict['Discovery'] = ''
                 
                  
