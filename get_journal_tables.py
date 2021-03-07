@@ -1552,12 +1552,12 @@ class Journal_tables():
     def update_MLD_lens_discovery_connection(self):
         with open(join(self.base_directory, 'batch_update_mysql_lens_discovery.txt'), 'w') as file:
             for connection in self.lens_detection_connection:
-                file.write("INSERT INTO discovery ( lensID,discoveryID,num ) Values ( %r,%r,1);\n"%(connection[0],connection[1])))
+                file.write("INSERT INTO discovery ( lensID,discoveryID,num ) Values ( %r,%r,1);\n"%(connection[0],connection[1]))
                            
     def update_MLD_lens_reference_connection(self):
         with open(join(self.base_directory, 'batch_update_mysql_lens_reference.txt'), 'w') as file:
             for connection in self.lens_reference_connection:
-                file.write("INSERT INTO discovery ( lensID,referenceID,ads,public,discovery_reference ) Values ( %r,%r,1,1,%r);\n"%(connection[0],connection[1],connection[2])))
+                file.write("INSERT INTO discovery ( lensID,referenceID,ads,public,discovery_reference ) Values ( %r,%r,1,1,%r);\n"%(connection[0],connection[1],connection[2]))
            
     def update_MLD_lens_entries(self):
         """Update Masterlens database lens entries"""
