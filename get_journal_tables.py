@@ -1331,7 +1331,9 @@ class Journal_tables():
             else: self.lens_objects[standard_name]['References'] = ['MNRAStmp(2021)303T']
             self.lens_objects[standard_name]['Lens type'].append({'value': 'GAL-GAL', 'tracer': {'bibcode':'MNRAStmp(2021)303T', 'update status': 'in SILO', 'weight':5}})
             if candidate['FIRST_DETECTION_FROM'] == '': self.lens_objects[standard_name]['Discovery'].append({'value': 'SILO', 'tracer': {'bibcode':'MNRAStmp(2021)303T', 'update status': 'in SILO', 'weight':5}})
-                                                                                              
+            
+            
+            
     def load_links(self):
         with open('LinKS_main.txt', 'r') as file:
             for line in file:
