@@ -1657,7 +1657,7 @@ class Journal_tables():
                 for coord_index, RA in enumerate(self.lens_objects[system]['Standard RA']):
                     if 'accurate_only_to_arcmin' not in RA and RA['value'] != '': break
                     elif 'accurate_only_to_arcmin' in RA and not RA['accurate_only_to_arcmin'] and RA['value'] != '': break
-                coord_error = 30/3600 if RA['accurate_only_to_arcmin'] else ''
+                coord_error = 30/3600 if 'accurate_only_to_arcmin' in RA and RA['accurate_only_to_arcmin'] else ''
                 
                 if 'Discovery' in self.lens_objects[system] and self.lens_objects[system]['Discovery']:
                     try: add_system_dict['Discovery'] = self.discovery_id[str(self.lens_objects[system]['Discovery'][0]['value'])]
