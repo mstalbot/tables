@@ -1578,7 +1578,7 @@ class Journal_tables():
                 none_favoured_in_MLD = True
                 for key in self.lens_objects[system].keys():
                     if key not in self.masterlens_phrases_to_input_converter:
-                        print('KEY>>>', key)
+                        #print('KEY>>>', key)
                         #input('CHECK key should not be considered for upload')
                         continue
                     if len(self.lens_objects[system][key]) == 0: continue
@@ -1604,17 +1604,17 @@ class Journal_tables():
                 if 'query_z_lens' not in add_system_dict or '⋅⋅' in str(add_system_dict['query_z_lens']) or '–' in str(add_system_dict['query_z_lens']): add_system_dict['query_z_lens']=''
                 elif 'query_z_lens' in add_system_dict and (float(add_system_dict['query_z_lens']) < 0 or float(add_system_dict['query_z_lens']) > 15):
                     print('ERROR IN query_z_lens', add_system_dict['query_z_lens'])
-                    input('On hold for you to check z_lens')
+                    #input('On hold for you to check z_lens')
                    
                 if 'query_z_source' not in add_system_dict or '⋅⋅' in str(add_system_dict['query_z_source']) or '–' in str(add_system_dict['query_z_source']): add_system_dict['query_z_source']=''
                 elif 'query_z_source' in add_system_dict and (float(add_system_dict['query_z_source']) < 0 or float(add_system_dict['query_z_source']) > 15):
                     print('ERROR IN query_z_source', add_system_dict['query_z_source'])
-                    input('On hold for you to check query_z_source')
+                    #input('On hold for you to check query_z_source')
                    
                 if 'query_theta_e' not in add_system_dict or '⋅⋅' in str(add_system_dict['query_theta_e']) or '–' in str(add_system_dict['query_theta_e']): add_system_dict['query_theta_e']=''
                 elif 'query_theta_e' in add_system_dict and (float(add_system_dict['query_theta_e']) < 0 or float(add_system_dict['query_theta_e']) > 15):
                     print('ERROR IN query_theta_e', add_system_dict['query_theta_e'])
-                    input('On hold for you to check query_theta_e')
+                    #input('On hold for you to check query_theta_e')
                    
                 if 'Discovery' in self.lens_objects[system] and self.lens_objects[system]['Discovery']:
                     try: add_system_dict['Discovery'] = self.discovery_id[str(self.lens_objects[system]['Discovery'][0]['value'])]
@@ -1623,22 +1623,18 @@ class Journal_tables():
                     if add_system_dict['Discovery'] in self.discovery_id: self.lens_detection_connection.append([lensID, self.discovery_id[add_system_dict['Discovery']]])
                 else: add_system_dict['Discovery'] = ''
                           
-                          
-                if 'Detected by' in self.lens_objects[system]:
-                    self.lens_reference_connection.append([lensID, self.reference_id[self.lens_objects[system]['Detected by']['tracer']['bibcode']],1])
-                else: self.lens_reference_connection.append([lensID, self.reference_id[self.lens_objects[system]['References'][0]],1])
+                for ref in self.lens_objects[system]['References']: self.lens_reference_connection.append([lensID, self.reference_id[ref], 1 if 'Detected by' in self.lens_objects[system] and self.lens_objects[system]['Detected by']['tracer']['bibcode'] == ref else 0])
                     
-                self.lens_reference_connection
                 #add_system_dict['referencestoadd[]'] = '[' + ','.join([self.reference_id[reference] for reference in self.lens_objects[system]['References']]) + ']'
                 #add_system_dict['addreferences'] = 'addreferences'
 
-                print('What POST looks like', add_system_dict)
+                #print('What POST looks like', add_system_dict)
                 if all_favoured_MLD: 
-                    print('Skipping since all entries in MLD for system:', system)
+                    #print('Skipping since all entries in MLD for system:', system)
                     continue
                 elif none_favoured_in_MLD:
                     file.write("INSERT INTO lens ( lensID,discovery_acronym,discovery_count,kind_acronym,kindID,filterID,system_name,lensgrade,multiplicity,morphology,reference_frame,equinox,description,alternate_name,z_lens,z_source,d_lens,d_source,vdisp,vdisp_err,time_delay0,time_delay1,mag_lens,mag_source,filter_lens,filter_source,theta_e,theta_e_err,theta_e_quality,theta_e_redshift,fluxes,ra_decimal,ra_hrs,ra_mins,ra_secs,ra_coord,ra_coord_err,dec_decimal,dec_degrees,dec_arcmin,dec_arcsec,dec_coord,dec_coord_err,number_images,reference_identifier,status,modified,created_by_member_name,modified_by_member_name,discovery_date,created,has_sdss,sdss_link,has_apod,apod_link,z_lens_err,z_lens_quality,z_source_err,z_source_quality,vett_status,released_status,hidden_status,vetted_by_member_name,released_as_of_version,released_by_member_name,hidden_by_member_name,vetted,released,hidden,repeats,graphic_status,coord_label,has_adsabs,adsabs_link,has_ned,ned_link,sdss_ObjID,sdss_specObjID,lens_name ) Values ( ")
                     file.write('%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r'%(lensID,add_system_dict['Discovery'] if 'Discovery' in add_system_dict else '', add_system_dict['query_discovery_count'] if 'query_discovery_count' in add_system_dict else '', self.lens_type_id[add_system_dict['query_kindID']] if 'query_kindID' in add_system_dict else '', add_system_dict['query_kindID'] if 'query_kindID' in add_system_dict else '',0, add_system_dict['query_system_name'] if 'query_system_name' in add_system_dict else '', add_system_dict['query_lensgrade'] if 'query_lensgrade' in add_system_dict else '', '','','','J2000',  add_system_dict['query_description'] if 'query_description' in add_system_dict else '', add_system_dict['query_alternate_name'] if 'query_alternate_name' in add_system_dict else '',  add_system_dict['query_z_lens'], add_system_dict['query_z_source'], '','', add_system_dict['query_vdisp'] if 'query_vdisp' in add_system_dict else '',  add_system_dict['query_vdisp_err'] if 'query_vdisp_err' in add_system_dict else '', '','','','','','', add_system_dict['query_theta_e'], add_system_dict['query_theta_e_err'] if 'query_theta_e_err' in add_system_dict else '', add_system_dict['query_theta_e_quality'] if 'query_theta_e_quality' in add_system_dict else '', '','','', add_system_dict['query_ra_hrs'] if 'query_ra_hrs' in add_system_dict else '', add_system_dict['query_ra_mins'] if 'query_ra_mins' in add_system_dict else '', add_system_dict['query_ra_secs'] if 'query_ra_secs' in add_system_dict else '',  add_system_dict['query_ra_coord'] if 'query_ra_coord' in add_system_dict else '', add_system_dict['ra_coord_err'] if 'ra_coord_err' in add_system_dict else '', '', add_system_dict['query_dec_degrees'] if 'query_dec_degrees' in add_system_dict else '',  add_system_dict['query_dec_arcmin'] if 'query_dec_arcmin' in add_system_dict else '', add_system_dict['query_dec_arcsec'] if 'query_dec_arcsec' in add_system_dict else '', add_system_dict['query_dec_coord'] if 'query_dec_coord' in add_system_dict else '', '','',self.lens_objects[system]['References'][0] if 'References' in self.lens_objects[system] else '',1,'NOW()', self.user_name, self.user_name, add_system_dict['query_discovery_date'] if 'query_discovery_date' in add_system_dict else '','NOW()','','','','', add_system_dict['query_z_lens_err'] if 'query_z_lens_err' in add_system_dict else '',  add_system_dict['query_z_lens_quality'] if 'query_z_lens_quality' in add_system_dict else '', add_system_dict['query_z_source_err'] if 'query_z_source_err' in add_system_dict else '', add_system_dict['query_z_source_quality'] if 'query_z_source_quality' in add_system_dict else '',0,1,0,'','','','','','','',0,0,'Manual',True,'','','','','', add_system_dict['query_system_name'].split('[')[0] if 'query_system_name' in add_system_dict else ''))
                     file.write(' );\n')
-                    print('SAVED SAVE NEW SYSTEM>>>>>', system)
+                    #print('SAVED SAVE NEW SYSTEM>>>>>', system)
                 else: print('System in MLD but new information should be verified as to which entry to include...if any:', system)
