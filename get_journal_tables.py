@@ -1632,10 +1632,8 @@ class Journal_tables():
                     if 'query_theta_e' in add_system_dict:
                         print('ERROR IN query_theta_e', add_system_dict['query_theta_e'])
                     add_system_dict['query_theta_e']=''
-                    
-                    self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'accurate_only_to_arcmin':self.bad_coord_error
-                
-                for coord_index, RA in enumerate(self.lens_objects[system]['Standard RA']):                                                            
+                                    
+                for coord_index, RA in enumerate(self.lens_objects[system]['Standard RA']):
                     if 'accurate_only_to_arcmin' not in RA and RA['value'] != '': break
                     elif 'accurate_only_to_arcmin' in RA and not RA['accurate_only_to_arcmin'] and RA['value'] != '': break
                 coord_error = 30/3600 if RA['accurate_only_to_arcmin'] else ''
