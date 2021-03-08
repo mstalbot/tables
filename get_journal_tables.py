@@ -1586,26 +1586,34 @@ class Journal_tables():
             for survey in self.detection_surveys:
                 file.write("INSERT INTO discovery ( title,acronym,description,lens_count,modified,gradeA_count,gradeB_count,gradeC_count,ungraded_count ) Values ( '',%r,'','',NOW(),'','','','' );\n"%survey)
             
-    def update_MLD_lens_discovery_connection(self):
+    def update_MLD_lens_discovsystem
+    ery_connection(self):
         with open(join(self.base_directory, 'batch_update_mysql_lens_discovery.txt'), 'w') as file:
             for connection in self.lens_detection_connection:
-                file.write("INSERT INTO discovery ( lensID,discoveryID,num ) Values ( %r,%r,1);\n"%(connection[0],connection[1]))
+                file.write("INSERT INTO discovery ( lensID,discoveryID,num ) Values ( %s,%s,1);\n"%(connection[0],connection[1]))
                            
     def update_MLD_lens_reference_connection(self):
         with open(join(self.base_directory, 'batch_update_mysql_lens_reference.txt'), 'w') as file:
             for connection in self.lens_reference_connection:
-                file.write("INSERT INTO discovery ( lensID,referenceID,ads,public,discovery_reference ) Values ( %r,%r,1,1,%r);\n"%(connection[0],connection[1],connection[2]))
+                file.write("INSERT INTO lens_reference ( lensID,referenceID,ads,public,discovery_reference ) Values ( %s,%s,1,1,%s);\n"%(connection[0],connection[1],connection[2]))
            
     def update_MLD_lens_entries(self):
         """Update Masterlens database lens entries"""
-        start = int(input('To start this section, you need to first set the AUTO increpent ID in database: start lensID='))
+        start = 746
         self.detection_surveys = []
         self.lens_detection_connection = []
         self.lens_reference_connection = []
         
+        self.skip_empty = []
+        self.skip_save = []
+        self.saved = []
+        self.skip_mld = []
+        
         with open(join(self.base_directory, 'batch_update_mysql_lenses.txt'), 'w') as file:
+            file.write('DELETE from lens where lensID > %s;\n'%str(start))
             file.write('ALTER TABLE lens AUTO_INCREMENT = %s;\n'%str(start+1))
             for index, system in enumerate(self.lens_objects.keys()):
+                #if index > 1: break
                 lensID = start+index
                 add_system_dict = {"inputaction":"Save", "query_system_name": system}
                 all_favoured_MLD = True
@@ -1615,7 +1623,9 @@ class Journal_tables():
                         #print('KEY>>>', key)
                         #input('CHECK key should not be considered for upload')
                         continue
-                    if len(self.lens_objects[system][key]) == 0: continue
+                    if len(self.lens_objects[system][key]) == 0:
+                        self.skip_empty.append(self.lens_objects[system])
+                        continue
 
                     weight = -9999
                     for data in self.lens_objects[system][key]:
@@ -1636,52 +1646,98 @@ class Journal_tables():
                     if (key + ' quality') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' quality']] = methodid
                     if (key + ' error') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' error']] = error
                 
-                try: add_system_dict['query_z_lens'] = float(add_system_dict['query_z_lens'])
+                try:
+                    add_system_dict['query_z_lens'] = round(float(str(add_system_dict['query_z_lens']).split(' ')[0]),4)
+                    if add_system_dict['query_z_lens'] < 0 or add_system_dict['query_z_lens'] > 14: add_system_dict['query_z_lens']=''
                 except:
                     if 'query_z_lens' in add_system_dict:
                         print('ERROR IN query_z_lens', add_system_dict['query_z_lens'])
                     add_system_dict['query_z_lens']=''
                    
-                try: add_system_dict['query_z_source'] = float(add_system_dict['query_z_source'])
+                try:
+                    add_system_dict['query_z_source'] = round(float(str(add_system_dict['query_z_source']).split(' ')[0]),4)
+                    if add_system_dict['query_z_source'] < 0 or add_system_dict['query_z_source'] > 14: add_system_dict['query_z_source']=''
                 except:
                     if 'query_z_source' in add_system_dict:
                         print('ERROR IN query_z_source', add_system_dict['query_z_source'])
                     add_system_dict['query_z_source']=''
                 
-                try: add_system_dict['query_theta_e'] = float(add_system_dict['query_theta_e'])
+                try:
+                    add_system_dict['query_theta_e'] = round(float(str(add_system_dict['query_theta_e']).split(' ')[0]),2)
+                    if add_system_dict['query_theta_e'] < 0 or add_system_dict['query_theta_e'] > 14: add_system_dict['query_theta_e']=''
                 except:
                     if 'query_theta_e' in add_system_dict:
                         print('ERROR IN query_theta_e', add_system_dict['query_theta_e'])
                     add_system_dict['query_theta_e']=''
-                                    
+
+                try:
+                    add_system_dict['query_z_source_err'] = round(float(str(add_system_dict['query_z_source_err']).split(' ')[0]),4)
+                    if add_system_dict['query_z_source_err'] < 0: add_system_dict['query_z_source_err'] = 0
+                except:
+                    if 'query_z_source_err' in add_system_dict:
+                        print('ERROR IN query_z_source_err', add_system_dict['query_z_source_err'])
+                    add_system_dict['query_z_source_err']=0
+                    
+                try:
+                    add_system_dict['query_z_lens_err'] = round(float(str(add_system_dict['query_z_lens_err']).split(' ')[0]),4)
+                    if add_system_dict['query_z_lens_err'] < 0: add_system_dict['query_z_lens_err'] = 0
+                except:
+                    if 'query_z_lens_err' in add_system_dict:
+                        print('ERROR IN query_z_lens_err', add_system_dict['query_z_lens_err'])
+                    add_system_dict['query_z_lens_err']=0
+                    
+                try:
+                    add_system_dict['number_images'] = int(str(add_system_dict['number_images']).split(' ')[0])
+                    if add_system_dict['number_images'] < 0: add_system_dict['number_images'] = 0
+                except:
+                    if 'number_images' in add_system_dict:
+                        print('ERROR IN number_images', add_system_dict['number_images'])
+                    add_system_dict['number_images']=0
+                
+                if len(self.lens_objects[system]['Standard RA']) == 0:
+                    print('Skipping since Coords not dependable', self.lens_objects[system])
+                    continue
                 for coord_index, RA in enumerate(self.lens_objects[system]['Standard RA']):
                     if 'accurate_only_to_arcmin' not in RA and RA['value'] != '': break
                     elif 'accurate_only_to_arcmin' in RA and not RA['accurate_only_to_arcmin'] and RA['value'] != '': break
                 coord_error = 30/3600 if 'accurate_only_to_arcmin' in RA and RA['accurate_only_to_arcmin'] else ''
                 
                 if 'Discovery' in self.lens_objects[system] and self.lens_objects[system]['Discovery']:
-                    try: add_system_dict['Discovery'] = self.discovery_id[str(self.lens_objects[system]['Discovery'][0]['value'])]
+                    try: add_system_dict['Discovery'] = self.discovery_id_inverted[str(self.lens_objects[system]['Discovery'][0]['value'])]
                     except: add_system_dict['Discovery'] = self.lens_objects[system]['Discovery'][0]['value'].replace(': check','')
                     if add_system_dict['Discovery'] not in self.detection_surveys and add_system_dict['Discovery'] not in self.discovery_id: self.detection_surveys.append(add_system_dict['Discovery'])
-                    if add_system_dict['Discovery'] in self.discovery_id: self.lens_detection_connection.append([lensID, self.discovery_id[add_system_dict['Discovery']]])
+                    if add_system_dict['Discovery'] in self.discovery_id: self.lens_detection_connection.append([lensID, int(self.discovery_id[add_system_dict['Discovery']])])
                 else: add_system_dict['Discovery'] = ''
-                          
+                         
+        
                 for ref in self.lens_objects[system]['References']:
                     try: self.lens_reference_connection.append([lensID, self.reference_id[ref], 1 if 'Detected by' in self.lens_objects[system] and self.lens_objects[system]['Detected by']['tracer']['bibcode'] == ref else 0])
                     except Exception as e:
                         print('>>>>>>>Could not pin to reference', ref, e)
                 #add_system_dict['referencestoadd[]'] = '[' + ','.join([self.reference_id[reference] for reference in self.lens_objects[system]['References']]) + ']'
                 #add_system_dict['addreferences'] = 'addreferences'
-                #print('What POST looks like', add_system_dict)
-                if all_favoured_MLD: 
+                '''if index > 337 and index < 341:
+                    #index < 458:
+                    print('Broken POST looks like', add_system_dict)
+                else: continue'''
+                  
+                if index == 100: print('Works POST looks like', add_system_dict)
+                if not none_favoured_in_MLD: 
                     #print('Skipping since all entries in MLD for system:', system)
-                    continue
-                elif RA['Standard RA']['value'] == '':
-                    print('Skipping since no RA is available')
-                    continue
+                    self.skip_mld.append(self.lens_objects[system])
+                elif RA['value'] == '':
+                    #print('Skipping since no RA is available')
+                    self.skip_save(self.lens_objects[system])
                 elif none_favoured_in_MLD:
-                    file.write("INSERT INTO lens ( lensID,discovery_acronym,discovery_count,kind_acronym,kindID,filterID,system_name,lensgrade,multiplicity,morphology,reference_frame,equinox,description,alternate_name,z_lens,z_source,d_lens,d_source,vdisp,vdisp_err,time_delay0,time_delay1,mag_lens,mag_source,filter_lens,filter_source,theta_e,theta_e_err,theta_e_quality,theta_e_redshift,fluxes,ra_decimal,ra_hrs,ra_mins,ra_secs,ra_coord,ra_coord_err,dec_decimal,dec_degrees,dec_arcmin,dec_arcsec,dec_coord,dec_coord_err,number_images,reference_identifier,status,modified,created_by_member_name,modified_by_member_name,discovery_date,created,has_sdss,sdss_link,has_apod,apod_link,z_lens_err,z_lens_quality,z_source_err,z_source_quality,vett_status,released_status,hidden_status,vetted_by_member_name,released_as_of_version,released_by_member_name,hidden_by_member_name,vetted,released,hidden,repeats,graphic_status,coord_label,has_adsabs,adsabs_link,has_ned,ned_link,sdss_ObjID,sdss_specObjID,lens_name ) Values ( ")
-                    file.write('%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r'%(lensID,add_system_dict['Discovery'] if 'Discovery' in add_system_dict else '', add_system_dict['query_discovery_count'] if 'query_discovery_count' in add_system_dict else '', self.lens_type_id[add_system_dict['query_kindID']] if 'query_kindID' in add_system_dict else '', add_system_dict['query_kindID'] if 'query_kindID' in add_system_dict else '',0, add_system_dict['query_system_name'] if 'query_system_name' in add_system_dict else '', add_system_dict['query_lensgrade'] if 'query_lensgrade' in add_system_dict else '', '','','','J2000',  add_system_dict['query_description'] if 'query_description' in add_system_dict else '', add_system_dict['query_alternate_name'] if 'query_alternate_name' in add_system_dict else '',  add_system_dict['query_z_lens'], add_system_dict['query_z_source'], '','', add_system_dict['query_vdisp'] if 'query_vdisp' in add_system_dict else '',  add_system_dict['query_vdisp_err'] if 'query_vdisp_err' in add_system_dict else '', '','','','','','', add_system_dict['query_theta_e'], add_system_dict['query_theta_e_err'] if 'query_theta_e_err' in add_system_dict else '', add_system_dict['query_theta_e_quality'] if 'query_theta_e_quality' in add_system_dict else '', '','','', add_system_dict['query_ra_hrs'] if 'query_ra_hrs' in add_system_dict else '', add_system_dict['query_ra_mins'] if 'query_ra_mins' in add_system_dict else '', add_system_dict['query_ra_secs'] if 'query_ra_secs' in add_system_dict else '',  add_system_dict['query_ra_coord'] if 'query_ra_coord' in add_system_dict else '', coord_error, '', add_system_dict['query_dec_degrees'] if 'query_dec_degrees' in add_system_dict else '',  add_system_dict['query_dec_arcmin'] if 'query_dec_arcmin' in add_system_dict else '', add_system_dict['query_dec_arcsec'] if 'query_dec_arcsec' in add_system_dict else '', add_system_dict['query_dec_coord'] if 'query_dec_coord' in add_system_dict else '', coord_error,'',self.lens_objects[system]['References'][0] if 'References' in self.lens_objects[system] else '',1,'NOW()', self.user_name, self.user_name, add_system_dict['query_discovery_date'] if 'query_discovery_date' in add_system_dict else '','NOW()','','','','', add_system_dict['query_z_lens_err'] if 'query_z_lens_err' in add_system_dict else '',  add_system_dict['query_z_lens_quality'] if 'query_z_lens_quality' in add_system_dict else '', add_system_dict['query_z_source_err'] if 'query_z_source_err' in add_system_dict else '', add_system_dict['query_z_source_quality'] if 'query_z_source_quality' in add_system_dict else '',0,1,0,'','','','','','','',0,0,'Manual',True,'','','','','', add_system_dict['query_system_name'].split('[')[0] if 'query_system_name' in add_system_dict else ''))
-                    file.write(' );\n')
-                    #print('SAVED SAVE NEW SYSTEM>>>>>', system)
-                else: print('System in MLD but new information should be verified as to which entry to include...if any:', system)
+                    for i in range(200):
+                        lensID+=1
+                        file.write("INSERT INTO lens ( lensID,discovery_acronym,discovery_count,kind_acronym,kindID,filterID,system_name,lensgrade,multiplicity,morphology,reference_frame,equinox,description,alternate_name,z_lens,z_source,d_lens,d_source,vdisp,vdisp_err,time_delay0,time_delay1,mag_lens,mag_source,filter_lens,filter_source,theta_e,theta_e_err,theta_e_quality,theta_e_redshift,fluxes,ra_decimal,ra_hrs,ra_mins,ra_secs,ra_coord,ra_coord_err,dec_decimal,dec_degrees,dec_arcmin,dec_arcsec,dec_coord,dec_coord_err,number_images,reference_identifier,status,modified,created_by_member_name,modified_by_member_name,discovery_date,created,has_sdss,sdss_link,has_apod,apod_link,z_lens_err,z_lens_quality,z_source_err,z_source_quality,vett_status,released_status,hidden_status,vetted_by_member_name,released_as_of_version,released_by_member_name,hidden_by_member_name,vetted,released,hidden,repeats,graphic_status,coord_label,has_adsabs,adsabs_link,has_ned,ned_link,sdss_ObjID,sdss_specObjID,lens_name ) Values ( ")
+                        to_write = '%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%s,%r,%r,%s,%s,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%s,%s,%s,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r'%(lensID,add_system_dict['Discovery'] if 'Discovery' in add_system_dict else '', int(add_system_dict['query_discovery_count']) if 'query_discovery_count' in add_system_dict else 0, add_system_dict['query_kindID'] if 'query_kindID' in add_system_dict else '', int(self.lens_type_id[add_system_dict['query_kindID']]) if 'query_kindID' in add_system_dict else '',0, add_system_dict['query_system_name'] if 'query_system_name' in add_system_dict else '', add_system_dict['query_lensgrade'] if 'query_lensgrade' in add_system_dict else '', '','','','J2000',  add_system_dict['query_description'] if 'query_description' in add_system_dict else '', add_system_dict['query_alternate_name'] if 'query_alternate_name' in add_system_dict else '',  add_system_dict['query_z_lens'], add_system_dict['query_z_source'], '','', add_system_dict['query_vdisp'] if 'query_vdisp' in add_system_dict else '',  add_system_dict['query_vdisp_err'] if 'query_vdisp_err' in add_system_dict else '', '','','','','','', add_system_dict['query_theta_e'], add_system_dict['query_theta_e_err'] if 'query_theta_e_err' in add_system_dict else '', add_system_dict['query_theta_e_quality'] if 'query_theta_e_quality' in add_system_dict else '', '','','', add_system_dict['query_ra_hrs'] if 'query_ra_hrs' in add_system_dict else '', add_system_dict['query_ra_mins'] if 'query_ra_mins' in add_system_dict else '', str(round(float(add_system_dict['query_ra_secs']),2)) if 'query_ra_secs' in add_system_dict else '',  round(float(add_system_dict['query_ra_coord']),6) if 'query_ra_coord' in add_system_dict else '', coord_error, '', add_system_dict['query_dec_degrees'] if 'query_dec_degrees' in add_system_dict else '',  add_system_dict['query_dec_arcmin'] if 'query_dec_arcmin' in add_system_dict else '', str(round(float(add_system_dict['query_dec_arcsec']),2)) if 'query_dec_arcsec' in add_system_dict else '', round(float(add_system_dict['query_dec_coord']),6) if 'query_dec_coord' in add_system_dict else '', coord_error, add_system_dict['number_images'], self.lens_objects[system]['References'][0] if 'References' in self.lens_objects[system] else '',1,'NOW()', self.user_name, self.user_name, add_system_dict['query_discovery_date'] if 'query_discovery_date' in add_system_dict else 'NULL','NOW()',0,'',0,'', add_system_dict['query_z_lens_err'] if 'query_z_lens_err' in add_system_dict else 0,  add_system_dict['query_z_lens_quality'] if 'query_z_lens_quality' in add_system_dict else '', add_system_dict['query_z_source_err'] if 'query_z_source_err' in add_system_dict else 0, add_system_dict['query_z_source_quality'] if 'query_z_source_quality' in add_system_dict else '',0,1,0,'','','','','NULL','NULL','NULL',0,0,'Manual',0,'',0,'','','', add_system_dict['query_system_name'].split('[')[0] if 'query_system_name' in add_system_dict else '')
+                        file.write(to_write.replace('nan',"''"))
+                        file.write(' );\n')
+                    self.saved.append(self.lens_objects[system])
+                    print('SAVED SAVE NEW SYSTEM>>>>>', self.lens_objects[system])
+                    break
+            print('Stats on save', 'Saved', len(self.saved), 'Skipped', len(self.skip_mld) + len(self.skip_save) + len(self.skip_empty), 'in mld', len(self.skip_mld), 'in empty', len(self.skip_empty), 'in bad', len(self.skip_save))
+                    
+                
