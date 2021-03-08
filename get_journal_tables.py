@@ -1596,7 +1596,7 @@ class Journal_tables():
     def update_MLD_lens_entries(self):
         """Update Masterlens database lens entries"""
         
-        start = int(input('You have to find last entry lensID in database and set this to lensID+1))
+        start = int(input('You have to find last entry lensID in database and set this to lensID+1'))
         self.detection_surveys = []
         self.lens_detection_connection = []
         self.lens_reference_connection = []
