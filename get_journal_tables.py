@@ -1005,9 +1005,6 @@ class Journal_tables():
                 print('Problem with data:', table_row, map)
                 testi = input('Retry to see bug? (type y for yes):')
                 if testi == 'y': standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
-
-            if self.bad_coord_error:
-             
              
             if 'Cluster Sources Table' in action_map and standard_ra != '':
                 if 'Word to recognize name is of lens and NOT source' in action_map:
@@ -1035,8 +1032,8 @@ class Journal_tables():
                 if 'Standard DEC' not in self.lens_objects: self.lens_objects[standard_name]['Standard DEC'] = []
 
                 #Save standard coordinate info
-                self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
-                self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
+                self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'accurate_only_to_arcmin':self.bad_coord_error, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
+                self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'accurate_only_to_arcmin':self.bad_coord_error, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
 
                 #Save reference information via a conversion from ADS bibform to MLD bibform
                 if 'References' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'] = [self.ads_to_mld_reference_interpreter[self.query]]
@@ -1635,6 +1632,8 @@ class Journal_tables():
                     if 'query_theta_e' in add_system_dict:
                         print('ERROR IN query_theta_e', add_system_dict['query_theta_e'])
                     add_system_dict['query_theta_e']=''
+                    
+                if self.lens_objects[system][] accurate_only_to_arcmin
                    
                 if 'Discovery' in self.lens_objects[system] and self.lens_objects[system]['Discovery']:
                     try: add_system_dict['Discovery'] = self.discovery_id[str(self.lens_objects[system]['Discovery'][0]['value'])]
@@ -1649,7 +1648,6 @@ class Journal_tables():
                         print('>>>>>>>Could not pin to reference', ref, e)
                 #add_system_dict['referencestoadd[]'] = '[' + ','.join([self.reference_id[reference] for reference in self.lens_objects[system]['References']]) + ']'
                 #add_system_dict['addreferences'] = 'addreferences'
-
                 #print('What POST looks like', add_system_dict)
                 if all_favoured_MLD: 
                     #print('Skipping since all entries in MLD for system:', system)
