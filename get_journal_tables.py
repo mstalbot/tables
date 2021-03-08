@@ -805,9 +805,12 @@ class Journal_tables():
             if Rs == '':
                 Rs = '30'
                 self.bad_coord_error = True
+            elif len(Rs) > 2 and '.' not in Rs: Rs = Rs[:2] + '.' + Rs[2:]
+               
             if Ds == '':
                 Ds = '30'
                 self.bad_coord_error = True
+            elif len(Ds) > 2 and '.' not in Ds: Ds = Ds[:2] + '.' + Ds[2:]
             
             coords = SkyCoord("%s:%s:%s %s:%s:%s"%(Rh,Rm,Rs,sign+Dd,Dm,Ds), frame='fk5', unit=(units.hourangle, units.deg))
             return coords.ra.deg, coords.dec.deg, system_name
@@ -1019,8 +1022,17 @@ class Journal_tables():
                     if rh: standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,int(rs),dd,dm,int(ds))) + ']'
                     else: standard_name = self.cluster_lens_name + '[' + str(table_row[map['Source names']]) + ']'
 
-
-            if standard_name is '': print('Could not define system', table_row, map)
+            if standard_name is '':
+                if 'System Name' in map or 'Alternate Name(s)' in map:
+                    for system in self.lens_objects:
+                        if 'System Name' in map and table_row[map['System Name']] in [self.lens_objects[system]['System Name'] if 'System Name' in self.lens_objects[system] else '-999999', elf.lens_objects[system]['Alternate Name(s)'] if 'Alternate Name(s)' in self.lens_objects[system] else '-999999']:
+                            standard_name = system + ''
+                            break
+                        if 'Alternate Name(s)' in map and table_row[map['Alternate Name(s)']] in [self.lens_objects[system]['System Name'] if 'System Name' in self.lens_objects[system] else '-999999', elf.lens_objects[system]['Alternate Name(s)'] if 'Alternate Name(s)' in self.lens_objects[system] else '-999999']:
+                            standard_name = system + ''
+                            break
+                                        
+            if standard_name is '': print('Could not define system. Retrying via comparison to others', table_row, map)
             else:
                 if standard_name not in self.lens_objects:
                     self.lens_objects[standard_name] = {}
