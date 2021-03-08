@@ -1519,7 +1519,7 @@ class Journal_tables():
             total_text = ''
             if 'Paper text' in self.ads_scrapped_data[query]:
                 total_text += self.ads_scrapped_data[query]['Paper text']
-                if 'Table meta data' in self.ads_scrapped_data[query]: total_text += ''.join([self.ads_scrapped_data[query]['Table meta data'][table_set_key]['Response']for table_set_key in self.ads_scrapped_data[query]['Table meta data'].keys()])
+                if 'Table meta data' in self.ads_scrapped_data[query]: total_text += ''.join([self.ads_scrapped_data[query]['Table meta data'][table_set_key]['Response'] for table_set_key in self.ads_scrapped_data[query]['Table meta data'].keys()])
             
             for name in name_versions:
                 try:
