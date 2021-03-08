@@ -1583,8 +1583,7 @@ class Journal_tables():
             for survey in self.detection_surveys:
                 file.write("INSERT INTO discovery ( title,acronym,description,lens_count,modified,gradeA_count,gradeB_count,gradeC_count,ungraded_count ) Values ( '',%r,'','',NOW(),'','','','' );\n"%survey)
             
-    def update_MLD_lens_discovsystem
-    ery_connection(self):
+    def update_MLD_lens_discovery_connection(self):
         with open(join(self.base_directory, 'batch_update_mysql_lens_discovery.txt'), 'w') as file:
             for connection in self.lens_detection_connection:
                 file.write("INSERT INTO discovery ( lensID,discoveryID,num ) Values ( %s,%s,1);\n"%(connection[0],connection[1]))
