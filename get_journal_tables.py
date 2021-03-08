@@ -1730,10 +1730,6 @@ class Journal_tables():
                         print('>>>>>>>Could not pin to reference', ref, e)
                 #add_system_dict['referencestoadd[]'] = '[' + ','.join([self.reference_id[reference] for reference in self.lens_objects[system]['References']]) + ']'
                 #add_system_dict['addreferences'] = 'addreferences'
-                '''if index > 337 and index < 341:
-                    #index < 458:
-                    print('Broken POST looks like', add_system_dict)
-                else: continue'''
                  
                 if not none_favoured_in_MLD: 
                     #print('Skipping since all entries in MLD for system:', system)
