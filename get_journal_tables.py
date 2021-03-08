@@ -1601,20 +1601,24 @@ class Journal_tables():
                     else: add_system_dict[self.masterlens_phrases_to_input_converter[key]] = value
                     if (key + ' quality') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' quality']] = methodid
                     if (key + ' error') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' error']] = error
-                if 'query_z_lens' not in add_system_dict or '⋅⋅' in str(add_system_dict['query_z_lens']) or '–' in str(add_system_dict['query_z_lens']): add_system_dict['query_z_lens']=''
-                elif 'query_z_lens' in add_system_dict and (float(add_system_dict['query_z_lens']) < 0 or float(add_system_dict['query_z_lens']) > 15):
-                    print('ERROR IN query_z_lens', add_system_dict['query_z_lens'])
-                    #input('On hold for you to check z_lens')
+                
+                try: add_system_dict['query_z_lens'] = float(add_system_dict['query_z_lens'])
+                except:
+                    if 'query_z_lens' in add_system_dict:
+                        print('ERROR IN query_z_lens', add_system_dict['query_z_lens'])
+                    add_system_dict['query_z_lens']=''
                    
-                if 'query_z_source' not in add_system_dict or '⋅⋅' in str(add_system_dict['query_z_source']) or '–' in str(add_system_dict['query_z_source']): add_system_dict['query_z_source']=''
-                elif 'query_z_source' in add_system_dict and (float(add_system_dict['query_z_source']) < 0 or float(add_system_dict['query_z_source']) > 15):
-                    print('ERROR IN query_z_source', add_system_dict['query_z_source'])
-                    #input('On hold for you to check query_z_source')
-                   
-                if 'query_theta_e' not in add_system_dict or '⋅⋅' in str(add_system_dict['query_theta_e']) or '–' in str(add_system_dict['query_theta_e']): add_system_dict['query_theta_e']=''
-                elif 'query_theta_e' in add_system_dict and (float(add_system_dict['query_theta_e']) < 0 or float(add_system_dict['query_theta_e']) > 15):
-                    print('ERROR IN query_theta_e', add_system_dict['query_theta_e'])
-                    #input('On hold for you to check query_theta_e')
+                try: add_system_dict['query_z_source'] = float(add_system_dict['query_z_source'])
+                except:
+                    if 'query_z_source' in add_system_dict:
+                        print('ERROR IN query_z_source', add_system_dict['query_z_source'])
+                    add_system_dict['query_z_source']=''
+                
+                try: add_system_dict['query_theta_e'] = float(add_system_dict['query_theta_e'])
+                except:
+                    if 'query_theta_e' in add_system_dict:
+                        print('ERROR IN query_theta_e', add_system_dict['query_theta_e'])
+                    add_system_dict['query_theta_e']=''
                    
                 if 'Discovery' in self.lens_objects[system] and self.lens_objects[system]['Discovery']:
                     try: add_system_dict['Discovery'] = self.discovery_id[str(self.lens_objects[system]['Discovery'][0]['value'])]
@@ -1623,8 +1627,10 @@ class Journal_tables():
                     if add_system_dict['Discovery'] in self.discovery_id: self.lens_detection_connection.append([lensID, self.discovery_id[add_system_dict['Discovery']]])
                 else: add_system_dict['Discovery'] = ''
                           
-                for ref in self.lens_objects[system]['References']: self.lens_reference_connection.append([lensID, self.reference_id[ref], 1 if 'Detected by' in self.lens_objects[system] and self.lens_objects[system]['Detected by']['tracer']['bibcode'] == ref else 0])
-                    
+                for ref in self.lens_objects[system]['References']:
+                    try: self.lens_reference_connection.append([lensID, self.reference_id[ref], 1 if 'Detected by' in self.lens_objects[system] and self.lens_objects[system]['Detected by']['tracer']['bibcode'] == ref else 0])
+                    except Exception as e:
+                        print('>>>>>>>Could not pin to reference', ref, e)
                 #add_system_dict['referencestoadd[]'] = '[' + ','.join([self.reference_id[reference] for reference in self.lens_objects[system]['References']]) + ']'
                 #add_system_dict['addreferences'] = 'addreferences'
 
