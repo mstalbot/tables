@@ -1523,7 +1523,7 @@ class Journal_tables():
             
             for name in name_versions:
                 try:
-                    test=int(name)
+                    test=float(name)
                     continue
                 except:
                     name2 = name.split('J')[-1]
