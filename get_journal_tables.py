@@ -785,6 +785,7 @@ class Journal_tables():
                 coords = system_name.split(sign)
                 print('system trial', sign, coords)
                 if len(coords) == 2: break
+            if sign != '+': sign = '-'
             ra, dec = coords
             ra = ra.replace('J','')
             dec = dec[:4]
