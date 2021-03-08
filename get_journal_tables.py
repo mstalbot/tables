@@ -996,7 +996,7 @@ class Journal_tables():
             
             try:
                 standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
-                if standard_ra: rh,rm,rs,dd,dm,ds = self.set_coord_details(standard_name, 0, key, key2, 'Not yet included', self.query, save=False, ra=standard_ra, dec=standard_dec)
+                if standard_ra: rh,rm,rs,dd,dm,ds = self.set_coord_details(standard_name, 0 if standard_ra == '' else 1 if self.bad_coord_error else 2, key, key2, 'Not yet included', self.query, save=False, ra=standard_ra, dec=standard_dec)
                 else: rh,rm,rs,dd,dm,ds = '', '', '', '', '', ''
             except Exception as e:
                 print(self.ads_scrapped_tables[self.query][key][key2], '\n>Standardize system Failed:', e)
@@ -1032,8 +1032,8 @@ class Journal_tables():
                 if 'Standard DEC' not in self.lens_objects: self.lens_objects[standard_name]['Standard DEC'] = []
 
                 #Save standard coordinate info
-                self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'accurate_only_to_arcmin':self.bad_coord_error, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
-                self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'accurate_only_to_arcmin':self.bad_coord_error, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
+                self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'accurate_only_to_arcmin':self.bad_coord_error, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0 if standard_ra == '' else 1 if self.bad_coord_error else 2}})
+                self.lens_objects[standard_name]['Standard DEC'].append({'value': standard_dec, 'accurate_only_to_arcmin':self.bad_coord_error, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0 if standard_dec == '' else 1 if self.bad_coord_error else 2}})
 
                 #Save reference information via a conversion from ADS bibform to MLD bibform
                 if 'References' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'] = [self.ads_to_mld_reference_interpreter[self.query]]
@@ -1636,7 +1636,8 @@ class Journal_tables():
                     self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'accurate_only_to_arcmin':self.bad_coord_error
                 
                 for coord_index, RA in enumerate(self.lens_objects[system]['Standard RA']):                                                            
-                    if not RA['accurate_only_to_arcmin']: break
+                    if 'accurate_only_to_arcmin' not in RA and RA['value'] != '': break
+                    elif 'accurate_only_to_arcmin' in RA and not RA['accurate_only_to_arcmin'] and RA['value'] != '': break
                 coord_error = 30/3600 if RA['accurate_only_to_arcmin'] else ''
                 
                 if 'Discovery' in self.lens_objects[system] and self.lens_objects[system]['Discovery']:
