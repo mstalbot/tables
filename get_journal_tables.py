@@ -1025,10 +1025,10 @@ class Journal_tables():
             if standard_name is '':
                 if 'System Name' in map or 'Alternate Name(s)' in map:
                     for system in self.lens_objects:
-                        if 'System Name' in map and table_row[map['System Name']] in [self.lens_objects[system]['System Name'] if 'System Name' in self.lens_objects[system] else '-999999', elf.lens_objects[system]['Alternate Name(s)'] if 'Alternate Name(s)' in self.lens_objects[system] else '-999999']:
+                        if 'System Name' in map and table_row[map['System Name']] in [self.lens_objects[system]['System Name'] if 'System Name' in self.lens_objects[system] else '-999999', self.lens_objects[system]['Alternate Name(s)'] if 'Alternate Name(s)' in self.lens_objects[system] else '-999999']:
                             standard_name = system + ''
                             break
-                        if 'Alternate Name(s)' in map and table_row[map['Alternate Name(s)']] in [self.lens_objects[system]['System Name'] if 'System Name' in self.lens_objects[system] else '-999999', elf.lens_objects[system]['Alternate Name(s)'] if 'Alternate Name(s)' in self.lens_objects[system] else '-999999']:
+                        if 'Alternate Name(s)' in map and table_row[map['Alternate Name(s)']] in [self.lens_objects[system]['System Name'] if 'System Name' in self.lens_objects[system] else '-999999', self.lens_objects[system]['Alternate Name(s)'] if 'Alternate Name(s)' in self.lens_objects[system] else '-999999']:
                             standard_name = system + ''
                             break
                                         
