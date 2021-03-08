@@ -1585,18 +1585,22 @@ class Journal_tables():
             
     def update_MLD_lens_discovery_connection(self):
         with open(join(self.base_directory, 'batch_update_mysql_lens_discovery.txt'), 'w') as file:
+            file.write('DELETE from lens_discovery where lensID > %s;\n'%str(self.start_lensID))
             for connection in self.lens_detection_connection:
-                file.write("INSERT INTO discovery ( lensID,discoveryID,num ) Values ( %s,%s,1);\n"%(connection[0],connection[1]))
+                file.write("INSERT INTO lens_discovery ( lensID,discoveryID,num ) Values ( %s,%s,1);\n"%(connection[0],connection[1]))
                            
     def update_MLD_lens_reference_connection(self):
         with open(join(self.base_directory, 'batch_update_mysql_lens_reference.txt'), 'w') as file:
+            file.write('DELETE from lens_reference where lensID > %s;\n'%str(self.start_lensID))
             for connection in self.lens_reference_connection:
                 file.write("INSERT INTO lens_reference ( lensID,referenceID,ads,public,discovery_reference ) Values ( %s,%s,1,1,%s);\n"%(connection[0],connection[1],connection[2]))
            
     def update_MLD_lens_entries(self):
         """Update Masterlens database lens entries"""
         
-        start = int(input('You have to find last entry lensID in database and set this to lensID+1'))
+        #start = int(input('You have to find last entry lensID in database and set this to lensID+1'))
+        self.start_lensID = 746
+        break_limit = int(input('Set a break limit'))
         self.detection_surveys = []
         self.lens_detection_connection = []
         self.lens_reference_connection = []
@@ -1605,20 +1609,20 @@ class Journal_tables():
         self.skip_save = []
         self.saved = []
         self.skip_mld = []
+        self.missed_references = []
         
         with open(join(self.base_directory, 'batch_update_mysql_lenses.txt'), 'w') as file:
-            file.write('DELETE from lens where lensID > %s;\n'%str(start))
-            file.write('ALTER TABLE lens AUTO_INCREMENT = %s;\n'%str(start+1))
+            file.write('DELETE from lens where lensID > %s;\n'%str(self.start_lensID))
+            file.write('ALTER TABLE lens AUTO_INCREMENT = %s;\n'%str(self.start_lensID+1))
             for index, system in enumerate(self.lens_objects.keys()):
-                #if index > 1: break
+                if index > break_limit: break
                 lensID = start+index
                 add_system_dict = {"inputaction":"Save", "query_system_name": system}
-                print('NEW', add_system_dict)
                 all_favoured_MLD = True
                 none_favoured_in_MLD = True
                 
                 for key in self.lens_objects[system].keys():
-                    if key not in self.masterlens_phrases_to_input_converter and len(self.lens_objects[system][key]) > 0: continue
+                    if key not in self.masterlens_phrases_to_input_converter or len(self.lens_objects[system][key]) == 0: continue
                     
                     weight = -9999
                     for data in self.lens_objects[system][key]:
@@ -1665,27 +1669,27 @@ class Journal_tables():
 
                 try:
                     add_system_dict['query_z_source_err'] = round(float(str(add_system_dict['query_z_source_err']).split(' ')[0]),4)
-                    if add_system_dict['query_z_source_err'] < 0: add_system_dict['query_z_source_err'] = 0
+                    if add_system_dict['query_z_source_err'] < 0: add_system_dict['query_z_source_err'] = ''
                 except:
                     if 'query_z_source_err' in add_system_dict:
                         print('ERROR IN query_z_source_err', add_system_dict['query_z_source_err'])
-                    add_system_dict['query_z_source_err']=0
+                    add_system_dict['query_z_source_err']=''
                     
                 try:
                     add_system_dict['query_z_lens_err'] = round(float(str(add_system_dict['query_z_lens_err']).split(' ')[0]),4)
-                    if add_system_dict['query_z_lens_err'] < 0: add_system_dict['query_z_lens_err'] = 0
+                    if add_system_dict['query_z_lens_err'] < 0: add_system_dict['query_z_lens_err'] = ''
                 except:
                     if 'query_z_lens_err' in add_system_dict:
                         print('ERROR IN query_z_lens_err', add_system_dict['query_z_lens_err'])
-                    add_system_dict['query_z_lens_err']=0
+                    add_system_dict['query_z_lens_err']=''
                     
                 try:
                     add_system_dict['number_images'] = int(str(add_system_dict['number_images']).split(' ')[0])
-                    if add_system_dict['number_images'] < 0: add_system_dict['number_images'] = 0
+                    if add_system_dict['number_images'] <= 0: add_system_dict['number_images'] = ''
                 except:
                     if 'number_images' in add_system_dict:
                         print('ERROR IN number_images', add_system_dict['number_images'])
-                    add_system_dict['number_images']=0
+                    add_system_dict['number_images']=''
                 
                 if len(self.lens_objects[system]['Standard RA']) == 0:
                     print('Skipping since Coords not dependable', self.lens_objects[system])
@@ -1724,8 +1728,11 @@ class Journal_tables():
                 else: add_system_dict['query_z_source_quality'] = 0
         
                 for ref in self.lens_objects[system]['References']:
-                    try: self.lens_reference_connection.append([lensID, self.reference_id[ref], 1 if 'Detected by' in self.lens_objects[system] and self.lens_objects[system]['Detected by']['tracer']['bibcode'] == ref else 0])
+                    try:
+                        new = [lensID, self.reference_id[ref], 1 if 'Detected by' in self.lens_objects[system] and self.lens_objects[system]['Detected by']['tracer']['bibcode'] == ref else 0]
+                        if new not in self.lens_reference_connection: self.lens_reference_connection.append(new)
                     except Exception as e:
+                        if ref not in self.missed_references: self.missed_references.append(ref)
                         print('>>>>>>>Could not pin to reference', ref, e)
                 #add_system_dict['referencestoadd[]'] = '[' + ','.join([self.reference_id[reference] for reference in self.lens_objects[system]['References']]) + ']'
                 #add_system_dict['addreferences'] = 'addreferences'
@@ -1742,7 +1749,7 @@ class Journal_tables():
                     file.write(to_write.replace('nan',"''"))
                     file.write(' );\n')
                     self.saved.append(self.lens_objects[system])
-                    print('SAVED SAVE NEW SYSTEM>>>>>', self.lens_objects[system])
-            print('Stats on save', 'Saved', len(self.saved), 'Skipped', len(self.skip_mld) + len(self.skip_save) + len(self.skip_empty), 'in mld', len(self.skip_mld), 'in empty', len(self.skip_empty), 'in bad', len(self.skip_save))
+                    #print('SAVED SAVE NEW SYSTEM>>>>>', self.lens_objects[system])
+            print('Stats on save', 'Ran', break_limit, 'Saved', len(self.saved), 'Skipped', len(self.skip_mld) + len(self.skip_save) + len(self.skip_empty), 'in mld', len(self.skip_mld), 'in empty', len(self.skip_empty), 'in bad', len(self.skip_save))
                     
                 
