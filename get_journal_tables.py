@@ -761,6 +761,7 @@ class Journal_tables():
             else: name = table_row[map['System Name']]
         else: name = None
         
+        self.bad_coord_error = False
         standard_ra, standard_dec = self.convert_to_standard_ra_dec(table_row, map)
         if standard_ra is not None:
             #print('Computed Standard RA and DEC to derive a coordinate derived name')
@@ -771,6 +772,7 @@ class Journal_tables():
             ra_hms = "{ra_hour:02.0f}:{ra_min:02.0f}:{ra_sec:05.2f}".format(ra_hour=ra_hour,ra_min=ra_min,ra_sec=ra_sec)
             dec_dms = "{dec_sign}{dec_degree:02.0f}:{dec_arcmin:02.0f}:{dec_arcsec:05.2f}".format(dec_sign=dec_sign,dec_degree=dec_degree,dec_arcmin=dec_arcmin,dec_arcsec=dec_arcsec)
             standard_name = 'J%s%s' % (ra_hms.replace(':','')[:4], dec_dms.replace(':','')[:5])
+            
             return standard_ra, standard_dec, standard_name
         elif name is not None and 'J' in name:
             if map['System Name'] == 'pdname': system_name = table_row.name
@@ -784,7 +786,7 @@ class Journal_tables():
                 print('system trial', sign, coords)
                 if len(coords) == 2: break
             ra, dec = coords
-            ra = ra.replace('J','')[:4]
+            ra = ra.replace('J','')
             dec = dec[:4]
             #Remove non-decimal related information
             non_decimal = re.compile(r'[^\d.]+')
@@ -793,9 +795,21 @@ class Journal_tables():
             ra = self.remove_non_numeric_related_formats(ra.split('.')[0])
             dec = self.remove_non_numeric_related_formats(dec.split('.')[0])
             print('Ra dec', ra, dec)
-            system_name = 'J' + ra + sign + dec
+            system_name = 'J' + ra[:4] + sign + dec[:4]
             print('standard name', system_name)
-            return '', '', system_name
+            
+            Rh, Rm, Rs = ra[:2], ra[2:4], ra[4:]
+            Dd, Dm, Ds = dec[:2], dec[2:4], dec[4:]
+            
+            if Rs == '':
+                Rs = '30'
+                self.bad_coord_error = True
+            if Ds == '':
+                Ds = '30'
+                self.bad_coord_error = True
+            
+            coords = SkyCoord("%s:%s:%s %s:%s:%s"%(Rh,Rm,Rs,sign+Dd,Dm,Ds), frame='fk5', unit=(units.hourangle, units.deg))
+            return coords.ra.deg, coords.dec.deg, system_name
         else: return '', '', ''
         
     def remove_non_numeric_related_formats(self, string, remove_plus = True):
@@ -989,10 +1003,12 @@ class Journal_tables():
                 standard_name, standard_ra, standard_dec = '', '', ''
                 rh,rm,rs,dd,dm,ds = '', '', '', '', '', ''
                 print('Problem with data:', table_row, map)
-                #testi = input('Retry to see bug? (type y for yes):')
-                #if testi == 'y': standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
+                testi = input('Retry to see bug? (type y for yes):')
+                if testi == 'y': standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
 
-            
+            if self.bad_coord_error:
+             
+             
             if 'Cluster Sources Table' in action_map and standard_ra != '':
                 if 'Word to recognize name is of lens and NOT source' in action_map:
                     if action_map['Word to recognize name is of lens and NOT source'] in table_row[map['Source names']]:
