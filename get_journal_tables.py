@@ -104,8 +104,8 @@ class Journal_tables():
             self.set_system_data()
             #self.update_MLD_references()
             #self.update_MLD_lens_entries()
-            #self.update_MLD_lens_discovery_connection():
-            #self.update_MLD_lens_reference_connection():
+            #self.update_MLD_lens_discovery_connection()
+            #self.update_MLD_lens_reference_connection()
     
     
     def load_query_bibcodes(self):
@@ -1589,21 +1589,21 @@ class Journal_tables():
             
     def update_MLD_lens_discovery_connection(self):
         with open(join(self.base_directory, 'batch_update_mysql_lens_discovery.txt'), 'w') as file:
-            file.write('DELETE from lens_discovery where lensID > %s;\n'%str(self.start_lensID))
+            file.write('DELETE from lens_discovery where lensID >= %s;\n'%str(self.start_lensID))
             for connection in self.lens_detection_connection:
                 file.write("INSERT INTO lens_discovery ( lensID,discoveryID,num ) Values ( %s,%s,1);\n"%(connection[0],connection[1]))
                            
     def update_MLD_lens_reference_connection(self):
         with open(join(self.base_directory, 'batch_update_mysql_lens_reference.txt'), 'w') as file:
-            file.write('DELETE from lens_reference where lensID > %s;\n'%str(self.start_lensID))
+            file.write('DELETE from lens_reference where lensID >= %s;\n'%str(self.start_lensID))
             for connection in self.lens_reference_connection:
                 file.write("INSERT INTO lens_reference ( lensID,referenceID,ads,public,discovery_reference ) Values ( %s,%s,1,1,%s);\n"%(connection[0],connection[1],connection[2]))
            
     def update_MLD_lens_entries(self):
         """Update Masterlens database lens entries"""
         
-        #start = int(input('You have to find last entry lensID in database and set this to lensID+1'))
-        self.start_lensID = 746
+        #self.start_lensID = int(input('You have to find last entry lensID in database and set this to lensID+1'))
+        self.start_lensID = 747
         break_limit = int(input('Set a break limit'))
         self.detection_surveys = []
         self.lens_detection_connection = []
@@ -1616,11 +1616,11 @@ class Journal_tables():
         self.missed_references = []
         
         with open(join(self.base_directory, 'batch_update_mysql_lenses.txt'), 'w') as file:
-            file.write('DELETE from lens where lensID > %s;\n'%str(self.start_lensID))
-            file.write('ALTER TABLE lens AUTO_INCREMENT = %s;\n'%str(self.start_lensID+1))
+            file.write('DELETE from lens where lensID >= %s;\n'%str(self.start_lensID))
+            file.write('ALTER TABLE lens AUTO_INCREMENT = %s;\n'%str(self.start_lensID))
             for index, system in enumerate(self.lens_objects.keys()):
                 if index > break_limit: break
-                lensID = start+index
+                lensID = self.start_lensID+index
                 add_system_dict = {"inputaction":"Save", "query_system_name": system}
                 all_favoured_MLD = True
                 none_favoured_in_MLD = True
