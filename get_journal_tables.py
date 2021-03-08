@@ -1624,9 +1624,9 @@ class Journal_tables():
                 else: add_system_dict['Discovery'] = ''
                           
                           
-                if 'Detected by' in self.lens_objects[standard_name]:
-                    self.lens_reference_connection.append([lens_ID, self.reference_id[self.lens_objects[standard_name]['Detected by']['tracer']['bibcode']],1])
-                else: self.lens_reference_connection.append([lens_ID, self.reference_id[self.lens_objects[system]['References'][0]],1])
+                if 'Detected by' in self.lens_objects[system]:
+                    self.lens_reference_connection.append([lensID, self.reference_id[self.lens_objects[system]['Detected by']['tracer']['bibcode']],1])
+                else: self.lens_reference_connection.append([lensID, self.reference_id[self.lens_objects[system]['References'][0]],1])
                     
                 self.lens_reference_connection
                 #add_system_dict['referencestoadd[]'] = '[' + ','.join([self.reference_id[reference] for reference in self.lens_objects[system]['References']]) + ']'
