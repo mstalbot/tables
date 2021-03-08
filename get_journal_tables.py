@@ -1596,7 +1596,8 @@ class Journal_tables():
            
     def update_MLD_lens_entries(self):
         """Update Masterlens database lens entries"""
-        start = 746
+        
+        start = int(input('You have to find last entry lensID in database and set this to lensID+1))
         self.detection_surveys = []
         self.lens_detection_connection = []
         self.lens_reference_connection = []
@@ -1617,13 +1618,9 @@ class Journal_tables():
                 all_favoured_MLD = True
                 none_favoured_in_MLD = True
                 
-                print('SYSTEM', system, self.lens_objects[system])
                 for key in self.lens_objects[system].keys():
-                    if key not in self.masterlens_phrases_to_input_converter:
-                        #print('KEY>>>', key)
-                        #input('CHECK key should not be considered for upload')
-                        continue
-
+                    if key not in self.masterlens_phrases_to_input_converter and len(self.lens_objects[system][key]) > 0: continue
+                    
                     weight = -9999
                     for data in self.lens_objects[system][key]:
                         if data['tracer']['weight'] >= weight:
@@ -1632,9 +1629,7 @@ class Journal_tables():
                     if 'MLD' in status: none_favoured_in_MLD = False
                     elif 'MLD' not in status: all_favoured_MLD = False
                     methodid = '' if method in ['', 'MLD', 'NaN', ' NaN', None] else self.z_type_id[method] if 'z_lens' in key else self.z_type_id[method] if 'z_Source(s)' in key else self.er_quality_id[method.replace('Images separation',"1/2 image separation")] if 'Einstein_R ["]' in key else self.lens_type_id[method] if 'Lens type' in key else self.discovery_id[method] if 'Discovery' in key else ''
-
                     
-                    print(key, '|', self.masterlens_phrases_to_input_converter[key], '|', value, method, methodid, error)
                     #THE MLD flag is a precaution for now that we can remove once a consensus on how we can update these correctly
                     if value == '': continue
                     add_system_dict[self.masterlens_phrases_to_input_converter[key]] = value
@@ -1642,11 +1637,8 @@ class Journal_tables():
                         try: add_system_dict[self.masterlens_phrases_to_input_converter[key]] = float(value)/2
                         except: pass
                     else: add_system_dict[self.masterlens_phrases_to_input_converter[key]] = value
-                    if (key + ' quality') in self.masterlens_phrases_to_input_converter:
-                        add_system_dict[self.masterlens_phrases_to_input_converter[key + ' quality']] = methodid
-                        print((key + ' quality'), '======>', methodid)
+                    if (key + ' quality') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' quality']] = methodid
                     if (key + ' error') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' error']] = error
-                print('YIKES', add_system_dict['query_z_source_quality'])
                 
                 try:
                     add_system_dict['query_z_lens'] = round(float(str(add_system_dict['query_z_lens']).split(' ')[0]),4)
