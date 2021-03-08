@@ -1522,12 +1522,16 @@ class Journal_tables():
                 if 'Table meta data' in self.ads_scrapped_data[query]: total_text += ''.join([self.ads_scrapped_data[query]['Table meta data'][table_set_key]['Response']for table_set_key in self.ads_scrapped_data[query]['Table meta data'].keys()])
             
             for name in name_versions:
-                name2 = name.split('J')[-1]
-                if name2 in total_text:
-                    q2 = self.convert_to_mld_reference_form(query)
-                    if q2 not in references:
-                        references.append(self.convert_to_mld_reference_form(query))
-                        break
+                try:
+                    test=int(name)
+                    continue
+                except:
+                    name2 = name.split('J')[-1]
+                    if name2 in total_text:
+                        q2 = self.convert_to_mld_reference_form(query)
+                        if q2 not in references:
+                            references.append(self.convert_to_mld_reference_form(query))
+                            break
         return references
             
     def parse_out_numbers(self, string):
