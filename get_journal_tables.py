@@ -85,6 +85,9 @@ class Journal_tables():
         self.er_quality_id = {"":"0", "SIE model":"1", "1/2 image separation":"2", "Reference redshift":"3"}        
         self.z_type_id_inverted = {self.z_type_id[key]:key for key in self.z_type_id}
         self.er_quality_id_inverted = {self.er_quality_id[key]:key for key in self.er_quality_id}
+        self.foreground_ids = {'GAL':1, 'QSO':2, 'GRP':3, 'CLUST':4, 'XRAY':5, '':6}
+        self.background_ids = {'GAL':1, 'QSO':2, '':3}
+        self.lens_type_fb = {1:[1, 1], 2:[1, 2], 3:[4, 2], 4:[3, 1], 5:[3, 2], 6:[5, 3], 7:[2, 1], 9:[4, 1]}
 
         #Set global overview and tables dictionary to save and load data from
         self.ads_scrapped_data = {}
@@ -1597,8 +1600,26 @@ class Journal_tables():
         with open(join(self.base_directory, 'batch_update_mysql_lens_reference.txt'), 'w') as file:
             file.write('DELETE from lens_reference where lensID >= %s;\n'%str(self.start_lensID))
             for connection in self.lens_reference_connection:
-                file.write("INSERT INTO lens_reference ( lensID,referenceID,ads,public,discovery_reference ) Values ( %s,%s,1,1,%s);\n"%(connection[0],connection[1],connection[2]))
+                file.write("INSERT INTO lens_reference ( lensID,referenceID,ads,public,discovery_reference ) Values ( %s,%s,1,1,%s,NOW());\n"%(connection[0],connection[1],connection[2]))
            
+    def update_MLD_lens_foreground_connection(self):
+        with open(join(self.base_directory, 'batch_update_mysql_lens_foreground.txt'), 'w') as file:
+            file.write('DELETE from lens_foreground where lensID >= %s;\n'%str(self.start_lensID))
+            for connection in self.lens_foreground_connection:
+                file.write("INSERT INTO lens_foreground ( lensID,foregroundID,kindID,num ) Values ( %s,%s,%s,1,NOW());\n"%(connection[0],connection[1],connection[2]))
+        
+    def update_MLD_lens_background_connection(self):
+       with open(join(self.base_directory, 'batch_update_mysql_lens_background.txt'), 'w') as file:
+           file.write('DELETE from lens_background where lensID >= %s;\n'%str(self.start_lensID))
+           for connection in self.lens_background_connection:
+               file.write("INSERT INTO lens_background ( lensID,backgroundID,kindID,num ) Values ( %s,%s,%s,1,NOW());\n"%(connection[0],connection[1],connection[2]))
+        
+    def update_MLD_coord(self):
+       with open(join(self.base_directory, 'batch_update_mysql_coord.txt'), 'w') as file:
+           file.write('DELETE from coord where lensID >= %s;\n'%str(self.start_lensID))
+           for c in self.coords_write:
+               file.write("INSERT INTO coord ( lensID,num,label,ra_hrs,ra_mins,ra_secs,ra_coord,ra_coord_err,dec_degrees,dec_arcmin,dec_arcsec,dec_coord,dec_coord_err,equinox,modified) ) Values ( %r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,NOW());\n"%(c[0],c[1],c[2],c[3],c[4],c[5],c[6],c[7],c[8],c[9],c[10],c[11],c[12],c[13]))
+          
     def update_MLD_lens_entries(self):
         """Update Masterlens database lens entries"""
         
@@ -1608,6 +1629,8 @@ class Journal_tables():
         self.detection_surveys = []
         self.lens_detection_connection = []
         self.lens_reference_connection = []
+        self.lens_background_connection = []
+        self.lens_foreground_connection = []
         
         self.skip_empty = []
         self.skip_save = []
@@ -1645,7 +1668,7 @@ class Journal_tables():
                         except: pass
                     else: add_system_dict[self.masterlens_phrases_to_input_converter[key]] = value
                     if (key + ' quality') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' quality']] = methodid
-                    if (key + ' error') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' error']] = error
+                    if (key + ' error') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' error']] = error               
                 
                 try:
                     add_system_dict['query_z_lens'] = round(float(str(add_system_dict['query_z_lens']).split(' ')[0]),4)
@@ -1730,7 +1753,19 @@ class Journal_tables():
                     try: add_system_dict['query_z_source_quality'] = int(add_system_dict['query_z_source_quality'])
                     except: add_system_dict['query_z_source_quality'] = int(self.z_type_id[add_system_dict['query_z_source_quality']])
                 else: add_system_dict['query_z_source_quality'] = 0
-        
+            
+                if 'query_system_name' in add_system_dict and add_system_dict['query_system_name']:
+                    try:
+                        test=float(add_system_dict['query_system_name'])
+                        add_system_dict['query_system_name'] = ''
+                    except: pass
+               
+                if 'query_alternate_name' in add_system_dict and add_system_dict['query_alternate_name']:
+                    try:
+                        test=float(add_system_dict['query_alternate_name'])
+                        add_system_dict['query_alternate_name'] = ''
+                    except: pass
+                            
                 for ref in self.lens_objects[system]['References']:
                     try:
                         new = [lensID, self.reference_id[ref], 1 if 'Detected by' in self.lens_objects[system] and self.lens_objects[system]['Detected by']['tracer']['bibcode'] == ref else 0]
@@ -1754,6 +1789,16 @@ class Journal_tables():
                     file.write(' );\n')
                     self.saved.append(self.lens_objects[system])
                     #print('SAVED SAVE NEW SYSTEM>>>>>', self.lens_objects[system])
+                    self.coords_write.append([lensID, 1, 'Manual', add_system_dict['query_ra_hrs'], add_system_dict['query_ra_mins'], add_system_dict['query_ra_secs'], round(float(add_system_dict['query_ra_coord']),6), coord_error, add_system_dict['query_dec_degrees'], add_system_dict['query_dec_arcmin'], add_system_dict['query_dec_arcsec'], round(float(add_system_dict['query_dec_coord']),6), coord_error, 'J2000'])
+                
+                    if 'query_kindID' in add_system_dict and add_system_dict['query_kindID']:
+                        kindID = int(self.lens_type_id[add_system_dict['query_kindID']])
+                        foregroundID, backgroundID = self.lens_type_fb[kindID]
+                        self.lens_foreground_connection.append([lensID, foregroundID, kindID])
+                        self.lens_background_connection.append([lensID, backgroundID, kindID])
+                    else:
+                        self.lens_foreground_connection.append([lensID, 6, ''])
+                        self.lens_background_connection.append([lensID, 3, ''])
             print('Stats on save', 'Ran', break_limit, 'Saved', len(self.saved), 'Skipped', len(self.skip_mld) + len(self.skip_save) + len(self.skip_empty), 'in mld', len(self.skip_mld), 'in empty', len(self.skip_empty), 'in bad', len(self.skip_save))
                     
                 
