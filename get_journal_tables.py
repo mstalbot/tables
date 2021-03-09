@@ -1594,31 +1594,31 @@ class Journal_tables():
         with open(join(self.base_directory, 'batch_update_mysql_lens_discovery.txt'), 'w') as file:
             file.write('DELETE from lens_discovery where lensID >= %s;\n'%str(self.start_lensID))
             for connection in self.lens_detection_connection:
-                file.write("INSERT INTO lens_discovery ( lensID,discoveryID,num ) Values ( %s,%s,1);\n"%(connection[0],connection[1]))
+                file.write("INSERT INTO lens_discovery ( lensID,discoveryID,num,modified ) Values ( %s,%s,1,NOW());\n"%(connection[0],connection[1]))
                            
     def update_MLD_lens_reference_connection(self):
         with open(join(self.base_directory, 'batch_update_mysql_lens_reference.txt'), 'w') as file:
             file.write('DELETE from lens_reference where lensID >= %s;\n'%str(self.start_lensID))
             for connection in self.lens_reference_connection:
-                file.write("INSERT INTO lens_reference ( lensID,referenceID,ads,public,discovery_reference ) Values ( %s,%s,1,1,%s,NOW());\n"%(connection[0],connection[1],connection[2]))
+                file.write("INSERT INTO lens_reference ( lensID,referenceID,ads,public,discovery_reference,modified ) Values ( %s,%s,1,1,%s,NOW());\n"%(connection[0],connection[1],connection[2]))
            
     def update_MLD_lens_foreground_connection(self):
         with open(join(self.base_directory, 'batch_update_mysql_lens_foreground.txt'), 'w') as file:
             file.write('DELETE from lens_foreground where lensID >= %s;\n'%str(self.start_lensID))
             for connection in self.lens_foreground_connection:
-                file.write("INSERT INTO lens_foreground ( lensID,foregroundID,kindID,num ) Values ( %s,%s,%s,1,NOW());\n"%(connection[0],connection[1],connection[2]))
+                file.write("INSERT INTO lens_foreground ( lensID,foregroundID,kindID,num,modified ) Values ( %r,%r,%r,1,NOW());\n"%(connection[0],connection[1],connection[2]))
         
     def update_MLD_lens_background_connection(self):
        with open(join(self.base_directory, 'batch_update_mysql_lens_background.txt'), 'w') as file:
            file.write('DELETE from lens_background where lensID >= %s;\n'%str(self.start_lensID))
            for connection in self.lens_background_connection:
-               file.write("INSERT INTO lens_background ( lensID,backgroundID,kindID,num ) Values ( %s,%s,%s,1,NOW());\n"%(connection[0],connection[1],connection[2]))
+               file.write("INSERT INTO lens_background ( lensID,backgroundID,kindID,num,modified ) Values ( %r,%r,%r,1,NOW());\n"%(connection[0],connection[1],connection[2]))
         
     def update_MLD_coord(self):
        with open(join(self.base_directory, 'batch_update_mysql_coord.txt'), 'w') as file:
            file.write('DELETE from coord where lensID >= %s;\n'%str(self.start_lensID))
            for c in self.coords_write:
-               file.write("INSERT INTO coord ( lensID,num,label,ra_hrs,ra_mins,ra_secs,ra_coord,ra_coord_err,dec_degrees,dec_arcmin,dec_arcsec,dec_coord,dec_coord_err,equinox,modified) ) Values ( %r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,NOW());\n"%(c[0],c[1],c[2],c[3],c[4],c[5],c[6],c[7],c[8],c[9],c[10],c[11],c[12],c[13]))
+               file.write("INSERT INTO coord ( lensID,num,label,ra_hrs,ra_mins,ra_secs,ra_coord,ra_coord_err,dec_degrees,dec_arcmin,dec_arcsec,dec_coord,dec_coord_err,equinox,modified ) Values ( %r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,NOW());\n"%(c[0],c[1],c[2],c[3],c[4],c[5],c[6],c[7],c[8],c[9],c[10],c[11],c[12],c[13]))
           
     def update_MLD_lens_entries(self):
         """Update Masterlens database lens entries"""
@@ -1766,13 +1766,6 @@ class Journal_tables():
                         add_system_dict['query_alternate_name'] = ''
                     except: pass
                             
-                for ref in self.lens_objects[system]['References']:
-                    try:
-                        new = [lensID, self.reference_id[ref], 1 if 'Detected by' in self.lens_objects[system] and self.lens_objects[system]['Detected by']['tracer']['bibcode'] == ref else 0]
-                        if new not in self.lens_reference_connection: self.lens_reference_connection.append(new)
-                    except Exception as e:
-                        if ref not in self.missed_references: self.missed_references.append(ref)
-                        print('>>>>>>>Could not pin to reference', ref, e)
                 #add_system_dict['referencestoadd[]'] = '[' + ','.join([self.reference_id[reference] for reference in self.lens_objects[system]['References']]) + ']'
                 #add_system_dict['addreferences'] = 'addreferences'
                  
@@ -1799,6 +1792,15 @@ class Journal_tables():
                     else:
                         self.lens_foreground_connection.append([lensID, 6, ''])
                         self.lens_background_connection.append([lensID, 3, ''])
+                       
+                    for ref in self.lens_objects[system]['References']:
+                        try:
+                            new = [lensID, self.reference_id[ref], 1 if 'Detected by' in self.lens_objects[system] and self.lens_objects[system]['Detected by']['tracer']['bibcode'] == ref else 0]
+                            if new not in self.lens_reference_connection: self.lens_reference_connection.append(new)
+                        except Exception as e:
+                            if ref not in self.missed_references: self.missed_references.append(ref)
+                            print('>>>>>>>Could not pin to reference', ref, e)
+                       
             print('Stats on save', 'Ran', break_limit, 'Saved', len(self.saved), 'Skipped', len(self.skip_mld) + len(self.skip_save) + len(self.skip_empty), 'in mld', len(self.skip_mld), 'in empty', len(self.skip_empty), 'in bad', len(self.skip_save))
                     
                 
