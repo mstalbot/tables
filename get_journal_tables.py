@@ -1012,8 +1012,8 @@ class Journal_tables():
                 standard_name, standard_ra, standard_dec = '', '', ''
                 rh,rm,rs,dd,dm,ds = '', '', '', '', '', ''
                 print('Problem with data:', table_row, map)
-                testi = input('Retry to see bug? (type y for yes):')
-                if testi == 'y': standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
+                #testi = input('Retry to see bug? (type y for yes):')
+                #if testi == 'y': standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
              
             if 'Cluster Sources Table' in action_map and standard_ra != '':
                 if 'Word to recognize name is of lens and NOT source' in action_map:
