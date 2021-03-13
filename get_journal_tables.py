@@ -1639,6 +1639,7 @@ class Journal_tables():
         self.saved = []
         self.skip_mld = []
         self.missed_references = []
+        self.coords_write = []
         
         with open(join(self.base_directory, 'batch_update_mysql_lenses.txt'), 'w') as file:
             file.write('DELETE from lens where lensID >= %s;\n'%str(self.start_lensID))
