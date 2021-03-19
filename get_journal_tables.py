@@ -105,13 +105,13 @@ class Journal_tables():
         if self.inspect: self.inspect_tables()
         if self.prepare_to_post_lenses_to_MLD2:
             self.set_system_data()
-            #self.update_MLD_references()
-            #self.update_MLD_lens_entries()
-            #self.update_MLD_lens_discovery_connection()
-            #self.update_MLD_lens_reference_connection()
-            #self.update_MLD_coord()
-            #self.update_MLD_lens_foreground_connection()
-            #self.update_MLD_lens_background_connection()
+            self.update_MLD_references()
+            self.update_MLD_lens_entries()
+            self.update_MLD_lens_discovery_connection()
+            self.update_MLD_lens_reference_connection()
+            self.update_MLD_coord()
+            self.update_MLD_lens_foreground_connection()
+            self.update_MLD_lens_background_connection()
     
     def load_query_bibcodes(self):
         """Load bibliography codes from a json file on disk"""
