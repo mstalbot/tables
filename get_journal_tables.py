@@ -1196,7 +1196,6 @@ class Journal_tables():
         
         for mld_reference in mld_references[:]:
             #First standardize the bibcode form
-            print('PRE citation', mld_reference.getElementsByTagName('identifier')[0].childNodes[0].nodeValue)
             try: url = mld_reference.getElementsByTagName('adsabs_link')[0].childNodes[0].nodeValue
             except: url = None
             if mld_reference.getElementsByTagName('identifier')[0].childNodes[0].nodeValue in self.ads_to_mld_reference_interpreter_inverted: citation = self.ads_to_mld_reference_interpreter_inverted[mld_reference.getElementsByTagName('identifier')[0].childNodes[0].nodeValue]
