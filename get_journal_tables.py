@@ -20,13 +20,14 @@ class Journal_tables():
  
     def __init__(self, get_bibcodes = False, get_online_tables = False, user_name = 'guest', base_directory = 'PATH_TO_lens_surveys', headers = {'user-agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.2 Safari/605.1.15'}, user = {'MNRAS':'','IOP':'','A&A':''}, password = {'MNRAS':'','IOP':'','A&A':''}, mld_auth = {'user':'','password':''}, start = 0, end = 99999, redo_pandas = False, rescan_online = False, slow_down_seconds_after_requests = 5, inspect = False, redo_inspection=False, load_processed_data = True, prepare_to_post_lenses_to_MLD2 = False):
     
-        """This program retrieves tables from journals typically used in Astronomy. Data is saved as a pandas or ascii version of a JSON file.
+        """This program retrieves tables from journals typically used in Astronomy. Data is saved as a pandas or ascii version of a JSON file. This program also enables inspection of table data and preparing the data to be inserted into mysql. To run any mode, simply set the related boolean below.
         
         Usage:
         get_bibcodes: Reads in bibcodes from a json file
         get_online_tables: Download tables from journals
-        headers: Headers from your site. The provided may be sufficient.
+        headers: Headers from your site. The default may be sufficient.
         user: User logins for journals
+        user_name = MLD user name, which is set to 'guest' by default and is only used to update a mysql command.
         password: Passwords for journals
         base_directory: Where json files of journal tables are saved and loaded from.
         start: Where to start process in bibcode list
@@ -37,7 +38,8 @@ class Journal_tables():
         inspect: Inspect tables not yet inspected
         redo_inspection: Redo inspection
         mld_auth: Masterlens database login in format of {'user':'Your user login', 'password':'Your password'}.
-        load_processed_data: Load previous processed data and relavent MLD database information
+        load_processed_data: Load previous processed data and relavent MLD database information. Kept as True by default.
+        prepare_to_post_lenses_to_MLD2: Parse tables using inspection map to gather candidates into the lens_objects dictionary.
         """ 
         #Set class globals
         self.user_name = user_name
@@ -457,7 +459,7 @@ class Journal_tables():
     def load_saved_overview(self):
         """Load overview query from file"""
         
-        print(self.base_directory, 'overviews', '%s-overview.txt'%self.query)
+        print('Loading>', self.base_directory, 'overviews', '%s-overview.txt'%self.query)
         load_overview_path = join(self.base_directory, 'overviews', '%s-overview.txt'%self.query)
         if exists(load_overview_path):
             with open(load_overview_path, 'r') as json_file: self.ads_scrapped_data[self.query] = json.load(json_file)
