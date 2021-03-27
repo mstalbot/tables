@@ -216,19 +216,15 @@ class Journal_tables():
                                     for ekey in self.ads_scrapped_data[self.query]['Table meta data'][key]['Table captions or footers'].keys(): print('%s:'%ekey, self.ads_scrapped_data[self.query]['Table meta data'][key]['Table captions or footers'][ekey])
                                 print('\n----------------------------------------------------Table-----------------------------------------------------\n', self.ads_scrapped_tables[self.query][key][key2])
                                 #Will skip table if inspection already done and re-inspect not stated.
-                                '''if 'Inspection' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2] and not self.redo_inspection:
+                                if 'Inspection' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2] and not self.redo_inspection:
                                     print('\n\n>>>Already inspected. Skipping\n\n')
                                     redo = False
                                     continue
                                     
-                                if 'Inspection' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2] and ('Skip cause table not important' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes'] or 'Skipping since duplicate' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes'] or 'Problem but check. Currently skipping' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes']):
+                                if not self.redo_inspection and 'Inspection' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2] and ('Skip cause table not important' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes'] or 'Skipping since duplicate' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes'] or 'Problem but check. Currently skipping' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes']):
                                     print('Skipping cause noted to skip')
                                     redo = False
                                     continue
-                                    
-                                if '2016ApJ...826..112' not in self.query:
-                                    redo = False
-                                    continue'''
                                     
                                 '''if 'Inspection' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2] and ('Skip cause table not important' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes'] or 'Problem but check. Currently skipping' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes']):
                                     pass
