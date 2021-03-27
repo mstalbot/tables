@@ -1271,7 +1271,6 @@ class Journal_tables():
         
         self.lens_objects = {}
         for mld_entry in lenses[:]:
-            print('........',mld_entry)
             standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords({'RA [°]': str(mld_entry.getElementsByTagName('ra_coord')[0].childNodes[0].nodeValue), 'Dec [°]': str(mld_entry.getElementsByTagName('dec_coord')[0].childNodes[0].nodeValue)}, {'RA [°]':'RA [°]', 'Dec [°]':'Dec [°]'})
             if standard_name not in self.lens_objects: self.lens_objects[standard_name] = {'System Name':[], 'Discovery Date':[], 'RA (Hours part)':[], 'RA (Mins part)':[], 'RA (Secs part)':[], 'RA [°]': [], 'Dec (Degree part)': [], 'Dec (Arcmin part)': [], 'Dec (Arcsec part)': [], 'Dec [°]': [], 'Lens Grade': [], 'Number of images': [], 'Einstein_R ["]': [], 'z_Lens': [], 'z_Source(s)': [], 'Stellar velocity disp': [], 'Standard RA':[], 'Standard DEC':[], 'MLD_ID':[], 'Description':[], 'Lens type':[], 'Lens type MLD_ID':[], 'Discovery':[], 'Discovery_MLD_ID':[], 'MLD SDSS link':[], 'MLD ADSABS link':[], 'MLD NED link':[], 'MLD APOD link':[], 'References_MLD_ID':[], 'Has external link for SDSS':[], 'Has external link for ADSABS':[], 'Has external link for NED':[], 'Has external link for APOD':[]}
             
