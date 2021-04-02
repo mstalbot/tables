@@ -1028,7 +1028,7 @@ class Journal_tables():
                         standard_name = self.cluster_lens_name + '[' + str(table_row[map['Source names']]) + ']'
                         print('>=-----', str(table_row[map['Source names']]))
                 elif 'Name,Ra,Dec of cluster or group lens' in action_map:
-                    self.cluster_lens_name = action_map['Name,Ra,Dec of cluster or group lens']
+                    self.cluster_lens_name = action_map['Name,Ra,Dec of cluster or group lens'].split(',')[0]
                     if rh:
                         standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,rs.split('.')[0],dd,dm,ds.split('.')[0])) + ']'
                         print('>iiiii', rh,rm,rs)
