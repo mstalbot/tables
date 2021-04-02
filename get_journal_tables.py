@@ -1148,8 +1148,8 @@ class Journal_tables():
             ddec_sign, ddeg, dmn, dsec = coord.dec.signed_dms
             ddec_sign = '-' if ddec_sign<0 else '+'
             
-            rhour, rmn, rsec = str(int(rhour)), str(int(rmin)), str(int(rsec))
-            ddeg, dmn, dsec = str(int(ddeg)), str(int(dmn)), str(int(dsec))
+            rhour, rmn = str(int(rhour)), str(int(rmn))
+            ddeg, dmn = str(int(ddeg)), str(int(dmn))
             
             ddeg = ddec_sign+str(int(ddeg))
             if save:
