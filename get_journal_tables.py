@@ -1019,12 +1019,20 @@ class Journal_tables():
                         self.cluster_lens_name = table_row[map['Source names']]
                         standard_name = self.cluster_lens_name + ''
                         print('>>>>>>', table_row[map['Source names']])
-                    elif rh: standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,int(rs),dd,dm,int(ds))) + ']'
-                    else: standard_name = self.cluster_lens_name + '[' + str(table_row[map['Source names']]) + ']'
+                    elif rh:
+                        standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,int(rs),dd,dm,int(ds))) + ']'
+                        print('>=-=-=', rh,rm,rs)
+                    else:
+                        standard_name = self.cluster_lens_name + '[' + str(table_row[map['Source names']]) + ']'
+                        print('>=-----', str(table_row[map['Source names']]))
                 elif 'Name,Ra,Dec of cluster or group lens' in action_map:
                     self.cluster_lens_name = action_map['Name,Ra,Dec of cluster or group lens']
-                    if rh: standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,int(rs),dd,dm,int(ds))) + ']'
-                    else: standard_name = self.cluster_lens_name + '[' + str(table_row[map['Source names']]) + ']'
+                    if rh:
+                        standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,int(rs),dd,dm,int(ds))) + ']'
+                        print('>iiiii', rh,rm,rs)
+                    else:
+                        standard_name = self.cluster_lens_name + '[' + str(table_row[map['Source names']]) + ']'
+                        print('>====', str(table_row[map['Source names']]))
                 if 'RXC J' in standard_name:
                     print('standard_name', standard_name)
                     input('on hold')
