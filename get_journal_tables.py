@@ -1022,7 +1022,7 @@ class Journal_tables():
                         standard_name = self.cluster_lens_name + ''
                         print('>>>>>>', table_row[map['Source names']])
                     elif rh:
-                        standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,int(rs),dd,dm,int(ds))) + ']'
+                        standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,rs.split('.')[0],dd,dm,ds.split('.')[0])) + ']'
                         print('>=-=-=', rh,rm,rs)
                     else:
                         standard_name = self.cluster_lens_name + '[' + str(table_row[map['Source names']]) + ']'
@@ -1030,7 +1030,7 @@ class Journal_tables():
                 elif 'Name,Ra,Dec of cluster or group lens' in action_map:
                     self.cluster_lens_name = action_map['Name,Ra,Dec of cluster or group lens']
                     if rh:
-                        standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,int(rs),dd,dm,int(ds))) + ']'
+                        standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,rs.split('.')[0],dd,dm,ds.split('.')[0])) + ']'
                         print('>iiiii', rh,rm,rs)
                     else:
                         standard_name = self.cluster_lens_name + '[' + str(table_row[map['Source names']]) + ']'
@@ -1148,8 +1148,8 @@ class Journal_tables():
             ddec_sign, ddeg, dmn, dsec = coord.dec.signed_dms
             ddec_sign = '-' if ddec_sign<0 else '+'
             
-            rhour, rmn = str(int(rhour)), str(int(rmn))
-            ddeg, dmn = str(int(ddeg)), str(int(dmn))
+            rhour, rmn = rhour.split('.')[0], rmn.split('.')[0]
+            ddeg, dmn = ddeg.split('.')[0], dmn.split('.')[0]
             
             ddeg = ddec_sign+str(int(ddeg))
             if save:
