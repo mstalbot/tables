@@ -1686,7 +1686,7 @@ class Journal_tables():
                     if add_system_dict['query_z_source'] < 0 or add_system_dict['query_z_source'] > 14: add_system_dict['query_z_source']=''
                 except:
                     if 'query_z_source' in add_system_dict:
-                        #print('ERROR IN query_z_source', add_system_dict['query_z_source'])
+                        print('ERROR IN query_z_source', add_system_dict['query_z_source'])
                     add_system_dict['query_z_source']=''
                 
                 try:
