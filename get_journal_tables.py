@@ -1670,7 +1670,7 @@ class Journal_tables():
                     if (key + ' error') in self.masterlens_phrases_to_input_converter: add_system_dict[self.masterlens_phrases_to_input_converter[key + ' error']] = error               
                 
                 try:
-                    add_system_dict['query_z_lens'] = round(float(str(add_system_dict['query_z_lens']).split(' ')[0]),4)
+                    add_system_dict['query_z_lens'] = round(float(str(add_system_dict['query_z_lens']).split(' ')[0].split('*')[0].split('±')[0]),4)
                     if add_system_dict['query_z_lens'] < 0 or add_system_dict['query_z_lens'] > 14: add_system_dict['query_z_lens']=''
                 except:
                     if 'query_z_lens' in add_system_dict:
@@ -1678,15 +1678,15 @@ class Journal_tables():
                     add_system_dict['query_z_lens']=''
                    
                 try:
-                    add_system_dict['query_z_source'] = round(float(str(add_system_dict['query_z_source']).split(' ')[0]),4)
+                    add_system_dict['query_z_source'] = round(float(str(add_system_dict['query_z_source']).split(' ')[0].split('*')[0].split('±')[0]),4)
                     if add_system_dict['query_z_source'] < 0 or add_system_dict['query_z_source'] > 14: add_system_dict['query_z_source']=''
                 except:
                     if 'query_z_source' in add_system_dict:
-                        print('ERROR IN query_z_source', add_system_dict['query_z_source'])
+                        #print('ERROR IN query_z_source', add_system_dict['query_z_source'])
                     add_system_dict['query_z_source']=''
                 
                 try:
-                    add_system_dict['query_theta_e'] = round(float(str(add_system_dict['query_theta_e']).split(' ')[0]),2)
+                    add_system_dict['query_theta_e'] = round(float(str(add_system_dict['query_theta_e']).split(' ')[0].split('*')[0].split('±')[0]),2)
                     if add_system_dict['query_theta_e'] < 0 or add_system_dict['query_theta_e'] > 14: add_system_dict['query_theta_e']=''
                 except:
                     if 'query_theta_e' in add_system_dict:
@@ -1698,16 +1698,24 @@ class Journal_tables():
                     if add_system_dict['query_z_source_err'] < 0: add_system_dict['query_z_source_err'] = ''
                 except:
                     if 'query_z_source_err' in add_system_dict:
-                        print('ERROR IN query_z_source_err', add_system_dict['query_z_source_err'])
-                    add_system_dict['query_z_source_err']=''
+                        try:
+                            add_system_dict['query_z_source_err'] = round(float(str(add_system_dict['query_z_source']).split(' ')[-1].split('*')[-1].split('±')[-1]),4)
+                            if add_system_dict['query_z_source'] < 0 or add_system_dict['query_z_source'] > 14: add_system_dict['query_z_source']=''
+                        except:
+                            print('ERROR IN query_z_source_err', add_system_dict['query_z_source_err'])
+                            add_system_dict['query_z_source_err']=''
                     
                 try:
                     add_system_dict['query_z_lens_err'] = round(float(str(add_system_dict['query_z_lens_err']).split(' ')[0]),4)
                     if add_system_dict['query_z_lens_err'] < 0: add_system_dict['query_z_lens_err'] = ''
                 except:
                     if 'query_z_lens_err' in add_system_dict:
-                        print('ERROR IN query_z_lens_err', add_system_dict['query_z_lens_err'])
-                    add_system_dict['query_z_lens_err']=''
+                        try:
+                            add_system_dict['query_z_lens_err'] = round(float(str(add_system_dict['query_z_lens']).split(' ')[-1].split('*')[-1].split('±')[-1]),4)
+                            if add_system_dict['query_z_lens'] < 0 or add_system_dict['query_z_lens'] > 14: add_system_dict['query_z_lens']=''
+                        except:
+                            print('ERROR IN query_z_lens_err', add_system_dict['query_z_lens_err'])
+                            add_system_dict['query_z_lens_err']=''
                     
                 try:
                     add_system_dict['number_images'] = int(str(add_system_dict['number_images']).split(' ')[0])
