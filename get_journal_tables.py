@@ -1018,12 +1018,16 @@ class Journal_tables():
                     if action_map['Word to recognize name is of lens and NOT source'] in table_row[map['Source names']]:
                         self.cluster_lens_name = table_row[map['Source names']]
                         standard_name = self.cluster_lens_name + ''
+                        print('>>>>>>, table_row[map['Source names'])
                     elif rh: standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,int(rs),dd,dm,int(ds))) + ']'
                     else: standard_name = self.cluster_lens_name + '[' + str(table_row[map['Source names']]) + ']'
                 elif 'Name,Ra,Dec of cluster or group lens' in action_map:
                     self.cluster_lens_name = action_map['Name,Ra,Dec of cluster or group lens']
                     if rh: standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,int(rs),dd,dm,int(ds))) + ']'
                     else: standard_name = self.cluster_lens_name + '[' + str(table_row[map['Source names']]) + ']'
+                if 'RXC J' in standard_name:
+                    print('standard_name', standard_name)
+                    input('on hold')
 
             if standard_name is '':
                 if 'System Name' in map or 'Alternate Name(s)' in map:
