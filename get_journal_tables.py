@@ -1339,6 +1339,7 @@ class Journal_tables():
                 self.lens_objects[standard_name][values_with_errors_dict[key]].append({'value': value, 'method':'MLD', 'error': error, 'tracer': {'update status': 'in MLD', 'weight':weight}})
         
     def load_sugohi(self):
+        lens_type_key = {'GG':'
         sugohi_key={'SuGOHI1':'PASJ70S(2018)29S', 'SuGOHI2':'ApJ867(2018)107', 'SuGOHI3':'A&A630A(2019)71S', 'SuGOHI4':'A&A636A(2020)87', 'SuGOHI5':'MNRAS495(2020)1291', 'SuGOHI6':'A&A642A(2020)148', 'SuGOHI7':'MNRAS502(2021)1487J'}
         with open('list_public.csv', newline='') as csvfile:
             sugohi = csv.reader(csvfile, delimiter=',')
