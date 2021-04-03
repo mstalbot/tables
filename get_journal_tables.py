@@ -1148,26 +1148,30 @@ class Journal_tables():
             ddec_sign, ddeg, dmn, dsec = coord.dec.signed_dms
             ddec_sign = '-' if ddec_sign<0 else '+'
             
-            rhour, rmn = rhour.split('.')[0], rmn.split('.')[0]
-            ddeg, dmn = ddeg.split('.')[0], dmn.split('.')[0]
+            rhour = ('0' if int(rhour) <= 9 else '') + str(int(rhour))
+            rmn = ('0' if int(rmn) <= 9 else '') + str(int(rmn))
+            rsec = ('0' if int(rsec) <= 9 else '') + str(rsec)
             
-            ddeg = ddec_sign+str(int(ddeg))
+            ddeg = ddec_sign + ('0' if int(ddeg) <= 9 else '') + str(int(ddeg))
+            dmn = ('0' if int(dmn) <= 9 else '') + str(int(dmn))
+            dsec = ('0' if int(dsec) <= 9 else '') + str(dsec)
+                        
             if save:
                 if 'RA (Hours part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['RA (Hours part)'] = []
                 if 'RA (Mins part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['RA (Mins part)'] = []
                 if 'RA (Secs part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['RA (Secs part)'] = []
 
-                self.lens_objects[standard_name]['RA (Hours part)'].append({'value': str(int(rhour)), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
-                self.lens_objects[standard_name]['RA (Mins part)'].append({'value': str(int(rmn)), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
-                self.lens_objects[standard_name]['RA (Secs part)'].append({'value': str(rsec), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+                self.lens_objects[standard_name]['RA (Hours part)'].append({'value': rhour, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+                self.lens_objects[standard_name]['RA (Mins part)'].append({'value': rmn, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+                self.lens_objects[standard_name]['RA (Secs part)'].append({'value': rsec, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
             
                 if 'Dec (Degree part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Dec (Degree part)'] = []
                 if 'Dec (Arcmin part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Dec (Arcmin part)'] = []
                 if 'Dec (Arcsec part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Dec (Arcsec part)'] = []
 
                 self.lens_objects[standard_name]['Dec (Degree part)'].append({'value': ddeg, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
-                self.lens_objects[standard_name]['Dec (Arcmin part)'].append({'value': str(int(dmn)), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
-                self.lens_objects[standard_name]['Dec (Arcsec part)'].append({'value': str(dsec), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+                self.lens_objects[standard_name]['Dec (Arcmin part)'].append({'value': dmn, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
+                self.lens_objects[standard_name]['Dec (Arcsec part)'].append({'value': dsec, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[query] if query in self.ads_to_mld_reference_interpreter else query, 'table set': key, 'table': key2, 'update status': update_status, 'weight':weight}})
 
                 if 'Dec [°]' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Dec [°]'] = []
                 if 'RA [°]' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['RA [°]'] = []
