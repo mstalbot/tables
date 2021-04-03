@@ -1339,7 +1339,7 @@ class Journal_tables():
                 self.lens_objects[standard_name][values_with_errors_dict[key]].append({'value': value, 'method':'MLD', 'error': error, 'tracer': {'update status': 'in MLD', 'weight':weight}})
         
     def load_sugohi(self):
-        lens_type_key = {'GG':'GAL-GAL', 'GQ':'GAL-QSO'
+        lens_type_key = {'GG':'GAL-GAL', 'GQ':'GAL-QSO', 'CG':'CLUST-GAL', 'CQ':'CLUST-QSO'}
         sugohi_key={'SuGOHI1':'PASJ70S(2018)29S', 'SuGOHI2':'ApJ867(2018)107', 'SuGOHI3':'A&A630A(2019)71S', 'SuGOHI4':'A&A636A(2020)87', 'SuGOHI5':'MNRAS495(2020)1291', 'SuGOHI6':'A&A642A(2020)148', 'SuGOHI7':'MNRAS502(2021)1487J'}
         with open('list_public.csv', newline='') as csvfile:
             sugohi = csv.reader(csvfile, delimiter=',')
@@ -1356,7 +1356,7 @@ class Journal_tables():
                 self.lens_objects[standard_name]['z_Lens'].append({'value': row[3], 'method':'', 'error':'', 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
                 self.lens_objects[standard_name]['z_Source(s)'].append({'value': row[4], 'method':'', 'error':'', 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
                 self.lens_objects[standard_name]['System Name'].append({'value': 'HSC'+standard_name, 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
-                self.lens_objects[standard_name]['Lens type'].append({'value': 'GAL-GAL', 'tracer': {'bibcode':'MNRAStmp(2021)303T', 'update status': 'in SILO', 'weight':5}})
+                self.lens_objects[standard_name]['Lens type'].append({'value': lens_type_key[row[8]], 'tracer': {'update status': 'in SuGOHI', 'weight':5}})
 
                 i=0
                 for sr in row[-1].split(' '):
@@ -1382,11 +1382,11 @@ class Journal_tables():
             self.lens_objects[standard_name]['z_Lens'].append({'value': candidate['Z_NOQSO'], 'method':'spectroscopic', 'error': candidate['ZERR_NOQSO'], 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['z_Source(s)'].append({'value': candidate['DETECTION_Z'], 'method':'spectroscopic', 'error': '', 'tracer': {'update status': 'in SILO', 'weight':5}})
             self.lens_objects[standard_name]['System Name'].append({'value': 'SDSS'+standard_name, 'tracer': {'update status': 'in SILO', 'weight':5}})
-            if 'References' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'].append('MNRAStmp(2021)303T')
-            else: self.lens_objects[standard_name]['References'] = ['MNRAStmp(2021)303T']
-            self.lens_objects[standard_name]['Lens type'].append({'value': 'GAL-GAL', 'tracer': {'bibcode':'MNRAStmp(2021)303T', 'update status': 'in SILO', 'weight':5}})
-            self.lens_objects[standard_name]['Discovery'].append({'value': 'SILO', 'tracer': {'bibcode':'MNRAStmp(2021)303T', 'update status': 'in SILO', 'weight':5}})
-            if candidate['FIRST_DETECTION_FROM'] == '': self.lens_objects[standard_name]['Detected by'] = {'value': 'SILO', 'tracer': {'bibcode':'MNRAStmp(2021)303T', 'update status': 'in SILO', 'weight':5}}
+            if 'References' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['References'].append('2021MNRAS.502.4617T')
+            else: self.lens_objects[standard_name]['References'] = ['2021MNRAS.502.4617T']
+            self.lens_objects[standard_name]['Lens type'].append({'value': 'GAL-GAL', 'tracer': {'bibcode':'2021MNRAS.502.4617T', 'update status': 'in SILO', 'weight':5}})
+            self.lens_objects[standard_name]['Discovery'].append({'value': 'SILO', 'tracer': {'bibcode':'2021MNRAS.502.4617T', 'update status': 'in SILO', 'weight':5}})
+            if candidate['FIRST_DETECTION_FROM'] == '': self.lens_objects[standard_name]['Detected by'] = {'value': 'SILO', 'tracer': {'bibcode':'2021MNRAS.502.4617T', 'update status': 'in SILO', 'weight':5}}
             
             
     def load_links(self):
