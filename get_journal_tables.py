@@ -1713,8 +1713,9 @@ class Journal_tables():
                 except:
                     if 'query_z_source_err' in add_system_dict:
                         try:
-                            add_system_dict['query_z_source_err'] = round(float(str(add_system_dict['query_z_source']).split(' ')[-1].split('*')[-1].split('±')[-1]),4)
-                            if add_system_dict['query_z_source'] < 0 or add_system_dict['query_z_source'] > 14: add_system_dict['query_z_source']=''
+                            if '±' in add_system_dict['query_z_source']: add_system_dict['query_z_source_err'] = round(float(str(add_system_dict['query_z_source']).split(' ')[-1].split('*')[-1].split('±')[-1]),4)
+                            else: add_system_dict['query_z_source_err']=''
+                            if add_system_dict['query_z_source_err'] != '' and add_system_dict['query_z_source_err'] < 0 or add_system_dict['query_z_source_err'] > 14: add_system_dict['query_z_source_err']=''
                         except:
                             print('ERROR IN query_z_source_err', add_system_dict['query_z_source_err'])
                             add_system_dict['query_z_source_err']=''
@@ -1725,8 +1726,9 @@ class Journal_tables():
                 except:
                     if 'query_z_lens_err' in add_system_dict:
                         try:
-                            add_system_dict['query_z_lens_err'] = round(float(str(add_system_dict['query_z_lens']).split(' ')[-1].split('*')[-1].split('±')[-1]),4)
-                            if add_system_dict['query_z_lens'] < 0 or add_system_dict['query_z_lens'] > 14: add_system_dict['query_z_lens']=''
+                            if '±' in add_system_dict['query_z_lens']: add_system_dict['query_z_lens_err'] = round(float(str(add_system_dict['query_z_lens']).split(' ')[-1].split('*')[-1].split('±')[-1]),4)
+                            else: add_system_dict['query_z_lens_err']=''
+                            if add_system_dict['query_z_lens_err'] != '' and add_system_dict['query_z_lens_err'] < 0 or add_system_dict['query_z_lens_err'] > 14: add_system_dict['query_z_lens_err']=''
                         except:
                             print('ERROR IN query_z_lens_err', add_system_dict['query_z_lens_err'])
                             add_system_dict['query_z_lens_err']=''
