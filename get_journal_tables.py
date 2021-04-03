@@ -1148,13 +1148,8 @@ class Journal_tables():
             ddec_sign, ddeg, dmn, dsec = coord.dec.signed_dms
             ddec_sign = '-' if ddec_sign<0 else '+'
             
-            rhour = ('0' if int(rhour) <= 9 else '') + str(int(rhour))
-            rmn = ('0' if int(rmn) <= 9 else '') + str(int(rmn))
-            rsec = ('0' if int(rsec) <= 9 else '') + str(rsec)
-            
-            ddeg = ddec_sign + ('0' if int(ddeg) <= 9 else '') + str(int(ddeg))
-            dmn = ('0' if int(dmn) <= 9 else '') + str(int(dmn))
-            dsec = ('0' if int(dsec) <= 9 else '') + str(dsec)
+            rhour, rmn, rsec = "{ra_hour:02.0f}:{ra_min:02.0f}:{ra_sec:05.2f}".format(ra_hour=rhour, ra_min = rmn, ra_sec = rsec).split(':')
+            ddeg, dmn, dsec = "{dec_sign}{dec_degree:02.0f}:{dec_arcmin:02.0f}:{dec_arcsec:05.2f}".format(dec_sign=ddec_sign,dec_degree=ddeg,dec_arcmin=dmn,dec_arcsec=dsec).split(':')
                         
             if save:
                 if 'RA (Hours part)' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['RA (Hours part)'] = []
