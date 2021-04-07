@@ -811,15 +811,21 @@ class Journal_tables():
             if Rs == '':
                 self.bad_coord_error = True
             elif len(Rs) > 2 and '.' not in Rs:
-                print('Rs', Rs)
-                input('FIX BUG!!!')
+                print('Old Rs', Rs)
+                try: Rs = str(float(Rs))
+                except: pass
+                if len(Rs) > 2 and '.' not in Rs:
+                    input('FIX BUG!!!')
                 #Rs = Rs[:2] + '.' + Rs[2:]
                
             if Ds == '':
                 self.bad_coord_error = True
             elif len(Ds) > 2 and '.' not in Ds:
-                print('Ds', Ds)
-                input('Fix BUG!!!!')
+                print('Old Ds', Ds)
+                try: Ds = str(float(Ds))
+                except: pass
+                if len(Ds) > 2 and '.' not in Ds:
+                    input('Fix BUG!!!!')
                 #Ds = Ds[:2] + '.' + Ds[2:]
             
             if Rs == '' or Ds == '' or (len(Rs) > 2 and '.' not in Rs) or (len(Ds) > 2 and '.' not in Ds): return '', '', system_name
