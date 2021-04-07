@@ -792,6 +792,9 @@ class Journal_tables():
             ra, dec = coords
             ra = ra.replace('J','')
             #Remove non-decimal related information
+            ra = ra.split('(')[0]
+            dec = dec.split('(')[0]
+            
             non_decimal = re.compile(r'[^\d.]+')
             
             #Convert RA and DEC to a 4 digit form.
@@ -810,14 +813,14 @@ class Journal_tables():
             elif len(Rs) > 2 and '.' not in Rs:
                 print('Rs', Rs)
                 input('FIX BUG!!!')
-                Rs = Rs[:2] + '.' + Rs[2:]
+                #Rs = Rs[:2] + '.' + Rs[2:]
                
             if Ds == '':
                 self.bad_coord_error = True
             elif len(Ds) > 2 and '.' not in Ds:
                 print('Ds', Ds)
-                print('Fix BUG!!!!')
-                Ds = Ds[:2] + '.' + Ds[2:]
+                input('Fix BUG!!!!')
+                #Ds = Ds[:2] + '.' + Ds[2:]
             
             if Rs == '' or Ds == '' or (len(Rs) > 2 and '.' not in Rs) or (len(Ds) > 2 and '.' not in Ds): return '', '', system_name
             else:
