@@ -1008,6 +1008,7 @@ class Journal_tables():
                 if standard_ra: rh,rm,rs,dd,dm,ds = self.set_coord_details(standard_name, 0 if standard_ra == '' else 1 if self.bad_coord_error else 2, key, key2, 'Not yet included', self.query, save=False, ra=standard_ra, dec=standard_dec)
                 else: rh,rm,rs,dd,dm,ds = '', '', '', '', '', ''
                 print('coords', rh,rm,rs,dd,dm,ds)
+                print('Standard ra and dec', standard_ra, standard_dec)
             except Exception as e:
                 print(self.ads_scrapped_tables[self.query][key][key2], '\n>Standardize system Failed:', e)
                 standard_name, standard_ra, standard_dec = '', '', ''
@@ -1015,6 +1016,8 @@ class Journal_tables():
                 print('Problem with data:', table_row, map)
                 #testi = input('Retry to see bug? (type y for yes):')
                 #if testi == 'y': standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
+            if self.ads_to_mld_reference_interpreter[self.query] in ['ApJS243(2019)17', 'MNRAS483(2019)4242', 'MNRAS486(2019)4987', 'ApJ884(2019)85', 'A&A581A(2015)99', 'ApJ823(2016)17', 'MNRAS456(2016)1595', 'MNRAS489(2019)2525', 'AstronJ117(1999)2010', 'MNRAS483(2019)2125', 'ApJ851(2017)48']:
+                input('on hold for bad reference check')
              
             if 'Cluster Sources Table' in action_map and standard_ra != '':
                 if 'Word to recognize name is of lens and NOT source' in action_map:
