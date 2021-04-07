@@ -1585,7 +1585,7 @@ class Journal_tables():
         for s in string:
             if s in '0123456789.':
                 if s == '.' and prev_s in '0123456789': temp+=s
-                elif s in '0123456789': temp+=s
+                elif s in '--0123456789': temp+=s
             else:
                 if temp != '':
                     numbers.append(temp)
