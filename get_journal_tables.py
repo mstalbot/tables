@@ -798,7 +798,7 @@ class Journal_tables():
             ra = self.remove_non_numeric_related_formats(ra)
             dec = self.remove_non_numeric_related_formats(dec)
             print('Ra dec', ra, dec)
-            system_name = 'J' + ra_name[:4] + sign + dec_name[:4]
+            system_name = 'J' + ra[:4] + sign + dec[:4]
             print('standard name', system_name)
             
             Rh, Rm, Rs = ra[:2], ra[2:4], ra[4:]
