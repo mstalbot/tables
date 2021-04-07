@@ -828,7 +828,7 @@ class Journal_tables():
     def remove_non_numeric_related_formats(self, string, remove_plus = True):
         """Remove or replace numbers symbols that cause problems."""
     
-        return "".join([n for n in string.replace('−','-').replace('+' if remove_plus else '','').replace('\xa0', '').replace('\u2009','').replace('...','') if n in '0123456789.+-: '])
+        return "".join([n for n in string.replace('−','-').replace('+' if remove_plus else '','').replace('\xa0', '').replace('\u2009','').replace('...','') if n in '0123456789.+-: ']).split('(')[0]
 
     def convert_to_standard_ra_dec(self, table_row, map):
         """Convert input coordinate formats to a standard format"""
