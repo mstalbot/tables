@@ -830,7 +830,7 @@ class Journal_tables():
         #Use column map derived in inspection to convert table RA and DEC to a standard format
         if 'RA [°]' in map and table_row[map['RA [°]']] is not None:
             #return float(self.remove_non_numeric_related_formats(str(table_row[map['RA [°]']]))), float(self.remove_non_numeric_related_formats(str(table_row[map['Dec [°]']])))
-            coords = SkyCoord(float(self.remove_non_numeric_related_formats(str(table_row[map['RA [°]']]))),float(self.remove_non_numeric_related_formats(str(table_row[map['Dec [°]']]))), frame='fk5', unit=(units.hourangle, units.deg))
+            coords = SkyCoord(float(self.remove_non_numeric_related_formats(str(table_row[map['RA [°]']]))),float(self.remove_non_numeric_related_formats(str(table_row[map['Dec [°]']]))), frame='fk5', unit=(units.deg, units.deg))
             return coords.ra.deg, coords.dec.deg
         elif 'RA in Hours' in map and table_row[map['RA in Hours']] is not None:
             RA = float(self.remove_non_numeric_related_formats(str(table_row[map['RA in Hours']])))
@@ -900,7 +900,8 @@ class Journal_tables():
                 coords = self.remove_non_numeric_related_formats(str(table_row[map['RA-Dec (Degrees)']]), remove_plus = False).split(sign)
                 if len(coords) == 2: break
             #return float(self.remove_non_numeric_related_formats(coords[0])), float(sign + coords[1])
-            coords = SkyCoord(float(self.remove_non_numeric_related_formats(coords[0])),float(sign + coords[1]), frame='fk5', unit=(units.hourangle, units.deg))
+            coords = SkyCoord(float(self.remove_non_numeric_related_formats(coords[0])),float(sign + coords[1]), frame='fk5', unit=(units.deg, units.deg))
+            input('On hold to check')
             return coords.ra.deg, coords.dec.deg
         elif 'MJD' in map and table_row[map['MJD']] is not None: return self.get_ra_dec_from_plate_mjd_fiberid(table_row[map['Plate']], table_row[map['MJD']], table_row[map['Fiberid']])
         elif 'MJD2' in map and table_row[map['MJD2']] is not None: return self.get_ra_dec_from_plate_mjd_fiberid(table_row[map['Plate2']], table_row[map['MJD2']], table_row[map['Fiberid2']])
