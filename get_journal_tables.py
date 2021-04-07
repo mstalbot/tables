@@ -791,32 +791,38 @@ class Journal_tables():
             if sign != '+': sign = '-'
             ra, dec = coords
             ra = ra.replace('J','')
-            dec = dec[:4]
             #Remove non-decimal related information
             non_decimal = re.compile(r'[^\d.]+')
             
             #Convert RA and DEC to a 4 digit form.
-            ra = self.remove_non_numeric_related_formats(ra.split('.')[0])
-            dec = self.remove_non_numeric_related_formats(dec.split('.')[0])
+            ra = self.remove_non_numeric_related_formats(ra)
+            dec = self.remove_non_numeric_related_formats(dec)
             print('Ra dec', ra, dec)
-            system_name = 'J' + ra[:4] + sign + dec[:4]
+            system_name = 'J' + ra_name[:4] + sign + dec_name[:4]
             print('standard name', system_name)
             
             Rh, Rm, Rs = ra[:2], ra[2:4], ra[4:]
             Dd, Dm, Ds = dec[:2], dec[2:4], dec[4:]
             
+            
             if Rs == '':
-                Rs = '30'
                 self.bad_coord_error = True
-            elif len(Rs) > 2 and '.' not in Rs: Rs = Rs[:2] + '.' + Rs[2:]
+            elif len(Rs) > 2 and '.' not in Rs:
+                print('Rs', Rs)
+                input('FIX BUG!!!')
+                Rs = Rs[:2] + '.' + Rs[2:]
                
             if Ds == '':
-                Ds = '30'
                 self.bad_coord_error = True
-            elif len(Ds) > 2 and '.' not in Ds: Ds = Ds[:2] + '.' + Ds[2:]
+            elif len(Ds) > 2 and '.' not in Ds:
+                print('Ds', Ds)
+                print('Fix BUG!!!!')
+                Ds = Ds[:2] + '.' + Ds[2:]
             
-            coords = SkyCoord("%s:%s:%s %s:%s:%s"%(Rh,Rm,Rs,sign+Dd,Dm,Ds), frame='fk5', unit=(units.hourangle, units.deg))
-            return coords.ra.deg, coords.dec.deg, system_name
+            if Rs == '' or Ds == '' or (len(Rs) > 2 and '.' not in Rs) or (len(Ds) > 2 and '.' not in Ds): return '', '', system_name
+            else:
+                coords = SkyCoord("%s:%s:%s %s:%s:%s"%(Rh,Rm,Rs,sign+Dd,Dm,Ds), frame='fk5', unit=(units.hourangle, units.deg))
+                return coords.ra.deg, coords.dec.deg, system_name
         else: return '', '', ''
         
     def remove_non_numeric_related_formats(self, string, remove_plus = True):
@@ -1014,8 +1020,8 @@ class Journal_tables():
                 standard_name, standard_ra, standard_dec = '', '', ''
                 rh,rm,rs,dd,dm,ds = '', '', '', '', '', ''
                 print('Problem with data:', table_row, map)
-                #testi = input('Retry to see bug? (type y for yes):')
-                #if testi == 'y': standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
+                testi = input('Retry to see bug? (type y for yes):')
+                if testi == 'y': standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
             if self.ads_to_mld_reference_interpreter[self.query] in ['ApJS243(2019)17', 'MNRAS483(2019)4242', 'MNRAS486(2019)4987', 'ApJ884(2019)85', 'A&A581A(2015)99', 'ApJ823(2016)17', 'MNRAS456(2016)1595', 'MNRAS489(2019)2525', 'AstronJ117(1999)2010', 'MNRAS483(2019)2125', 'ApJ851(2017)48']:
                 print('bad reference', self.ads_to_mld_reference_interpreter[self.query])
                 input('on hold for bad reference check')
@@ -1085,7 +1091,10 @@ class Journal_tables():
                 else: system_names = []
                 system_names.append(standard_name)
                 
-                self.set_coord_details(standard_name, 0, key, key2, 'Not yet included', self.query)
+                if standard_ra and standard_dec: self.set_coord_details(standard_name, 0, key, key2, 'Not yet included', self.query)
+                else:
+                    print('fail standard ra dec', standard_ra, standard_dec)
+                    input('remove once looks fine')
                 if 'Detection table' in action_map: self.lens_objects[standard_name]['Detected by'] = {'value': action_map['Discovery'] if 'Discovery' in action_map else '', 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'update status': 'Not yet included', 'weight':2}}                       
                 self.lens_objects[standard_name]['References'] = self.get_all_papers_referenced(self.lens_objects[standard_name]['References'], system_names)
 
