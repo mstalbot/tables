@@ -1029,7 +1029,7 @@ class Journal_tables():
                 print('Problem with data:', table_row, map)
                 testi = input('Retry to see bug? (type y for yes):')
                 if testi == 'y': standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
-            if self.ads_to_mld_reference_interpreter[self.query] in ['ApJS243(2019)17', 'MNRAS483(2019)4242', 'MNRAS486(2019)4987', 'ApJ884(2019)85', 'ApJ823(2016)17', 'MNRAS489(2019)2525', 'AstronJ117(1999)2010', 'MNRAS483(2019)2125', 'ApJ851(2017)48']:
+            if self.ads_to_mld_reference_interpreter[self.query] in ['ApJ884(2019)85', 'ApJ851(2017)48']:
                 print('bad reference', self.ads_to_mld_reference_interpreter[self.query])
                 input('on hold for bad reference check')
              
@@ -1099,9 +1099,7 @@ class Journal_tables():
                 system_names.append(standard_name)
                 
                 if standard_ra and standard_dec: self.set_coord_details(standard_name, 0, key, key2, 'Not yet included', self.query)
-                else:
-                    print('fail standard ra dec', standard_ra, standard_dec)
-                    input('remove once looks fine')
+                else: print('Not committing any RA and DEC since coords resolved only to minutes')
                 if 'Detection table' in action_map: self.lens_objects[standard_name]['Detected by'] = {'value': action_map['Discovery'] if 'Discovery' in action_map else '', 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'update status': 'Not yet included', 'weight':2}}                       
                 self.lens_objects[standard_name]['References'] = self.get_all_papers_referenced(self.lens_objects[standard_name]['References'], system_names)
 
