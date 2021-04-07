@@ -814,7 +814,7 @@ class Journal_tables():
                 print('Old Rs', Rs)
                 try: Rs = str(float(Rs))
                 except: pass
-                if len(Rs) > 2 and '.' not in Ra:
+                if len(Rs) > 2 and '.' not in ra:
                     Rs = Rs[:2] + '.' + Rs[2:]
                
             if Ds == '':
@@ -823,7 +823,7 @@ class Journal_tables():
                 print('Old Ds', Ds)
                 try: Ds = str(float(Ds))
                 except: pass
-                if len(Ds) > 2 and '.' not in Dec:
+                if len(Ds) > 2 and '.' not in dec:
                     Ds = Ds[:2] + '.' + Ds[2:]
             
             if Rs == '' or Ds == '' or (len(Rs) > 2 and '.' not in Rs) or (len(Ds) > 2 and '.' not in Ds): return '', '', system_name
