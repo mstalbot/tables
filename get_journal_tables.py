@@ -1078,8 +1078,8 @@ class Journal_tables():
                 if 'Cluster Sources Table' in action_map:
                     if 'System Name' in self.lens_objects[standard_name]: self.lens_objects[standard_name]['System Name'].append({'value': standard_name, 'tracer': {'update status': 'is or in cluster', 'weight':5}})
                     else: self.lens_objects[standard_name]['System Name'] = [{'value': standard_name, 'tracer': {'update status': 'is or in cluster', 'weight':5}}]
-                if 'Standard RA' not in self.lens_objects: self.lens_objects[standard_name]['Standard RA'] = []
-                if 'Standard DEC' not in self.lens_objects: self.lens_objects[standard_name]['Standard DEC'] = []
+                if 'Standard RA' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Standard RA'] = []
+                if 'Standard DEC' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Standard DEC'] = []
 
                 #Save standard coordinate info
                 self.lens_objects[standard_name]['Standard RA'].append({'value': standard_ra, 'accurate_only_to_arcmin':self.bad_coord_error, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0 if standard_ra == '' else 1 if self.bad_coord_error else 2}})
