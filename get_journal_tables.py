@@ -939,7 +939,6 @@ class Journal_tables():
     
         for index, self.query in enumerate(self.bibcodes[self.end:self.start:-1]):
             print('INDEX>>>', index)
-            if '2019' not in self.query: continue
             referenced = self.check_referance_added_to_MLD_references(self.query, self.ads_scrapped_data[self.query]['Paper Overview'])
             if referenced:
                 print('Paper already cited: %s. Skipping'%self.query)
@@ -1030,9 +1029,6 @@ class Journal_tables():
                 print('Problem with data:', table_row, map)
                 testi = input('Retry to see bug? (type y for yes):')
                 if testi == 'y': standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
-            if self.ads_to_mld_reference_interpreter[self.query] in ['ApJS243(2019)17']:
-                print('bad reference', self.ads_to_mld_reference_interpreter[self.query])
-                input('on hold for bad reference check')
              
             if 'Cluster Sources Table' in action_map and standard_ra != '':
                 if 'Word to recognize name is of lens and NOT source' in action_map:
