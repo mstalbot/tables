@@ -107,13 +107,13 @@ class Journal_tables():
         if self.inspect: self.inspect_tables()
         if self.prepare_to_post_lenses_to_MLD2:
             self.set_system_data()
-            #self.update_MLD_references()
-            #self.update_MLD_lens_entries()
-            #self.update_MLD_lens_discovery_connection()
-            #self.update_MLD_lens_reference_connection()
-            #self.update_MLD_coord()
-            #self.update_MLD_lens_foreground_connection()
-            #self.update_MLD_lens_background_connection()
+            self.update_MLD_references()
+            self.update_MLD_lens_entries()
+            self.update_MLD_lens_discovery_connection()
+            self.update_MLD_lens_reference_connection()
+            self.update_MLD_coord()
+            self.update_MLD_lens_foreground_connection()
+            self.update_MLD_lens_background_connection()
     
     def load_query_bibcodes(self):
         """Load bibliography codes from a json file on disk"""
@@ -1818,13 +1818,15 @@ class Journal_tables():
                     #print('Skipping since no RA is available')
                     self.skip_save.append(self.lens_objects[system])
                 elif none_favoured_in_MLD:
+                    add_system_dict['query_dec_coord'] = add_system_dict['query_dec_coord'].replace('−','-')
+                    print(add_system_dict.keys())
                     file.write("INSERT INTO lens ( lensID,discovery_acronym,discovery_count,kind_acronym,kindID,filterID,system_name,lensgrade,multiplicity,morphology,reference_frame,equinox,description,alternate_name,z_lens,z_source,d_lens,d_source,vdisp,vdisp_err,time_delay0,time_delay1,mag_lens,mag_source,filter_lens,filter_source,theta_e,theta_e_err,theta_e_quality,theta_e_redshift,fluxes,ra_decimal,ra_hrs,ra_mins,ra_secs,ra_coord,ra_coord_err,dec_decimal,dec_degrees,dec_arcmin,dec_arcsec,dec_coord,dec_coord_err,number_images,reference_identifier,status,modified,created_by_member_name,modified_by_member_name,discovery_date,created,has_sdss,sdss_link,has_apod,apod_link,z_lens_err,z_lens_quality,z_source_err,z_source_quality,vett_status,released_status,hidden_status,vetted_by_member_name,released_as_of_version,released_by_member_name,hidden_by_member_name,vetted,released,hidden,repeats,graphic_status,coord_label,has_adsabs,adsabs_link,has_ned,ned_link,sdss_ObjID,sdss_specObjID,lens_name ) Values ( ")
                     to_write = '%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%s,%r,%r,%s,%s,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%s,%s,%s,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r'%(lensID,add_system_dict['Discovery'] if 'Discovery' in add_system_dict else '', int(add_system_dict['query_discovery_count']) if 'query_discovery_count' in add_system_dict else 0, add_system_dict['query_kindID'] if 'query_kindID' in add_system_dict else '', int(self.lens_type_id[add_system_dict['query_kindID']]) if 'query_kindID' in add_system_dict else '',0, add_system_dict['query_system_name'] if 'query_system_name' in add_system_dict else '', add_system_dict['query_lensgrade'] if 'query_lensgrade' in add_system_dict else '', '','','','J2000',  add_system_dict['query_description'] if 'query_description' in add_system_dict else '', add_system_dict['query_alternate_name'] if 'query_alternate_name' in add_system_dict else '',  add_system_dict['query_z_lens'], add_system_dict['query_z_source'], '','', add_system_dict['query_vdisp'] if 'query_vdisp' in add_system_dict else '',  add_system_dict['query_vdisp_err'] if 'query_vdisp_err' in add_system_dict else '', '','','','','','', add_system_dict['query_theta_e'], add_system_dict['query_theta_e_err'] if 'query_theta_e_err' in add_system_dict else '', add_system_dict['query_theta_e_quality'] if 'query_theta_e_quality' in add_system_dict else '', '','','', add_system_dict['query_ra_hrs'] if 'query_ra_hrs' in add_system_dict else '', add_system_dict['query_ra_mins'] if 'query_ra_mins' in add_system_dict else '', str(round(float(add_system_dict['query_ra_secs']),2)) if 'query_ra_secs' in add_system_dict else '',  round(float(add_system_dict['query_ra_coord']),6) if 'query_ra_coord' in add_system_dict else '', coord_error, '', add_system_dict['query_dec_degrees'] if 'query_dec_degrees' in add_system_dict else '',  add_system_dict['query_dec_arcmin'] if 'query_dec_arcmin' in add_system_dict else '', str(round(float(add_system_dict['query_dec_arcsec']),2)) if 'query_dec_arcsec' in add_system_dict else '', round(float(add_system_dict['query_dec_coord']),6) if 'query_dec_coord' in add_system_dict else '', coord_error, add_system_dict['number_images'], self.lens_objects[system]['References'][0] if 'References' in self.lens_objects[system] else '',1,'NOW()', self.user_name, self.user_name, add_system_dict['query_discovery_date'] if 'query_discovery_date' in add_system_dict else 'NULL','NOW()',0,'',0,'', add_system_dict['query_z_lens_err'] if 'query_z_lens_err' in add_system_dict else 0,  add_system_dict['query_z_lens_quality'] if 'query_z_lens_quality' in add_system_dict else '', add_system_dict['query_z_source_err'] if 'query_z_source_err' in add_system_dict else 0, add_system_dict['query_z_source_quality'] if 'query_z_source_quality' in add_system_dict else '',0,1,0,'',1,'','','NULL','NULL','NULL',0,0,'Manual',0,'',0,'','','', add_system_dict['query_system_name'].split('[')[0] if 'query_system_name' in add_system_dict else '')
                     file.write(to_write.replace('nan',"''"))
                     file.write(' );\n')
                     self.saved.append(self.lens_objects[system])
                     #print('SAVED SAVE NEW SYSTEM>>>>>', self.lens_objects[system])
-                    self.coords_write.append([lensID, 1, 'Manual', add_system_dict['query_ra_hrs'], add_system_dict['query_ra_mins'], add_system_dict['query_ra_secs'], round(float(add_system_dict['query_ra_coord']),6), coord_error, add_system_dict['query_dec_degrees'], add_system_dict['query_dec_arcmin'], add_system_dict['query_dec_arcsec'], round(float(add_system_dict['query_dec_coord']),6), coord_error, 'J2000'])
+                    #self.coords_write.append([lensID, 1, 'Manual', add_system_dict['query_ra_hrs'], add_system_dict['query_ra_mins'], add_system_dict['query_ra_secs'], round(float(add_system_dict['query_ra_coord']),6), coord_error, add_system_dict['query_dec_degrees'], add_system_dict['query_dec_arcmin'], add_system_dict['query_dec_arcsec'], round(float(add_system_dict['query_dec_coord']),6), coord_error, 'J2000'])
                 
                     if 'query_kindID' in add_system_dict and add_system_dict['query_kindID']:
                         kindID = int(self.lens_type_id[add_system_dict['query_kindID']])
