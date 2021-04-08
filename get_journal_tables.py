@@ -1030,9 +1030,9 @@ class Journal_tables():
                 #testi = input('Retry to see bug? (type y for yes):')
                 #if testi == 'y': standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords(table_row, map)
                  
-            '''if self.ads_to_mld_reference_interpreter[self.query] in ['ApJ889(2020)189', 'ApJ884(2019)85', 'ApJ823(2016)17', 'MNRAS483(2019)2125', 'MNRAS456(2016)1948']:
+            if self.ads_to_mld_reference_interpreter[self.query] in ['A&A618A(2018)56', 'ApJ835(2017)44', 'MNRAS483(2019)2125', 'MNRAS475(2018)2086', 'ApJ859(2018)159', 'MNRAS483(2019)5649', 'MNRAS481(2018)1041']:
                 print('bad', self.query)
-                input('On HOLD')'''
+                input('On HOLD')
              
             if 'Cluster Sources Table' in action_map and standard_ra != '':
                 if 'Word to recognize name is of lens and NOT source' in action_map:
