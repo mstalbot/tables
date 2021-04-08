@@ -812,19 +812,17 @@ class Journal_tables():
                 self.bad_coord_error = True
             elif len(Rs) > 2 and '.' not in Rs:
                 print('Old Rs', Rs)
-                try: Rs = str(float(Rs))
-                except:
-                    if len(Rs) > 2 and '.' not in ra:
-                        Rs = Rs[:2] + '.' + Rs[2:]
+                Rs = Rs.replace(' ','')
+                if len(Rs) > 2 and '.' not in ra:
+                    Rs = Rs[:2] + '.' + Rs[2:]
                
             if Ds == '':
                 self.bad_coord_error = True
             elif len(Ds) > 2 and '.' not in Ds:
                 print('Old Ds', Ds)
-                try: Ds = str(float(Ds))
-                except:
-                    if len(Ds) > 2 and '.' not in dec:
-                        Ds = Ds[:2] + '.' + Ds[2:]
+                Ds = Ds.replace(' ','')
+                if len(Ds) > 2 and '.' not in dec:
+                    Ds = Ds[:2] + '.' + Ds[2:]
             
             if Rs == '' or Ds == '' or (len(Rs) > 2 and '.' not in Rs) or (len(Ds) > 2 and '.' not in Ds): return '', '', system_name
             else:
