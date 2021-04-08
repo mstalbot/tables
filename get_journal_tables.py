@@ -936,7 +936,7 @@ class Journal_tables():
     
         for index, self.query in enumerate(self.bibcodes[self.end:self.start:-1]):
             print('INDEX>>>', index)
-            if self.ads_to_mld_reference_interpreter[self.query] in ['ApJS243(2019)17']: continue
+            if '2019' not in self.query: continue
             referenced = self.check_referance_added_to_MLD_references(self.query, self.ads_scrapped_data[self.query]['Paper Overview'])
             if referenced:
                 print('Paper already cited: %s. Skipping'%self.query)
