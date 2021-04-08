@@ -894,7 +894,7 @@ class Journal_tables():
             Rh = self.remove_non_numeric_related_formats(str(table_row[map['RA (Hours part)']])) if 'RA (Hours part)' in map else self.remove_non_numeric_related_formats(str(table_row[map['RA (Degree part)']]))
             Rm, Rs = self.remove_non_numeric_related_formats(str(table_row[map['RA (Mins part)']])), self.remove_non_numeric_related_formats(str(table_row[map['RA (Secs part)']]))
             Dd, Dm, Ds = self.remove_non_numeric_related_formats(str(table_row[map['Dec (Degree part)']])), self.remove_non_numeric_related_formats(str(table_row[map['Dec (Arcmin part)']])), self.remove_non_numeric_related_formats(str(table_row[map['Dec (Arcsec part)']]))
-            if 'DE-' in table_row: sign = table_row['DE-']
+            if 'DE-' in table_row: sign = table_row['DE-'] if '-' in table_row['DE-'] else ''
             else: sign = ''
             Dd = Dd + sign
             coords = SkyCoord("%s:%s:%s %s:%s:%s"%(Rh,Rm,Rs,Dd,Dm,Ds), frame='fk5', unit=(units.hourangle, units.deg))
