@@ -18,7 +18,7 @@ from astropy import units
  
 class Journal_tables():
  
-    def __init__(self, get_bibcodes = False, get_online_tables = False, user_name = 'guest', base_directory = 'PATH_TO_lens_surveys', headers = {'user-agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.2 Safari/605.1.15'}, user = {'MNRAS':'','IOP':'','A&A':''}, password = {'MNRAS':'','IOP':'','A&A':''}, mld_auth = {'user':'','password':''}, start = 0, end = 99999, redo_pandas = False, rescan_online = False, slow_down_seconds_after_requests = 5, inspect = False, redo_inspection=False, load_processed_data = True, prepare_to_post_lenses_to_MLD2 = False):
+    def __init__(self, get_bibcodes = False, optional_bibcode_file = None, get_online_tables = False, user_name = 'guest', base_directory = 'PATH_TO_lens_surveys', headers = {'user-agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.2 Safari/605.1.15'}, user = {'MNRAS':'','IOP':'','A&A':''}, password = {'MNRAS':'','IOP':'','A&A':''}, mld_auth = {'user':'','password':''}, start = 0, end = 99999, redo_pandas = False, rescan_online = False, slow_down_seconds_after_requests = 5, inspect = False, redo_inspection=False, load_processed_data = True, prepare_to_post_lenses_to_MLD2 = False):
     
         """This program retrieves tables from journals typically used in Astronomy. Data is saved as a pandas or ascii version of a JSON file. This program also enables inspection of table data and preparing the data to be inserted into mysql. To run any mode, simply set the related boolean below.
         
@@ -42,6 +42,7 @@ class Journal_tables():
         prepare_to_post_lenses_to_MLD2: Parse tables using inspection map to gather candidates into the lens_objects dictionary.
         """ 
         #Set class globals
+        self.optional_bibcode_file = optional_bibcode_file
         self.user_name = user_name
         self.headers = headers
         self.get_bibcodes = get_bibcodes
@@ -118,7 +119,7 @@ class Journal_tables():
     def load_query_bibcodes(self):
         """Load bibliography codes from a json file on disk"""
         
-        with open(join(self.base_directory, 'resources', 'bibcodes_leonidas.txt'), 'r') as json_file:
+        with open(join(self.base_directory, 'resources', 'bibcodes_leonidas.txt' if self.optional_bibcode_file is None else self.optional_bibcode_file), 'r') as json_file:
             self.bibcodes = json.load(json_file)['bibcodes']
             
                 
@@ -463,7 +464,9 @@ class Journal_tables():
         load_overview_path = join(self.base_directory, 'overviews', '%s-overview.txt'%self.query)
         if exists(load_overview_path):
             with open(load_overview_path, 'r') as json_file: self.ads_scrapped_data[self.query] = json.load(json_file)
-        else: self.ads_scrapped_data[self.query] = {}
+        else:
+            print('No file saved for bibcode...yet')
+            self.ads_scrapped_data[self.query] = {}
     
     def load_saved_tables(self):
         """Load table via overview keys"""
