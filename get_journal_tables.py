@@ -15,10 +15,11 @@ from astropy.io import fits
 import xml.dom.minidom
 from astropy.coordinates.angles import hms_tuple, dms_tuple
 from astropy import units
+from glob import glob
  
 class Journal_tables():
  
-    def __init__(self, get_bibcodes = False, optional_bibcode_file = None, get_online_tables = False, user_name = 'guest', base_directory = 'PATH_TO_lens_surveys', headers = {'user-agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.2 Safari/605.1.15'}, user = {'MNRAS':'','IOP':'','A&A':''}, password = {'MNRAS':'','IOP':'','A&A':''}, mld_auth = {'user':'','password':''}, start = 0, end = 99999, redo_pandas = False, rescan_online = False, slow_down_seconds_after_requests = 5, inspect = False, redo_inspection=False, load_processed_data = True, prepare_to_post_lenses_to_MLD2 = False):
+    def __init__(self, get_bibcodes = False, optional_bibcode_file = None, get_online_tables = False, user_name = 'guest', base_directory = 'PATH_TO_lens_surveys', headers = {'user-agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.2 Safari/605.1.15'}, user = {'MNRAS':'','IOP':'','A&A':''}, password = {'MNRAS':'','IOP':'','A&A':''}, mld_auth = {'user':'','password':''}, start = 0, end = 99999, redo_pandas = False, rescan_online = False, slow_down_seconds_after_requests = 100, inspect = False, redo_inspection=False, load_processed_data = True, prepare_to_post_lenses_to_MLD2 = False):
     
         """This program retrieves tables from journals typically used in Astronomy. Data is saved as a pandas or ascii version of a JSON file. This program also enables inspection of table data and preparing the data to be inserted into mysql. To run any mode, simply set the related boolean below.
         
@@ -40,8 +41,16 @@ class Journal_tables():
         mld_auth: Masterlens database login in format of {'user':'Your user login', 'password':'Your password'}.
         load_processed_data: Load previous processed data and relavent MLD database information. Kept as True by default.
         prepare_to_post_lenses_to_MLD2: Parse tables using inspection map to gather candidates into the lens_objects dictionary.
-        """ 
-        #Set class globals
+        """         
+        self.standardize_known_cluster_variants = {' Abell 370': 'Abell 370', 'A2744': 'Abell 2744', 'Cl0024+1654': 'CL0024+1654', 'MACS J0416': 'MACS J0416.1−2403', 'MACS0416': 'MACS J0416.1−2403', 'MACS J0717': 'MACS J0717.5+3745', 'MACS J1149': 'MACS J1149.5+2223', 'MACS\u2009J0717.5+3745': 'MACS J0717.5+3745', 'RXCJ0600−2007': 'MACS J0600.1-2008', 'Abell S1063': 'RXC J2248.7-4431', 'MACS1206': 'MACS 1206−0847', 'MACS0329': 'MACS J0329.6-0211'}
+        
+        #self.lensing_cluster_coord_approximates = {'J004−415':'DES J0041−4155', 'J010−534':'DES J0104−5341', 'J012−514':'DES J0120−5143', 'J022−451':'DES J0227−4516', 'J035−475':'DES J0357−4756', 'J041−545':'DES J0418−5457', 'J211−011':'DES J2113−0114', 'J232−463':'DES J2321−4630', 'DES J234−511':'DES J2349−5113', 'J001-302':'Abell 2744', 'J002-122':'MACS J0025.4-1222', 'J002+170':'CL0024+1654', 'J003+180':'RXC J0032.1+1808', 'J010-491':'ACT-CL J0102-49151', 'J014+443':'RXC J0142.9+4438', 'J015-085':'MACS J0159.8-0849', 'J023-013':'Abell 370', 'J024-530':'Abell S295', 'J025-220':'MACS0257', 'J032-021':'MACS J0329.6-0211', 'J035-533':'SPT-CL J0356–5337', 'J041-240':'MACS J0416.1−2403', 'J041-115':'MACS J0417.5–1154', 'J044+021':'MS 0440.5+0204', 'J045-030':'MS 0451.6−0305', 'J055-334':'MACS J0553.4−3342', 'J060-200':'MACS J0600.1-2008', 'J064+701':'MACS J0647.7+7015', 'J065-555':'Bullet cluster', 'J071+374':'MACS J0717.5+3745', 'J084+362':'Abell 697', 'J094+074':'MACS0940', 'J114+222':'MACS J1149.5+2223', 'J120-084':'MACS 1206−0847', 'J121+273':'RM J121218.5+273255.1', 'J131-011':'Abell 1689', 'J134-114':'RX J1347', 'J135+623':'MS 1358.4+6245', 'J161-060':'Abell 2163', 'J203-403':'SMACS2031', 'J212-074':'MACS J2129.4−0741', 'J212+000':'RX J2129.4+0009', 'J213-401':'SMACS2131', 'J213-010':'MACS J2135.2-0102', 'J221-034':'RXC J2211.7-0349', 'J221-140':'MACS2214', 'J224+443':'RXC J2248.7-4431', 'J230-021':'Abell 2537'}
+        
+        
+        self.cluster_sources_memory = {}
+        self.paper_id_memory = {}
+        self.cluster_lens_names = []
+        self.cluster_lens_names_coords = []
         self.optional_bibcode_file = optional_bibcode_file
         self.user_name = user_name
         self.headers = headers
@@ -68,6 +77,8 @@ class Journal_tables():
         self.fix_messed_up_tables = {'2016ApJ...826..112S': '\n\n\n\n\n\n\n\n\t'}
         self.table_action = {'^':'Word to recognize name is of lens and NOT source', '~':'Name,Ra,Dec of cluster or group lens','+':'Cluster Sources Table', 's': 'Skip cause table not important', 'y': 'Table correctly loaded', 'h': 'Append first table row to header', 'f': 'Trim footer', 'p': 'Warn problem', 'm': 'Message on table quality', 'c': 'Check system name since may be unique', '?':'Table might not be necessary', 't':'Detection table', 'i':'Follow up table', '-': 'Double check diction', 'd':'Skipping since duplicate', 'z':'Problem but check. Currently skipping', 'r':'Repeats format horizontally', 'n':'Discovery', 'k':'Lens Kind', 'g': 'Candidate table represents a grade', 'q':'Table columns are horizontal', '=':'Word to recognize candidate in column'}
         self.table_inspection_id = {'sn': 'Source names', 's': 'System Name', 'dd': 'Discovery Date', 'an': 'Alternate Name(s)', 'ndp': 'Number of Discovery Programs', 'rh': 'RA in Hours', 'rf': 'RA in Hours:Min:Sec', 'rpw': 'RA in Degrees:Min:Sec', 'rhp': 'RA (Hours part)', 'rmp': 'RA (Mins part)', 'rsp': 'RA (Secs part)', 'r': 'RA [°]', 'dp': 'Dec (+/-) Degree:Min:Sec', 'ddp': 'Dec (Degree part)', 'dmp': 'Dec (Arcmin part)', 'dsp': 'Dec (Arcsec part)', 'd': 'Dec [°]', 'lg': 'Lens Grade', 'er': 'Einstein_R ["]', 'zl': 'z_Lens', 'zs': 'z_Source(s)', 'svd': 'Stellar velocity disp', 'des': 'Description', 'ref': 'References', 'el': 'External Links', 'dg': 'Detection score or grade', 'p':'Plate', 'mjd':'MJD', 'f':'Fiberid', 'pos':'Position', 'r-d':'RA-Dec (Degrees)', 'p2':'Plate2', 'mjd2': 'MJD2', 'f2':'Fiberid2', 'p3':'Plate3', 'mjd3': 'MJD3', 'f3': 'Fiberid3', 'zl2': 'z_Lens2', 'zl3': 'z_Lens3', 'es':'Has external link for SDSS','eads':'Has external link for ADS','en':'Has external link for NED','eapod':'Has external link for APOD','svde':'Stellar velocity disp error','dc':'Discovery count', 'kr':'killreferences', 'ar':'addreferences', 'rk':'referencestokill[]', 'ra':'referencestoadd[]', 'lt': 'Lens type', 'ic':'Image count', 'pmf':'Plate-MJD-Fiberid', 'c':'Condition'}
+        
+        self.on_disk_from_IOP = ['2021ApJ...919...54Z', '2021ApJ...916...50F', '2021ApJ...910..135S', '2021ApJ...911...99F', '2020ApJ...903..137Z', '2020ApJ...898....6A', '2020ApJ...897....4V', '2020ApJ...896..156F', '2020ApJ...894..150M', '2020ApJS..247...12S', '2019ApJ...873...96M', '2018ApJ...863..145C', '2018ApJ...855....4K', '2017ApJ...844..127W', '2017ApJ...838..137P', '2017ApJ...834...45Z', '2016ApJ...833...25Z', '2014ApJ...790..144B', '2012ApJ...746..161S', '2010ApJ...715L.160C', '2009ApJ...707L..12H', '2009ApJ...697.1907Z', '2007ApJ...662..781R', '2005ApJ...629L..73S', '2005ApJ...618L...5E', '1997ApJ...486L..75F']
         
         #User MLD authorization data, urls, and plain english to HTML entry conversion metadata
         self.mld_auth = mld_auth
@@ -99,6 +110,7 @@ class Journal_tables():
         #Automatically run if True
         if self.get_bibcodes: self.load_query_bibcodes()
         if self.load_processed_data: self.load_saved_data()
+        self.set_cluster_list()
         if self.get_online_tables:
             self.set_sessions('open', user, password)
             self.set_papers_overview()
@@ -115,6 +127,15 @@ class Journal_tables():
             self.update_MLD_coord()
             self.update_MLD_lens_foreground_connection()
             self.update_MLD_lens_background_connection()
+            
+    def set_cluster_list(self):
+        with open(join(self.base_directory, 'resources', 'parsed_clusters.txt'), 'r') as file:
+            self.cluster_list = []
+            for line in file:
+                self.cluster_list.append(line.split(','))
+                if len(line.split(',')) == 6: print(line)
+        self.cluster_list = np.array(self.cluster_list)
+        print('SHAPE!!!!', self.cluster_list.shape)
     
     def load_query_bibcodes(self):
         """Load bibliography codes from a json file on disk"""
@@ -224,7 +245,7 @@ class Journal_tables():
                                     redo = False
                                     continue
                                     
-                                if not self.redo_inspection and 'Inspection' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2] and ('Skip cause table not important' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes'] or 'Skipping since duplicate' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes'] or 'Problem but check. Currently skipping' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes']):
+                                if 'Inspection' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2] and ('Skip cause table not important' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes'] or 'Skipping since duplicate' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes']):
                                     print('Skipping cause noted to skip')
                                     redo = False
                                     continue
@@ -254,9 +275,17 @@ class Journal_tables():
                                 except: pass
                                 #Record table quality and relavence
                                 notes = {}
-                                if input('Continue?') == '':
+                                test_move_on = input('Continue () assign table pass grade (g) or specify(y)?')
+                                if test_move_on in ['', 'g']:
                                     redo = False
+                                    if test_move_on == 'g': 
+                                        self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Notes']['Candidate table represents a grade'] = 'p'
+                                        marker = input('Any column marker for pass/unpass(use ! for unpass)')
+                                        if marker != '':
+                                            self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Table map to MasterLens database']['pass' if '!' not in marker else 'not pass'] = {input('Paste in column'):marker.replace('!','')}
+                                        self.save_overview()
                                     continue
+                                
                                 for action in input('TYPE OR ONE FROM THE FOLLOWING: %s'%self.table_action):
                                     if action not in ['f','p','m','-', 'r', 'n', 'k', 'g', '=', '^', '~']: notes[self.table_action[action]] = ''
                                     else: 
@@ -289,11 +318,15 @@ class Journal_tables():
                                             method = input('Choose zlens method type: %s'%self.z_type_id_inverted)
                                             if method != '': method = self.z_type_id_inverted[method]
                                             error = input('Choose zlens error column: %s'%columns)
-                                            if error != '': error = columns[error]
+                                            rescale = ''
+                                            if error != '':
+                                                error = columns[error]
+                                                rescale = input('If error should be re-scaled, then enter a float to multiply column by:')
+                                                if rescale != '': rescale = '@' + rescale
                                             print(method, error, column_id.split(':'))
                                             print(column_id.split(':')[0])
                                             print(self.table_inspection_id[column_id.split(':')[0]])
-                                            map[self.table_inspection_id[column_id.split(':')[0]]] += ('@' + str(method) + '@' + str(error))
+                                            map[self.table_inspection_id[column_id.split(':')[0]]] += ('@' + str(method) + '@' + str(error) + rescale)
                                         if 'Einstein_R ["]' in self.table_inspection_id[column_id.split(':')[0]]:
                                             method = input('Choose method type: %s'%self.er_quality_id_inverted)
                                             if method != '': method = self.er_quality_id_inverted[method]
@@ -320,7 +353,7 @@ class Journal_tables():
                                             map[self.table_inspection_id[column_id.split(':')[0]]] += ('@' + str(method) + '@' + '')
                                         
                                     self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection']['Table map to MasterLens database'] = map
-                                print('\n>>>>>>HERE if your output:', self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection'],'\n')
+                                print('\n>>>>>>HERE is your output:', self.ads_scrapped_data[self.query]['Table meta data'][key]['Pandas format'][key2]['Inspection'],'\n')
                                 #Save per table inspection
                                 confirm = input('Please confirm correct (y=yes, n=redo)')
                                 if confirm == 'y':
@@ -355,6 +388,7 @@ class Journal_tables():
             #Used to note if a change has been made and should be saved
             self.changed = False
             
+            print('self.overview_list', self.overview_list.keys())
             #Copy paper overview info from RIS output file, which file was generated from Leonidas paper list
             if self.rescan_online or 'Paper Overview' not in self.ads_scrapped_data[self.query]:
                 self.ads_scrapped_data[self.query]['Paper Overview'] = self.overview_list[self.query]
@@ -388,17 +422,26 @@ class Journal_tables():
             #Request paper information from ADS gateway link to journal
             if self.rescan_online or 'Paper text' not in self.ads_scrapped_data[self.query] or self.ads_scrapped_data[self.query]['Status'] in ['Start', 'Failed']:
                 self.changed = True
-                response = self.sessions[self.base].get(gateway, headers = self.headers)
-                sleep(self.slow_down_seconds_after_requests)
-                got_access = self.check_passed(response)
-                if got_access != 'Good':
-                    self.ads_scrapped_data[self.query]['Status'] = 'Failed'
-                    self.ads_scrapped_data[self.query]['Action'] = 'Aborted since: %s'%got_access
-                else:
+                if self.query in self.on_disk_from_IOP:
+                    local_paper_text_location = self.get_IOP_local('xml')
+                    if len(local_paper_text_location) != 0: local_paper_text_location = local_paper_text_location[0]
+                    else: local_paper_text_location = self.get_IOP_local('html')[0]   
+                    with open(local_paper_text_location, 'r') as file: text = file.read()
                     self.ads_scrapped_data[self.query]['Status'] = 'Page'
                     self.ads_scrapped_data[self.query]['Action'] = 'Loaded page'
-                    self.ads_scrapped_data[self.query]['Paper text'] = response.text
-                response.close()
+                    self.ads_scrapped_data[self.query]['Paper text'] = text
+                else:
+                    response = self.sessions[self.base].get(gateway, headers = self.headers)
+                    sleep(self.slow_down_seconds_after_requests)
+                    got_access = self.check_passed(response)
+                    if got_access != 'Good':
+                        self.ads_scrapped_data[self.query]['Status'] = 'Failed'
+                        self.ads_scrapped_data[self.query]['Action'] = 'Aborted since: %s'%got_access
+                    else:
+                        self.ads_scrapped_data[self.query]['Status'] = 'Page'
+                        self.ads_scrapped_data[self.query]['Action'] = 'Loaded page'
+                        self.ads_scrapped_data[self.query]['Paper text'] = response.text
+                    response.close()
             
             #Test access to journal
             if self.ads_scrapped_data[self.query]['Status'] in ['Failed', 'Skipped']:
@@ -407,13 +450,15 @@ class Journal_tables():
                 continue
             
             #Scrape paper data regarding tables
-            if not self.rescan_online and 'Tables status' in self.ads_scrapped_data[self.query] and self.ads_scrapped_data[self.query]['Tables status'] in ['Scanned', 'Complete']: pass
+            if not self.rescan_online and 'Tables status' in self.ads_scrapped_data[self.query] and self.ads_scrapped_data[self.query]['Tables status'] in ['Scanned', 'Complete'] and len([key for key in self.ads_scrapped_data[self.query]['Table meta data'].keys() if 'Table set' in key and self.ads_scrapped_data[self.query]['Table meta data'][key]['Status'] == 'Failed']) == 0: pass
             else:
                 self.changed = True
                 if self.journal in ['AJ', 'ApJ', 'ApJS', 'NAAS']:
-                    try: table_links = self.scan_IOP_tables(self.ads_scrapped_data[self.query]['Paper text'])
+                    try:
+                        if self.query in self.on_disk_from_IOP: table_links = self.get_IOP_local('txt')
+                        else: table_links = self.scan_IOP_tables(self.ads_scrapped_data[self.query]['Paper text'])
                     except Exception as e:
-                        print('IOP paper stopped since suspected has no figures.', e)
+                        print('IOP paper stopped since suspected has no tables.', e)
                         self.save_overview()
                         continue
                 elif self.journal == 'MNRAS': table_links = self.scan_MNRAS_tables(self.ads_scrapped_data[self.query]['Paper text'])
@@ -430,6 +475,7 @@ class Journal_tables():
                 else: input('OOOPS...some journal slipped through the cracks. Check!!!')
                 print('>>>>>Table links', table_links)
                 self.populate_query_table(table_links)
+            print('END RESULT', self.ads_scrapped_data[self.query]['Tables status'])
 
             #Process table data through Pandas
             if self.ads_scrapped_data[self.query]['Tables status'] != 'Empty' and (self.rescan_online or self.redo_pandas or self.ads_scrapped_data[self.query]['Tables status'] in ['Scanned', 'Missing']):
@@ -438,6 +484,15 @@ class Journal_tables():
                 
             #Save overview information, including references to tables.
             if self.changed or self.rescan_online or self.redo_pandas: self.save_overview()
+            
+    def get_IOP_local(self, extension):
+        end = self.query.split('.')[-1][:-1]
+        mid = [m for m in self.query.split('.')[1:-1] if len(m) > 0][0]
+        try: mid = str(int(mid))
+        except: mid = str(int(mid[:-1]))
+        local_IOP_on_disk = join('/uufs/chpc.utah.edu/common/home/astro/brownstein/talbot/research/silo/data/tables_backup/hand_from_dropbox', self.journal, mid, end)
+        if not exists(local_IOP_on_disk): local_IOP_on_disk = join('/uufs/chpc.utah.edu/common/home/astro/brownstein/talbot/research/silo/data/tables_backup/hand_from_dropbox', self.journal + 'L', mid, end)
+        return glob(join(local_IOP_on_disk, '*.%s'%extension))
             
     def report_overal_stats(self):
         """Report overall success of scrape process"""
@@ -563,16 +618,23 @@ class Journal_tables():
                 
             if 'Table set %s'%(index+1) not in self.ads_scrapped_data[self.query]['Table meta data']: self.ads_scrapped_data[self.query]['Table meta data']['Table set %s'%(index+1)] = {}
             if self.rescan_online or 'Status' not in self.ads_scrapped_data[self.query]['Table meta data']['Table set %s'%(index+1)] or self.ads_scrapped_data[self.query]['Table meta data']['Table set %s'%(index+1)]['Status'] == 'Failed':
-                response = self.sessions[self.base].get(table_link, headers = self.headers)
-                sleep(self.slow_down_seconds_after_requests)
-                access_status = self.check_passed(response)
-                
+                if '/chpc.utah.edu/' in table_link:
+                    with open(table_link, 'r') as file: text = file.read()
+                    if 'Note.' in text or 'Notes.' in text: text = text.split('Note')[0]
+                    print('TEST', table_link, text)
+                    #input('on hold for debug test')
+                    access_status = 'Good'
+                else:
+                    response = self.sessions[self.base].get(table_link, headers = self.headers)
+                    text = response.text
+                    sleep(self.slow_down_seconds_after_requests)
+                    access_status = self.check_passed(response)
+                    response.close()
                 self.ads_scrapped_data[self.query]['Table meta data']['Table set %s'%(index+1)]['Link'] = table_link
-                self.ads_scrapped_data[self.query]['Table meta data']['Table set %s'%(index+1)]['Response'] = response.text
+                self.ads_scrapped_data[self.query]['Table meta data']['Table set %s'%(index+1)]['Response'] = text
                 self.ads_scrapped_data[self.query]['Table meta data']['Table set %s'%(index+1)]['Status'] = 'Failed' if 'Good' not in access_status else 'Scanned'
                 self.ads_scrapped_data[self.query]['Table meta data']['Table set %s'%(index+1)]['Action'] = 'Scanned link' if 'Good' in access_status else ('Aborted since: %s'%access_status)
                 if 'Failed' in self.ads_scrapped_data[self.query]['Table meta data']['Table set %s'%(index+1)]['Status']: check = True
-            response.close()
         self.ads_scrapped_data[self.query]['Tables status'] = 'Empty' if len (table_links) == 0 else 'Missing' if check else 'Scanned'
                     
     def run_pandas(self):
@@ -593,7 +655,9 @@ class Journal_tables():
                     table_type = 'HTML' if '<table' in response_text else 'ASCII' if '-----' in response_text else 'local'
                     print('FIRST TRY on pandas', table_type)
                     if self.query in self.fix_messed_up_tables: response_text = response_text.replace(self.fix_messed_up_tables[self.query], '')
-                    
+                    if '/chpc.utah.edu/' in self.ads_scrapped_data[self.query]['Table meta data'][key]['Link']:
+                        #response_text = response_text.split('Note')[0]
+                        response_text = response_text.replace('"',"''").replace('"',"''")
                     #Run pandas to format table data
                     tables, extra = self.get_tables_using_html(response_text) if '<table' in response_text else self.get_tables_using_ascii(response_text) if '------' in response_text else self.get_tables_using_local(response_text)
                         
@@ -748,7 +812,7 @@ class Journal_tables():
                             if ('Overview data' if index == 0 else ('Info after table %s'%index)) not in extra_info: extra_info['Overview data' if index == 0 else ('Info after table %s'%index)] = suspect_table_row
                             else: extra_info['Overview data' if index == 0 else ('Info after table %s'%index)] += '\n%s'%suspect_table_row
                         else: table_rows += (suspect_table_row.replace('\n','') + '\t'*(max_size - len(suspect_table_row.split('\t'))) + '\n')
-                    with open(join(self.base_directory, 'resources', 'temp.txt'), 'w') as file: file.write(table_rows)
+                    with open(join(self.base_directory, 'sandbox', 'temp.txt'), 'w') as file: file.write(table_rows)
                     tables.append(pd.read_table(join(self.base_directory, 'sandbox', 'temp.txt'), sep='\n', delimiter='\t', na_filter=False))
         else:
             print('Pandas local appeared to fail')
@@ -844,7 +908,7 @@ class Journal_tables():
         #Use column map derived in inspection to convert table RA and DEC to a standard format
         if 'RA [°]' in map and table_row[map['RA [°]']] is not None:
             #return float(self.remove_non_numeric_related_formats(str(table_row[map['RA [°]']]))), float(self.remove_non_numeric_related_formats(str(table_row[map['Dec [°]']])))
-            coords = SkyCoord(float(self.remove_non_numeric_related_formats(str(table_row[map['RA [°]']]))),float(self.remove_non_numeric_related_formats(str(table_row[map['Dec [°]']]))), frame='fk5', unit=(units.deg, units.deg))
+            coords = SkyCoord(float(self.remove_non_numeric_related_formats(str(table_row[map['RA [°]']])).replace(' ','')),float(self.remove_non_numeric_related_formats(str(table_row[map['Dec [°]']])).replace(' ','')), frame='fk5', unit=(units.deg, units.deg))
             return coords.ra.deg, coords.dec.deg
         elif 'RA in Hours' in map and table_row[map['RA in Hours']] is not None:
             RA = float(self.remove_non_numeric_related_formats(str(table_row[map['RA in Hours']])))
@@ -944,9 +1008,10 @@ class Journal_tables():
             print('INDEX>>>', index)
             referenced = self.check_referance_added_to_MLD_references(self.query, self.ads_scrapped_data[self.query]['Paper Overview'])
             if referenced:
-                print('Paper already cited: %s. Skipping'%self.query)
-                continue
-            else: pass
+                if self.convert_to_mld_reference_form(self.query) in self.patch_list_in_MLD: pass
+                else:
+                    print('Paper already cited in MLD: %s. Skipping'%self.query)
+                    continue
             
             #Get data from each table via the table column map determined in table inspection
             if ('Status' in self.ads_scrapped_data[self.query] and self.ads_scrapped_data[self.query]['Status'] == 'Complete'):
@@ -1005,6 +1070,7 @@ class Journal_tables():
         print('action_map====>', action_map)
         empty = True
         for mkey in map:
+            if mkey in ['pass', 'not pass']: continue
             if map[mkey] in oversimplified_keys: new_value = int(map[mkey])
             else: new_value = map[mkey]
             map[mkey] = new_value
@@ -1036,28 +1102,72 @@ class Journal_tables():
             '''if self.ads_to_mld_reference_interpreter[self.query] in ['A&A618A(2018)56', 'ApJ835(2017)44', 'MNRAS483(2019)2125', 'MNRAS475(2018)2086', 'ApJ859(2018)159', 'MNRAS483(2019)5649', 'MNRAS481(2018)1041']:
                 print('bad', self.query)
                 input('On HOLD')'''
-             
+            self.cluster_lens_name_redshift = ''
+            self.cluster_lens_name_redshift_error = ''
+            
             if 'Cluster Sources Table' in action_map and standard_ra != '':
+                try: paper_id = (self.query+str(table_row[map['Source names']])) if 'Source names' in map and '.' in str(table_row[map['Source names']]) else ''
+                except: paper_id = ''
+                print('Pre cluster standard_name', standard_name, 'and paper_id', paper_id)
                 if 'Word to recognize name is of lens and NOT source' in action_map:
                     if action_map['Word to recognize name is of lens and NOT source'] in table_row[map['Source names']]:
                         self.cluster_lens_name = table_row[map['Source names']]
+                        if self.cluster_lens_name in self.standardize_known_cluster_variants: self.cluster_lens_name = self.standardize_known_cluster_variants[self.cluster_lens_name]
+                        if 'J' in self.cluster_lens_name and ' J' not in self.cluster_lens_name and len(self.cluster_lens_name.split('J')) == 2: self.cluster_lens_name = self.cluster_lens_name.split('J')[0] + ' J' + self.cluster_lens_name.split('J')[-1]
+                        if self.cluster_lens_name.startswith('A '): self.cluster_lens_name = self.cluster_lens_name.replace('A ', 'Abell ')
+                        if self.cluster_lens_name in self.cluster_list[:,0]: cname, cra, cdec, self.cluster_lens_name_redshift, self.cluster_lens_name_redshift_error = self.cluster_list[self.cluster_list[:,0].tolist().index(self.cluster_lens_name)]
                         standard_name = self.cluster_lens_name + ''
-                        print('>>>>>>', table_row[map['Source names']])
+                        print('Cluster lens name extracted from:', table_row[map['Source names']])
+                        if self.cluster_lens_name not in self.cluster_lens_names: 
+                            self.cluster_lens_names.append(self.cluster_lens_name)
+                            self.cluster_lens_names_coords.append(self.cluster_lens_name + '')
                     elif rh:
                         standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,rs.split('.')[0],dd,dm,ds.split('.')[0])) + ']'
-                        print('>=-=-=', rh,rm,rs)
+                        print('Cluster source in RA-DEC format', rh,rm,rs)
+                        if paper_id != '' and paper_id not in self.paper_id_memory: self.paper_id_memory[paper_id] = [standard_name, self.cluster_lens_name_redshift, self.cluster_lens_name_redshift_error]
                     else:
-                        standard_name = self.cluster_lens_name + '[' + str(table_row[map['Source names']]) + ']'
-                        print('>=-----', str(table_row[map['Source names']]))
+                        print('Cluster source not found for', standard_name, standard_ra, standard_dec)
+                        standard_name = None
+
                 elif 'Name,Ra,Dec of cluster or group lens' in action_map:
-                    self.cluster_lens_name = action_map['Name,Ra,Dec of cluster or group lens'].split(',')[0]
+                    self.cluster_lens_name = action_map['Name,Ra,Dec of cluster or group lens'].split(',')[0] #Might not use RA and DEC for anything
+                    if self.cluster_lens_name in self.standardize_known_cluster_variants: self.cluster_lens_name = self.standardize_known_cluster_variants[self.cluster_lens_name]
+                    if 'J' in self.cluster_lens_name and ' J' not in self.cluster_lens_name and len(self.cluster_lens_name.split('J')) == 2: self.cluster_lens_name = self.cluster_lens_name.split('J')[0] + ' J' + self.cluster_lens_name.split('J')[-1]
+                    if self.cluster_lens_name.startswith('A '): self.cluster_lens_name = self.cluster_lens_name.replace('A ', 'Abell ')
+                    if self.cluster_lens_name in self.cluster_list[:,0]: cname, cra, cdec, self.cluster_lens_name_redshift, self.cluster_lens_name_redshift_error = self.cluster_list[self.cluster_list[:,0].tolist().index(self.cluster_lens_name)]
                     if rh:
                         standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,rs.split('.')[0],dd,dm,ds.split('.')[0])) + ']'
+                        if paper_id != '' and paper_id not in self.paper_id_memory: self.paper_id_memory[paper_id] = [standard_name, self.cluster_lens_name_redshift, self.cluster_lens_name_redshift_error]
                         print('>iiiii', rh,rm,rs)
-                    else:
-                        standard_name = self.cluster_lens_name + '[' + str(table_row[map['Source names']]) + ']'
-                        print('>====', str(table_row[map['Source names']]))
-
+                        if self.cluster_lens_name not in self.cluster_lens_names: 
+                            self.cluster_lens_names.append(self.cluster_lens_name)
+                            self.cluster_lens_names_coords.append('J%s%s%s%s%s%s'%(rh,rm,rs.split('.')[0],dd,dm,ds.split('.')[0]))
+                    else: standard_name = None
+                elif rh:
+                    dist = np.sqrt((self.cluster_list[:,1].astype(float) - standard_ra)**2 + (self.cluster_list[:,2].astype(float) - standard_dec)**2)
+                    dist_min_index = dist.argmin()
+                    if dist[dist_min_index] < 1: self.cluster_lens_name, cra, cdec, self.cluster_lens_name_redshift, self.cluster_lens_name_redshift_error = self.cluster_list[dist_min_index]
+                    else: self.cluster_lens_name = ''
+                    print('CLUSTER OF SOURCE DESIGNATED AS>>>', self.cluster_lens_name, 'and source')
+                    standard_name = self.cluster_lens_name + '[' + ('J%s%s%s%s%s%s'%(rh,rm,rs.split('.')[0],dd,dm,ds.split('.')[0])) + ']'
+                    if paper_id != '' and paper_id not in self.paper_id_memory: self.paper_id_memory[paper_id] = [standard_name, self.cluster_lens_name_redshift, self.cluster_lens_name_redshift_error]
+                elif paper_id != '' and paper_id in self.paper_id_memory: standard_name, self.cluster_lens_name_redshift, self.cluster_lens_name_redshift_error = self.paper_id_memory[paper_id]
+                else:
+                    print('Cluster source not found at all', standard_name, standard_ra, standard_dec)
+                    standard_name = None
+                if standard_name is not None and '[' in standard_name:
+                    source_part = standard_name.split('[')[-1][:-1]
+                    if source_part in self.cluster_sources_memory:
+                        if len(standard_name) <= len(self.cluster_sources_memory[source_part][0]):
+                            standard_name, cluster_lens_name_redshift, cluster_lens_name_redshift_error = self.cluster_sources_memory[source_part]
+                            if cluster_lens_name_redshift and not self.cluster_lens_name_redshift: self.cluster_lens_name_redshift = cluster_lens_name_redshift*1
+                            if cluster_lens_name_redshift_error and not self.cluster_lens_name_redshift_error: self.cluster_lens_name_redshift_error = cluster_lens_name_redshift_error*1
+                        else:
+                            self.lens_objects[standard_name] = self.lens_objects.pop(self.cluster_sources_memory[source_part][0])
+                            self.cluster_sources_memory[source_part] = [standard_name, self.cluster_lens_name_redshift, self.cluster_lens_name_redshift_error]
+                    else: self.cluster_sources_memory[source_part] = [standard_name, self.cluster_lens_name_redshift, self.cluster_lens_name_redshift_error]
+                print('POST cluster standard_name', standard_name, self.cluster_lens_name_redshift, self.cluster_lens_name_redshift_error)
+                
             if standard_name is '':
                 if 'System Name' in map or 'Alternate Name(s)' in map:
                     for system in self.lens_objects:
@@ -1115,7 +1225,10 @@ class Journal_tables():
                 #Save any related method and error specified from inspection map of columns
                 for mkey in map.keys():
                     if not isinstance(map[mkey], int) and '@' in map[mkey]:
-                        mvalue, method, merror = map[mkey].split('@')
+                        if len(map[mkey].split('@')) == 4: mvalue, method, merror, mrescale = map[mkey].split('@')
+                        else:
+                            mvalue, method, merror = map[mkey].split('@')
+                            mrescale = '1'
                         if mvalue in oversimplified_keys: mvalue = int(mvalue)
                         if merror in oversimplified_keys: merror = int(merror)
                         if mvalue == merror:
@@ -1140,24 +1253,50 @@ class Journal_tables():
                             value = table_row[mvalue]
                             error = table_row[merror] if merror != '' else ''
                     elif map[mkey] == 'pdname': value, method, error = table_row.name, '', ''
+                    elif 'not pass' in map or 'pass' in map: continue
                     else: value, method, error = table_row[map[mkey]], '', ''
 
                     #Attempt a weight system used to determine which value is best to use for MLD. Check how we want to improve this!!!
                     weight = 0
                     weight += (1 if error != '' else 0)
                     weight += (1 if method in ["spectroscopic", "SIE model", "MLD"] else -1 if method in ["Reference redshift", ""] else 0)
-
+                    try: error = error*float(mrescale)
+                    except: pass
                     #Save system information. The "replace(2,'') is to allow inspection of repeated column types (i.e. Plate, Plate2, Plate3)
                     if value not in ['', 'NaN', ' NaN', None]:
+                        if mkey == 'Source names' and 'Cluster Sources Table' not in action_map: mkey = 'System Name' #Fixes when source name accidentally used instead of system name for clusters...not cluster sources
                         if mkey not in self.lens_objects[standard_name]: self.lens_objects[standard_name][mkey.replace('2','').replace('3','')] = []
                         self.lens_objects[standard_name][mkey.replace('2','').replace('3','')].append({'value': str(value).replace(' NaN','').replace('NaN',''), 'method': str(method).replace(' NaN','').replace('NaN',''), 'error': str(error).replace(' NaN','').replace('NaN',''), 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':weight}})
                         print('lens object values', self.lens_objects[standard_name])
-                if 'Lens type' in action_map:
-                    if 'Lens type' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Lens type'] = []
-                    self.lens_objects[standard_name]['Lens type'].append({'value': action_map['Lens type'], 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
+                if 'Lens type' in action_map or 'Lens Kind' in action_map:
+                    print(action_map)
+                    try:
+                        if 'Lens type' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Lens type'] = []
+                        self.lens_objects[standard_name]['Lens type'].append({'value': action_map['Lens type'] if 'Lens type' in action_map else self.lens_type_id_inverted[action_map['Lens Kind']], 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
+                    except: pass
+                if 'Candidate table represents a grade' in action_map:    
+                    grade = action_map['Candidate table represents a grade']
+                    if 'Cluster Sources Table' in action_map:
+                        try:
+                            if ('not pass' not in map and 'pass' not in map) or ('pass' in map and map['pass'][list(map['pass'].keys())[0]] in table_row[list(map['pass'].keys())[0]]) or ('not pass' in map and map['not pass'][list(map['not pass'].keys())[0]] not in table_row[list(map['not pass'].keys())[0]]):
+                                if 'Lens Grade' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Lens Grade'] = []
+                                self.lens_objects[standard_name]['Lens Grade'].append({'value': grade, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':4}})
+                        except:
+                            if ('not pass' not in map and 'pass' not in map) or ('pass' in map and map['pass'][list(map['pass'].keys())[0]] in table_row[int(list(map['pass'].keys())[0])]) or ('not pass' in map and map['not pass'][list(map['not pass'].keys())[0]] not in table_row[int(list(map['not pass'].keys())[0])]):
+                                if 'Lens Grade' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Lens Grade'] = []
+                                self.lens_objects[standard_name]['Lens Grade'].append({'value': grade, 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':4}})
+                    elif 'Lens type' in self.lens_objects[standard_name] and 'CLUST' in self.lens_objects[standard_name]['Lens type'][-1]['value']:
+                        if 'Lens Grade' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Lens Grade'] = []
+                        self.lens_objects[standard_name]['Lens Grade'].append({'value': 'A', 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':4}})
+                    else:
+                        if 'Detection score or grade' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Detection score or grade'] = []
+                        self.lens_objects[standard_name]['Detection score or grade'].append({'value': action_map['Candidate table represents a grade'], 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':4}})
                 if 'Discovery' in action_map:
                     if 'Discovery' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['Discovery'] = []
                     self.lens_objects[standard_name]['Discovery'].append({'value': action_map['Discovery'], 'tracer': {'bibcode':self.ads_to_mld_reference_interpreter[self.query], 'table set': key, 'table': key2, 'update status': 'Not yet included', 'weight':0}})
+                if self.cluster_lens_name_redshift:
+                    if 'z_Lens' not in self.lens_objects[standard_name]: self.lens_objects[standard_name]['z_Lens'] = []
+                    self.lens_objects[standard_name]['z_Lens'].append({'value': self.cluster_lens_name_redshift, 'error':self.cluster_lens_name_redshift_error, 'method':'', 'tracer': {'bibcode':'', 'table set': '', 'table': '', 'update status': 'Not yet included', 'weight':1}})
                  
     def set_coord_details(self, standard_name, weight, key, key2, update_status, query, save=True, ra='', dec=''):
         if (save and self.lens_objects[standard_name]['Standard RA'][0]['value']) or (not save and ra):
@@ -1198,7 +1337,7 @@ class Journal_tables():
     def write_pdfs(self):
         """Write pdfs of each paper"""
         
-        for self.query in self.bibcodes:            
+        for self.query in self.bibcodes[self.start:self.end]:
             self.load_saved_overview()
             self.load_saved_tables()
             pdf_path = join(self.base_directory, 'pdfs', '%s.pdf'%self.query)
@@ -1269,9 +1408,12 @@ class Journal_tables():
             except: pass
             self.reference_id[query] = mld_reference.getAttribute('referenceID')
             
-        patch_list = {'ApJ765(2013)139':'3990', 'AJ160(2020)223':'4494', 'PASJ70S(2018)29S':'4493', 'A&A630A(2019)71S':'4492', 'MNRAS502(2021)1487J':'4491', 'MNRAS484(2019)3879P':'4490', '2021MNRAS.502.4617T':'4489', 'MNRAS414L(2011)31':'4343','ApJ742(2011)48':'4344','ApJ747L(2012)9':'4345','ApJ747(2012)3':'4346','A&A540A(2012)36':'4347','ApJ755(2012)173':'4348','ApJ762(2013)32':'4349','A&A559L(2013)9':'4350','ApJ777L(2013)17':'4351','MNRAS438(2014)1417':'4352','A&A562A(2014)43':'4353','MNRAS440(2014)2013':'4354','MNRAS440(2014)1999':'4355','AJ147(2014)153':'4356','ApJ789L(2014)31':'4357','SCPMA57(2014)1809':'4358','ApJ793L(2014)12':'4359','MNRAS445(2014)201':'4360','MNRAS444(2014)2561':'4361','ApJ800L(2015)26':'4362','Sci347(2015)1123':'4363','ApJ803(2015)71':'4364','ApJ805(2015)184':'4365','A&A581A(2015)105':'4366','A&A581A(2015)99':'4367','MNRAS452(2015)502':'4368','ApJ811(2015)20':'4369','ApJ813L(2015)7':'4370','MNRAS453(2015)3068':'4371','MNRAS454(2015)1260':'4372','A&A585A(2016)88':'4373','MNRAS455(2016)1191':'4374','MNRAS455(2016)1171':'4375','ApJ817(2016)98':'4376','MNRAS456(2016)1948':'4377','MNRAS456(2016)2210':'4378','MNRAS456(2016)1595':'4379','ApJ819(2016)74':'4380','MNRAS457(2016)4406':'4381','A&A590L(2016)4':'4382','A&A590A(2016)42':'4383','ApJ823(2016)17':'4384','ApJ826L(2016)19':'4385','ApJ826(2016)112':'4386','MNRAS461L(2016)67':'4387','ApJ833(2016)194':'4388','A&A596A(2016)77':'4389','MNRAS464L(2017)46':'4390','ApJ835(2017)44':'4391','ApJ834(2017)210':'4392','ApJ834L(2017)18':'4393','MNRAS465(2017)2411':'4394','ApJ835L(2017)25':'4395','MNRAS465(2017)4530':'4396','MNRAS465(2017)4325':'4397','ApJ838L(2017)15':'4398','MNRAS468(2017)2590':'4399','ApJ843L(2017)22':'4400','ApJ845(2017)157':'4401','ApJ844(2017)90':'4402','A&A605A(2017)81':'4403','MNRAS471(2017)2013':'4404','ApJ850(2017)94':'4405','ApJ851(2017)48':'4406','MNRAS472(2017)5023':'4407','MNRAS472(2017)4038':'4408','ApJ852L(2018)7':'4409','MNRAS473L(2018)116':'4410','ApJ854(2018)151':'4411','MNRAS474(2018)3700':'4412','MNRAS477(2018)195':'4413','ApJ856(2018)68':'4414','MNRAS474(2018)3391':'4415','ApJ855(2018)22':'4416','ApJ856(2018)131':'4417','MNRAS475(2018)3086':'4418','MNRAS475(2018)2086':'4419','MNRAS476(2018)663':'4420','MNRAS476(2018)927':'4421','ApJ859(2018)146':'4422','ApJ859(2018)159':'4423','PASA35(2018)24':'4424','MNRAS477L(2018)70':'4425','A&A616L(2018)11':'4426','ApJ863L(2018)16':'4427','ApJ863(2018)60':'4428','MNRAS478(2018)5081':'4429','MNRAS478(2018)1595':'4430','ApJ864L(2018)22':'4431','ApJ864(2018)60':'4432','MNRAS479(2018)435':'4433','MNRAS479(2018)262':'4434','ApJ864(2018)91':'4435','MNRAS479(2018)4345':'4436','MNRAS479(2018)4796':'4437','ApJ866(2018)65':'4438','A&A618A(2018)56':'4439','RNAAS2(2018)189':'4440','MNRAS479(2018)5060':'4441','MNRAS481L(2018)136':'4442','NatAs2(2018)56':'4443','MNRAS481(2018)1041':'4444','ApJ867(2018)107':'4445','ARep62(2018)917':'4446','MNRAS482(2019)313':'4447','ApJ870L(2019)11':'4448','ApJ870L(2019)12':'4449','MNRAS483(2019)2125':'4450','A&A622A(2019)165':'4451','MNRAS483(2019)5649':'4452','MNRAS483(2019)4242':'4453','MNRAS483(2019)3888':'4454','ApJ873(2019)117':'4455','ApJ873L(2019)14':'4456','MNRAS484(2019)5330':'4457','MNRAS484(2019)3879':'4458','ApJ876(2019)107':'4459','MNRAS485(2019)5086':'4460','MNRAS486(2019)2366':'4461','MNRAS485(2019)5180':'4462','ApJS243(2019)17':'4463','ApJS243(2019)6':'4464','MNRAS486(2019)4987':'4465','MNRAS487(2019)3342':'4466','A&A628A(2019)17':'4467','MNRAS489(2019)2525':'4468','ApJ884(2019)85':'4469','2019arXiv191208977K':'4470','ApJ887(2019)126':'4471','A&A632A(2019)56':'4472','MNRAS494(2020)1308':'4473','ApJ889(2020)189':'4474','MNRAS494(2020)271':'4475','MNRAS494(2020)3491':'4476','MNRAS494(2020)6072':'4477','MNRAS493L(2020)33':'4478','A&A635A(2020)27':'4479','AJ159(2020)122':'4480','A&A636A(2020)87':'4481','MNRAS495(2020)1291':'4482','2020arXiv200504730H':'4483','ApJ894(2020)78':'4484','2020arXiv200616584J':'4485','A&A640A(2020)105':'4486','2020arXiv200907854C':'4487','A&A642A(2020)148':'4488'}
-        for query in patch_list: self.reference_id[query] = patch_list[query]
-                
+        self.patch_list_in_MLD = {'ApJ765(2013)139':'3990', 'AJ160(2020)223':'4494', 'PASJ70S(2018)29S':'4493', 'A&A630A(2019)71S':'4492', 'MNRAS502(2021)1487J':'4491', 'MNRAS484(2019)3879P':'4490', '2021MNRAS.502.4617T':'4489', 'MNRAS414L(2011)31':'4343','ApJ742(2011)48':'4344','ApJ747L(2012)9':'4345','ApJ747(2012)3':'4346','A&A540A(2012)36':'4347','ApJ755(2012)173':'4348','ApJ762(2013)32':'4349','A&A559L(2013)9':'4350','ApJ777L(2013)17':'4351','MNRAS438(2014)1417':'4352','A&A562A(2014)43':'4353','MNRAS440(2014)2013':'4354','MNRAS440(2014)1999':'4355','AJ147(2014)153':'4356','ApJ789L(2014)31':'4357','SCPMA57(2014)1809':'4358','ApJ793L(2014)12':'4359','MNRAS445(2014)201':'4360','MNRAS444(2014)2561':'4361','ApJ800L(2015)26':'4362','Sci347(2015)1123':'4363','ApJ803(2015)71':'4364','ApJ805(2015)184':'4365','A&A581A(2015)105':'4366','A&A581A(2015)99':'4367','MNRAS452(2015)502':'4368','ApJ811(2015)20':'4369','ApJ813L(2015)7':'4370','MNRAS453(2015)3068':'4371','MNRAS454(2015)1260':'4372','A&A585A(2016)88':'4373','MNRAS455(2016)1191':'4374','MNRAS455(2016)1171':'4375','ApJ817(2016)98':'4376','MNRAS456(2016)1948':'4377','MNRAS456(2016)2210':'4378','MNRAS456(2016)1595':'4379','ApJ819(2016)74':'4380','MNRAS457(2016)4406':'4381','A&A590L(2016)4':'4382','A&A590A(2016)42':'4383','ApJ823(2016)17':'4384','ApJ826L(2016)19':'4385','ApJ826(2016)112':'4386','MNRAS461L(2016)67':'4387','ApJ833(2016)194':'4388','A&A596A(2016)77':'4389','MNRAS464L(2017)46':'4390','ApJ835(2017)44':'4391','ApJ834(2017)210':'4392','ApJ834L(2017)18':'4393','MNRAS465(2017)2411':'4394','ApJ835L(2017)25':'4395','MNRAS465(2017)4530':'4396','MNRAS465(2017)4325':'4397','ApJ838L(2017)15':'4398','MNRAS468(2017)2590':'4399','ApJ843L(2017)22':'4400','ApJ845(2017)157':'4401','ApJ844(2017)90':'4402','A&A605A(2017)81':'4403','MNRAS471(2017)2013':'4404','ApJ850(2017)94':'4405','ApJ851(2017)48':'4406','MNRAS472(2017)5023':'4407','MNRAS472(2017)4038':'4408','ApJ852L(2018)7':'4409','MNRAS473L(2018)116':'4410','ApJ854(2018)151':'4411','MNRAS474(2018)3700':'4412','MNRAS477(2018)195':'4413','ApJ856(2018)68':'4414','MNRAS474(2018)3391':'4415','ApJ855(2018)22':'4416','ApJ856(2018)131':'4417','MNRAS475(2018)3086':'4418','MNRAS475(2018)2086':'4419','MNRAS476(2018)663':'4420','MNRAS476(2018)927':'4421','ApJ859(2018)146':'4422','ApJ859(2018)159':'4423','PASA35(2018)24':'4424','MNRAS477L(2018)70':'4425','A&A616L(2018)11':'4426','ApJ863L(2018)16':'4427','ApJ863(2018)60':'4428','MNRAS478(2018)5081':'4429','MNRAS478(2018)1595':'4430','ApJ864L(2018)22':'4431','ApJ864(2018)60':'4432','MNRAS479(2018)435':'4433','MNRAS479(2018)262':'4434','ApJ864(2018)91':'4435','MNRAS479(2018)4345':'4436','MNRAS479(2018)4796':'4437','ApJ866(2018)65':'4438','A&A618A(2018)56':'4439','RNAAS2(2018)189':'4440','MNRAS479(2018)5060':'4441','MNRAS481L(2018)136':'4442','NatAs2(2018)56':'4443','MNRAS481(2018)1041':'4444','ApJ867(2018)107':'4445','ARep62(2018)917':'4446','MNRAS482(2019)313':'4447','ApJ870L(2019)11':'4448','ApJ870L(2019)12':'4449','MNRAS483(2019)2125':'4450','A&A622A(2019)165':'4451','MNRAS483(2019)5649':'4452','MNRAS483(2019)4242':'4453','MNRAS483(2019)3888':'4454','ApJ873(2019)117':'4455','ApJ873L(2019)14':'4456','MNRAS484(2019)5330':'4457','MNRAS484(2019)3879':'4458','ApJ876(2019)107':'4459','MNRAS485(2019)5086':'4460','MNRAS486(2019)2366':'4461','MNRAS485(2019)5180':'4462','ApJS243(2019)17':'4463','ApJS243(2019)6':'4464','MNRAS486(2019)4987':'4465','MNRAS487(2019)3342':'4466','A&A628A(2019)17':'4467','MNRAS489(2019)2525':'4468','ApJ884(2019)85':'4469','2019arXiv191208977K':'4470','ApJ887(2019)126':'4471','A&A632A(2019)56':'4472','MNRAS494(2020)1308':'4473','ApJ889(2020)189':'4474','MNRAS494(2020)271':'4475','MNRAS494(2020)3491':'4476','MNRAS494(2020)6072':'4477','MNRAS493L(2020)33':'4478','A&A635A(2020)27':'4479','AJ159(2020)122':'4480','A&A636A(2020)87':'4481','MNRAS495(2020)1291':'4482','2020arXiv200504730H':'4483','ApJ894(2020)78':'4484','2020arXiv200616584J':'4485','A&A640A(2020)105':'4486','2020arXiv200907854C':'4487','A&A642A(2020)148':'4488'}
+        for query in self.patch_list_in_MLD:
+            self.reference_id[query] = self.patch_list_in_MLD[query]
+            if query not in self.done_references_bib: self.done_references_bib.append(query)
+            if query not in self.mld_reference: self.mld_reference[query] = {"action":"Do not upload", "identifier":query, "author": 'from patch list', "title": 'from patch list', "journalID": 'from patch list'}            
+            
                 
     def load_MLD_kinds_ids(self):
         """Load Masterlens Database lens kinds via kinds.xml"""
@@ -1360,6 +1502,18 @@ class Journal_tables():
                     weight = -1
                 
                 self.lens_objects[standard_name][values_with_errors_dict[key]].append({'value': value, 'method':'MLD', 'error': error, 'tracer': {'update status': 'in MLD', 'weight':weight}})
+            '''apprx_coord_name = 'J' + standard_name.split('J')[-1]
+            apprx_coord_name = apprx_coord_name[:4]+apprx_coord_name[5:9]
+            lens_kind = self.lens_type_id_inverted[mld_entry.getElementsByTagName('kind')[0].getAttribute('kindID')]
+            
+            system_name = mld_entry.getElementsByTagName('system_name')[0].childNodes[0].nodeValue
+            z_lens = self.lens_objects[standard_name]['z_Lens'][0]['value']
+            z_lens_error = self.lens_objects[standard_name]['z_Lens'][0]['error']
+            if 'CLU' in lens_kind: #Populate cluster lenses
+                print('Using MLD to populate some clusters', apprx_coord_name, standard_name, system_name, z_lens, z_lens_error)
+                self.lensing_cluster_coord_approximates[apprx_coord_name] = system_name
+                self.lensing_cluster_coord_approximates_redshifts[apprx_coord_name] = z_lens
+                self.lensing_cluster_coord_approximates_redshifts_error[apprx_coord_name] = z_lens_error'''
         
     def load_sugohi(self):
         lens_type_key = {'GG':'GAL-GAL', 'GQ':'GAL-QSO', 'CG':'CLUST-GAL', 'CQ':'CLUST-QSO'}
@@ -1369,6 +1523,15 @@ class Journal_tables():
             for row in sugohi:
                 if 'Name' in row: continue               
                 standard_ra, standard_dec, standard_name = self.get_standard_name_and_coords({'RA [°]': row[1], 'Dec [°]': row[2]}, {'RA [°]':'RA [°]', 'Dec [°]':'Dec [°]'})
+                """if lens_type_key[row[10]] == 'CLUST-GAL':
+                    rh,rm,rs,dd,dm,ds = self.set_coord_details('', 0, '', '', 'Not yet included', '', save=False, ra=row[1], dec=row[2])
+                    source_part = 'J%s%s%s%s%s%s'%(rh,rm,rs.split('.')[0],dd,dm,ds.split('.')[0])
+                    test_part = source_part[:4] + source_part[7] + source_part[8:11]
+                    if test_part in self.lensing_cluster_coord_approximates: self.cluster_lens_name = self.lensing_cluster_coord_approximates[test_part]
+                    else: self.cluster_lens_name = ''
+                    print('SUGOHI CLUSTER OF SOURCE DESIGNATED AS>>>', test_part, 'for cluster', self.cluster_lens_name, 'and source', source_part)
+                    #input('check')
+                    standard_name = self.cluster_lens_name + '[' + source_part + ']'"""
                 if standard_name not in self.lens_objects:
                     self.new_lens_test+=1
                     self.lens_objects[standard_name] = {'System Name':[], 'Discovery Date':[], 'RA (Hours part)':[], 'RA (Mins part)':[], 'RA (Secs part)':[], 'RA [°]': [], 'Dec (Degree part)': [], 'Dec (Arcmin part)': [], 'Dec (Arcsec part)': [], 'Dec [°]': [], 'Lens Grade': [], 'Number of images': [], 'Einstein_R ["]': [], 'z_Lens': [], 'z_Source(s)': [], 'Stellar velocity disp': [], 'Standard RA':[], 'Standard DEC':[], 'MLD_ID':[], 'Description':[], 'Lens type':[], 'Lens type MLD_ID':[], 'Discovery':[], 'Discovery_MLD_ID':[], 'MLD SDSS link':[], 'MLD ADSABS link':[], 'MLD NED link':[], 'MLD APOD link':[], 'References_MLD_ID':[], 'Has external link for SDSS':[], 'Has external link for ADSABS':[], 'Has external link for NED':[], 'Has external link for APOD':[]}
@@ -1489,13 +1652,12 @@ class Journal_tables():
         
     def check_referance_added_to_MLD_references(self, bibcode, title):
         """Check if either bibcode or title already in 'done' references"""
-        
         mld_bibcode_form = self.convert_to_mld_reference_form(bibcode)
+        if mld_bibcode_form not in self.ads_to_mld_reference_interpreter: self.ads_to_mld_reference_interpreter[bibcode] = mld_bibcode_form
         if mld_bibcode_form in self.done_references_bib or title in self.done_references_title: return True
         else:
             self.done_references_bib.append(mld_bibcode_form)
             self.done_references_title.append(title)
-            self.ads_to_mld_reference_interpreter[bibcode] = mld_bibcode_form
             self.update_reference.append(bibcode)
             return False
             
@@ -1600,22 +1762,27 @@ class Journal_tables():
     def update_MLD_references(self):
         """Upload new references to Masterlens database"""
         #Trying session method failed, thus resorting to creating batch file for mysql update
-        
+        input('MAKE sure the patch_list is up to date from the mysql database before running this') 
         with open(join(self.base_directory, 'batch_update_mysql_references.txt'), 'w') as file:
-            for self.query in self.update_reference:
+            self.start_referenceID = max([int(self.patch_list_in_MLD[key]) for key in self.patch_list_in_MLD])+1
+            for index, self.query in enumerate(self.update_reference):
                 journalID = ''
+                test_found = False
                 for key in self.journal_id_converter_bib_inverted:
                     if key in self.query:
                         journalID = self.journal_id_converter_bib_inverted[key]
+                        test_found = True
                         break
+                self.reference_id[self.convert_to_mld_reference_form(self.query)] = self.start_referenceID+index
+                if not test_found: journalID = ''
                 po = self.ads_scrapped_data[self.query]['Paper Overview']
-                file.write("INSERT INTO reference ( siteID,identifier,abstract,author,title,journal,year,month,pages,ads,keywords,editor,publisher,address,school,booktitle,series,bibtype,bibauthor,journalID,bibkey,public,modified")
+                file.write("INSERT INTO reference ( referenceid,siteID,identifier,abstract,author,title,journal,year,month,pages,ads,keywords,editor,publisher,address,school,booktitle,series,bibtype,bibauthor,journalID,bibkey,public,modified")
                 if 'number' in po: file.write(',number')
                 if 'custom1' in po: file.write(',eprint')
                 if "volume" in po: file.write(',volume')
                 if "doi" in po: file.write(',doi')
                 file.write(r' ) VALUES ( ')
-                file.write('%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,NOW()'%(1, self.ads_to_mld_reference_interpreter[self.query], po['abstract'], ', '.join(po['authors']), po['Title'], po['journal_name'], po['publication_year'].split('/')[0], po['start_page'], po['publication_year'].split('/')[1], po['start_page'], po['url'], ': '.join(po['keywords']), '', '', '', '', '', '', 'article', '', journalID, 1))
+                file.write('%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,NOW()'%(self.start_referenceID+index, 1, self.ads_to_mld_reference_interpreter[self.query], po['abstract'], ', '.join(po['authors']), po['Title'], po['journal_name'], po['publication_year'].split('/')[0], po['start_page'], po['publication_year'].split('/')[1], po['start_page'], po['url'], ': '.join(po['keywords']), '', '', '', '', '', '', 'article', '', journalID, 1))
                 if 'number' in po: file.write(',%r'%po['number'])
                 if 'custom1' in po: file.write(',%r'%po['custom1'].replace('eprint: ',''))
                 if "volume" in po: file.write(',%r'%po['volume'][0])
@@ -1733,31 +1900,51 @@ class Journal_tables():
                         print('ERROR IN query_theta_e', add_system_dict['query_theta_e'])
                     add_system_dict['query_theta_e']=''
 
-                try:
-                    add_system_dict['query_z_source_err'] = round(float(str(add_system_dict['query_z_source_err']).split(' ')[0]),4)
-                    if add_system_dict['query_z_source_err'] < 0: add_system_dict['query_z_source_err'] = ''
-                except:
-                    if 'query_z_source_err' in add_system_dict:
-                        try:
-                            if '±' in add_system_dict['query_z_source']: add_system_dict['query_z_source_err'] = round(float(str(add_system_dict['query_z_source']).split(' ')[-1].split('*')[-1].split('±')[-1]),4)
-                            else: add_system_dict['query_z_source_err']=''
-                            if add_system_dict['query_z_source_err'] != '' and add_system_dict['query_z_source_err'] < 0 or add_system_dict['query_z_source_err'] > 14: add_system_dict['query_z_source_err']=''
-                        except:
-                            print('ERROR IN query_z_source_err', add_system_dict['query_z_source_err'])
-                            add_system_dict['query_z_source_err']=''
-                    
-                try:
-                    add_system_dict['query_z_lens_err'] = round(float(str(add_system_dict['query_z_lens_err']).split(' ')[0]),4)
-                    if add_system_dict['query_z_lens_err'] < 0: add_system_dict['query_z_lens_err'] = ''
-                except:
-                    if 'query_z_lens_err' in add_system_dict:
-                        try:
-                            if '±' in add_system_dict['query_z_lens']: add_system_dict['query_z_lens_err'] = round(float(str(add_system_dict['query_z_lens']).split(' ')[-1].split('*')[-1].split('±')[-1]),4)
-                            else: add_system_dict['query_z_lens_err']=''
-                            if add_system_dict['query_z_lens_err'] != '' and add_system_dict['query_z_lens_err'] < 0 or add_system_dict['query_z_lens_err'] > 14: add_system_dict['query_z_lens_err']=''
-                        except:
-                            print('ERROR IN query_z_lens_err', add_system_dict['query_z_lens_err'])
-                            add_system_dict['query_z_lens_err']=''
+                if 'query_z_source_err' in add_system_dict:
+                    try:
+                        if '[' in add_system_dict['query_z_source_err']:
+                            errors = add_system_dict['query_z_source_err'].replace('[','').replace(']','').split(' ')
+                            add_system_dict['query_z_source_err'] = (abs(float(errors[0])) + abs(float(errors[1])))/2
+                        else: add_system_dict['query_z_source_err'] = round(float(str(add_system_dict['query_z_source_err']).split(' ')[0]),4)
+                        if add_system_dict['query_z_source_err'] < 0: add_system_dict['query_z_source_err'] = ''
+                    except Exception as e:
+                        print('First pass z lens error failed', e, add_system_dict['query_z_source_err'])
+                        if 'query_z_source_err' in add_system_dict:
+                            try:
+                                print('retrying z_source_error with z_source', add_system_dict['query_z_source'])
+                                if '±' in add_system_dict['query_z_source']: add_system_dict['query_z_source_err'] = round(float(str(add_system_dict['query_z_source']).split(' ')[-1].split('*')[-1].split('±')[-1]),4)
+                                elif '[' in add_system_dict['query_z_source']:
+                                    errors = add_system_dict['query_z_source'].split('[')[-1].replace(']','').split(' ')
+                                    add_system_dict['query_z_source_err'] = (abs(float(errors[0])) + abs(float(errors[1])))/2
+                                else: add_system_dict['query_z_source_err']=''
+                                if add_system_dict['query_z_source_err'] != '' and add_system_dict['query_z_source_err'] < 0 or add_system_dict['query_z_source_err'] > 14: add_system_dict['query_z_source_err']=''
+                            except Exception as e:
+                                print('ERROR IN query_z_source_err', e)
+                                add_system_dict['query_z_source_err']=''
+                else: add_system_dict['query_z_source_err'] = ''
+                
+                if 'query_z_lens_err' in add_system_dict:    
+                    try:
+                        if '[' in add_system_dict['query_z_lens_err']:
+                            errors = add_system_dict['query_z_lens_err'].replace('[','').replace(']','').split(' ')
+                            add_system_dict['query_z_lens_err'] = (abs(float(errors[0])) + abs(float(errors[1])))/2
+                        else: add_system_dict['query_z_lens_err'] = round(float(str(add_system_dict['query_z_lens_err']).split(' ')[0]),4)
+                        if add_system_dict['query_z_lens_err'] < 0: add_system_dict['query_z_lens_err'] = ''
+                    except Exception as e:
+                        print('First pass z lens error failed', e, add_system_dict['query_z_lens_err'])
+                        if 'query_z_lens_err' in add_system_dict:
+                            try:
+                                print('retrying z_lens_error with z_lens', add_system_dict['query_z_lens'])
+                                if '±' in add_system_dict['query_z_lens']: add_system_dict['query_z_lens_err'] = round(float(str(add_system_dict['query_z_lens']).split(' ')[-1].split('*')[-1].split('±')[-1]),4)
+                                elif '[' in add_system_dict['query_z_lens']:
+                                    errors = add_system_dict['query_z_lens'].split('[')[-1].replace(']','').split(' ')
+                                    add_system_dict['query_z_lens_err'] = (abs(float(errors[0])) + abs(float(errors[1])))/2
+                                else: add_system_dict['query_z_lens_err']=''
+                                if add_system_dict['query_z_lens_err'] != '' and add_system_dict['query_z_lens_err'] < 0 or add_system_dict['query_z_lens_err'] > 14: add_system_dict['query_z_lens_err']=''
+                            except Exception as e:
+                                print('ERROR IN query_z_lens_err', e)
+                                add_system_dict['query_z_lens_err']=''
+                else: add_system_dict['query_z_lens_err'] = ''
                     
                 try:
                     add_system_dict['number_images'] = int(str(add_system_dict['number_images']).split(' ')[0])
@@ -1827,7 +2014,7 @@ class Journal_tables():
                 elif none_favoured_in_MLD:
                     try: add_system_dict['query_dec_coord'] = add_system_dict['query_dec_coord'].replace('−','-')
                     except: pass
-                    print(add_system_dict.keys())
+                    #print(add_system_dict.keys())
                     file.write("INSERT INTO lens ( lensID,discovery_acronym,discovery_count,kind_acronym,kindID,filterID,system_name,lensgrade,multiplicity,morphology,reference_frame,equinox,description,alternate_name,z_lens,z_source,d_lens,d_source,vdisp,vdisp_err,time_delay0,time_delay1,mag_lens,mag_source,filter_lens,filter_source,theta_e,theta_e_err,theta_e_quality,theta_e_redshift,fluxes,ra_decimal,ra_hrs,ra_mins,ra_secs,ra_coord,ra_coord_err,dec_decimal,dec_degrees,dec_arcmin,dec_arcsec,dec_coord,dec_coord_err,number_images,reference_identifier,status,modified,created_by_member_name,modified_by_member_name,discovery_date,created,has_sdss,sdss_link,has_apod,apod_link,z_lens_err,z_lens_quality,z_source_err,z_source_quality,vett_status,released_status,hidden_status,vetted_by_member_name,released_as_of_version,released_by_member_name,hidden_by_member_name,vetted,released,hidden,repeats,graphic_status,coord_label,has_adsabs,adsabs_link,has_ned,ned_link,sdss_ObjID,sdss_specObjID,lens_name ) Values ( ")
                     to_write = '%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%s,%r,%r,%s,%s,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r,%s,%s,%s,%r,%r,%r,%r,%r,%r,%r,%r,%r,%r'%(lensID,add_system_dict['Discovery'] if 'Discovery' in add_system_dict else '', int(add_system_dict['query_discovery_count']) if 'query_discovery_count' in add_system_dict else 0, add_system_dict['query_kindID'] if 'query_kindID' in add_system_dict else '', int(self.lens_type_id[add_system_dict['query_kindID']]) if 'query_kindID' in add_system_dict else '',0, add_system_dict['query_system_name'] if 'query_system_name' in add_system_dict else '', add_system_dict['query_lensgrade'] if 'query_lensgrade' in add_system_dict else '', '','','','J2000',  add_system_dict['query_description'] if 'query_description' in add_system_dict else '', add_system_dict['query_alternate_name'] if 'query_alternate_name' in add_system_dict else '',  add_system_dict['query_z_lens'], add_system_dict['query_z_source'], '','', add_system_dict['query_vdisp'] if 'query_vdisp' in add_system_dict else '',  add_system_dict['query_vdisp_err'] if 'query_vdisp_err' in add_system_dict else '', '','','','','','', add_system_dict['query_theta_e'], add_system_dict['query_theta_e_err'] if 'query_theta_e_err' in add_system_dict else '', add_system_dict['query_theta_e_quality'] if 'query_theta_e_quality' in add_system_dict else '', '','','', add_system_dict['query_ra_hrs'] if 'query_ra_hrs' in add_system_dict else '', add_system_dict['query_ra_mins'] if 'query_ra_mins' in add_system_dict else '', str(round(float(add_system_dict['query_ra_secs']),2)) if 'query_ra_secs' in add_system_dict else '',  round(float(add_system_dict['query_ra_coord']),6) if 'query_ra_coord' in add_system_dict else '', coord_error, '', add_system_dict['query_dec_degrees'] if 'query_dec_degrees' in add_system_dict else '',  add_system_dict['query_dec_arcmin'] if 'query_dec_arcmin' in add_system_dict else '', str(round(float(add_system_dict['query_dec_arcsec']),2)) if 'query_dec_arcsec' in add_system_dict else '', round(float(add_system_dict['query_dec_coord']),6) if 'query_dec_coord' in add_system_dict else '', coord_error, add_system_dict['number_images'], self.lens_objects[system]['References'][0] if 'References' in self.lens_objects[system] else '',1,'NOW()', self.user_name, self.user_name, add_system_dict['query_discovery_date'] if 'query_discovery_date' in add_system_dict else 'NULL','NOW()',0,'',0,'', add_system_dict['query_z_lens_err'] if 'query_z_lens_err' in add_system_dict else 0,  add_system_dict['query_z_lens_quality'] if 'query_z_lens_quality' in add_system_dict else '', add_system_dict['query_z_source_err'] if 'query_z_source_err' in add_system_dict else 0, add_system_dict['query_z_source_quality'] if 'query_z_source_quality' in add_system_dict else '',0,1,0,'',1,'','','NULL','NULL','NULL',0,0,'Manual',0,'',0,'','','', add_system_dict['query_system_name'].split('[')[0] if 'query_system_name' in add_system_dict else '')
                     file.write(to_write.replace('nan',"''"))
@@ -1846,6 +2033,7 @@ class Journal_tables():
                         self.lens_background_connection.append([lensID, 3, ''])
                        
                     for ref in self.lens_objects[system]['References']:
+						#NOTE: Attempted to include in paper table references but often in unwanted format...thus paper table references cause a crash in the try and are thus not included.
                         try:
                             new = [lensID, self.reference_id[ref], 1 if 'Detected by' in self.lens_objects[system] and self.lens_objects[system]['Detected by']['tracer']['bibcode'] == ref else 0]
                             if new not in self.lens_reference_connection: self.lens_reference_connection.append(new)
