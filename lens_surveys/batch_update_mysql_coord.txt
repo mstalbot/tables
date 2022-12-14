@@ -1,0 +1,1 @@
+DELETE from coord where lensID >= 747;

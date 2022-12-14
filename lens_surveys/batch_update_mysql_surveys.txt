@@ -1,0 +1,9 @@
+INSERT INTO discovery ( title,acronym,description,lens_count,modified,gradeA_count,gradeB_count,gradeC_count,ungraded_count ) Values ( '','SuGOHI','','',NOW(),'','','','' );
+INSERT INTO discovery ( title,acronym,description,lens_count,modified,gradeA_count,gradeB_count,gradeC_count,ungraded_count ) Values ( '','SILO','','',NOW(),'','','','' );
+INSERT INTO discovery ( title,acronym,description,lens_count,modified,gradeA_count,gradeB_count,gradeC_count,ungraded_count ) Values ( '','LinKS','','',NOW(),'','','','' );
+INSERT INTO discovery ( title,acronym,description,lens_count,modified,gradeA_count,gradeB_count,gradeC_count,ungraded_count ) Values ( '','Space Warps','','',NOW(),'','','','' );
+INSERT INTO discovery ( title,acronym,description,lens_count,modified,gradeA_count,gradeB_count,gradeC_count,ungraded_count ) Values ( '','MNELLS','','',NOW(),'','','','' );
+INSERT INTO discovery ( title,acronym,description,lens_count,modified,gradeA_count,gradeB_count,gradeC_count,ungraded_count ) Values ( '','Gaia GraL','','',NOW(),'','','','' );
+INSERT INTO discovery ( title,acronym,description,lens_count,modified,gradeA_count,gradeB_count,gradeC_count,ungraded_count ) Values ( '','S4TM','','',NOW(),'','','','' );
+INSERT INTO discovery ( title,acronym,description,lens_count,modified,gradeA_count,gradeB_count,gradeC_count,ungraded_count ) Values ( '','STRIDES','','',NOW(),'','','','' );
+INSERT INTO discovery ( title,acronym,description,lens_count,modified,gradeA_count,gradeB_count,gradeC_count,ungraded_count ) Values ( '','RELICS','','',NOW(),'','','','' );

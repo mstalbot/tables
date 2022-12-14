@@ -1,0 +1,4536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE VOTABLE SYSTEM "http://cdsweb.u-strasbg.fr/xml/VOTable.dtd">
+<VOTABLE version="1.1">
+<DESCRIPTION>STScI Hubble Legacy Archive SIAP</DESCRIPTION>
+  <PARAM datatype="char" arraysize="*" name="SORTORDER" value="Detector PropID"></PARAM>
+  <RESOURCE type="results">
+    <INFO name="QUERY_STATUS" value="OK"></INFO>
+    <PARAM datatype="char" name="INPUT:POS" value="3.595917,-30.352722" arraysize="*" unit="deg"></PARAM>
+    <PARAM datatype="double" name="INPUT:SIZE" value="0.020000" unit="deg"></PARAM>
+    <PARAM datatype="char" name="INPUT:FORMAT" value="FITS" arraysize="*"></PARAM>
+    <PARAM datatype="char" name="INPUT:imagetype" value="best" arraysize="*"></PARAM>
+    <PARAM datatype="char" name="INPUT:inst" value="acs" arraysize="*"></PARAM>
+    <PARAM datatype="int" name="INPUT:hrcmatch" value="0"></PARAM>
+    <PARAM datatype="double" name="INPUT:zoom" value="1.000000"></PARAM>
+    <PARAM datatype="double" name="INPUT:autoscale" value="99.500000" unit="%"></PARAM>
+    <PARAM datatype="int" name="INPUT:asinh" value="1"></PARAM>
+    <PARAM datatype="char" arraysize="*" name="refframe" ucd="VOX:STC_CoordRefFrame" value="ICRS"></PARAM>
+    <PARAM datatype="char" arraysize="3" name="projection" ucd="VOX:WCS_CoordProjection" value="TAN"></PARAM>
+    <TABLE>
+      <FIELD ID="URL" name="URL" datatype="char" ucd="VOX:Image_AccessReference" arraysize="*">
+      <DESCRIPTION>Link to data</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="RA" name="RA" datatype="double" unit="deg" ucd="POS_EQ_RA_MAIN">
+      <DESCRIPTION>RA (J2000)</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="DEC" name="DEC" datatype="double" unit="deg" ucd="POS_EQ_DEC_MAIN">
+      <DESCRIPTION>Dec (J2000)</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Level" name="Level" datatype="int" ucd="PRODUCT_LEVEL">
+      <DESCRIPTION>Processing level: 1=exposure 2=combined 3=mosaic 4=color 5=HLSP</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Target" name="Target" datatype="char" ucd="TARGET_NAME" arraysize="*">
+      <DESCRIPTION>Proposal target name</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Detector" name="Detector" datatype="char" ucd="INST_ID" arraysize="*">
+      <DESCRIPTION>Detector</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Aperture" name="Aperture" datatype="char" ucd="INST_APERT" arraysize="*">
+      <DESCRIPTION>Instrument aperture or slit</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Spectral_Elt" name="Spectral_Elt" datatype="char" ucd="MAIN_FILTER" arraysize="*">
+      <DESCRIPTION>Filter or spectral element name</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="NExposures" name="NExposures" datatype="int" ucd="NUM_EXPOSURES">
+      <DESCRIPTION>Number of exposures combined in this image</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="ExpTime" name="ExpTime" datatype="double" unit="s" ucd="EXPOSURE_TIME">
+      <DESCRIPTION>Total exposure time</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="StartTime" name="StartTime" datatype="char" arraysize="*" ucd="TIME_EPOCH">
+      <DESCRIPTION>Start time of first exposure</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Dataset" name="Dataset" datatype="char" arraysize="*" ucd="ID_MAIN">
+      <DESCRIPTION>Name of image: HST_propid_visit_detector_spectralelt_exposure</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="PropID" name="PropID" datatype="char" arraysize="*" ucd="ID_SET">
+      <DESCRIPTION>HST proposal number (or "multi" for combined images)</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="VisitNum" name="VisitNum" datatype="char" arraysize="*" ucd="ID_SET">
+      <DESCRIPTION>Visit number within proposal</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="PI_Name" name="PI_Name" datatype="char" arraysize="*" ucd="NAME_PI">
+      <DESCRIPTION>PI last name</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="DAOCat" name="DAOCat" datatype="char" arraysize="*">
+      <DESCRIPTION>Processing status for DAOphot catalog</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="SEXCat" name="SEXCat" datatype="char" arraysize="*">
+      <DESCRIPTION>Processing status for SExtractor catalog</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Mode" name="Mode" datatype="char" arraysize="*">
+      <DESCRIPTION>Data collection mode</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="DBCreationDate" name="DBCreationDate" datatype="char" arraysize="*" ucd="TIME_EPOCH">
+      <DESCRIPTION>Date when this dataset was added to database</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Source" name="Source" datatype="char" arraysize="*">
+      <DESCRIPTION>Source for this dataset (one of HLA, ECF, CADC, DADS, HLSP, HSTCACHE)</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Wavelength" name="Wavelength" datatype="double" unit="0.1nm" ucd="INST_WAVELENGTH">
+      <DESCRIPTION>Characteristic wavelength for bandpass</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Format" name="Format" datatype="char" ucd="VOX:Image_Format" arraysize="*">
+      <DESCRIPTION>Format of image</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="ReleaseDate" name="ReleaseDate" datatype="char" ucd="TIME_EPOCH" arraysize="*">
+      <DESCRIPTION>Date when these data are made public (GMT)</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="NReleaseDate" name="NReleaseDate" datatype="long" ucd="TIME_EPOCH">
+      <DESCRIPTION>Date when these data are made public (seconds since 1970)</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Title" name="Title" datatype="char" ucd="VOX:Image_Title" arraysize="*">
+      <DESCRIPTION>Summary title</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="naxis" name="naxis" datatype="int" ucd="VOX:Image_Naxis" arraysize="*">
+      <DESCRIPTION>Image size (pixels)</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="scale" name="scale" datatype="double" unit="deg/pix" ucd="VOX:Image_Scale" arraysize="*">
+      <DESCRIPTION>Pixel scale</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="naxes" name="naxes" datatype="int" ucd="VOX:Image_Naxes">
+      <DESCRIPTION>WCS info</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="crpix" name="crpix" datatype="double" unit="pix" ucd="VOX:WCS_CoordRefPixel" arraysize="*">
+      <DESCRIPTION>WCS info</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="crval" name="crval" datatype="double" unit="deg" ucd="VOX:WCS_CoordRefValue" arraysize="*">
+      <DESCRIPTION>WCS info</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="cd_matrix" name="cd_matrix" datatype="double" unit="deg/pix" ucd="VOX:WCS_CDMatrix" arraysize="*">
+      <DESCRIPTION>WCS info</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="filename" name="filename" datatype="char" arraysize="*">
+      <DESCRIPTION>Filename (comma-separated list for color)</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="regionSTCS" name="regionSTCS" datatype="char" arraysize="*">
+      <DESCRIPTION>STC/S footprint region description</DESCRIPTION>
+      </FIELD>
+      <DATA>
+        <TABLEDATA>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hlsp_frontier_hst_acs-30mas-selfcal_abell2744_f435w_v1.0-epoch2_drz]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>5</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F435W</TD>
+<TD>72</TD>
+<TD>45747.000000</TD>
+<TD>2014-06-11 20:17:30</TD>
+<TD>hlsp_frontier_hst_acs-30mas-selfcal_abell2744_f435w_v1.0-epoch2_drz</TD>
+<TD>13495</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:27:58</TD>
+<TD>HLSP</TD>
+<TD>4327.29980469</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-30mas-selfcal_abell2744 ACS/WFC F435W (hlsp) ABELL-2744</TD>
+<TD>10700 12300</TD>
+<TD>8.3334E-06</TD>
+<TD>2</TD>
+<TD>5350.000 6150.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-8.3334E-06 0 -0 8.3334E-06</TD>
+<TD>hlsp_frontier_hst_acs-30mas-selfcal_abell2744_f435w_v1.0-epoch2_drz</TD>
+<TD>Polygon J2000     3.634969   -30.439240    3.634915   -30.336739    3.531602   -30.336740    3.531547   -30.439240</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hlsp_frontier_hst_acs-30mas-selfcal_abell2744_f606w_v1.0-epoch2_drz]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>5</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F606W</TD>
+<TD>38</TD>
+<TD>23632.088000</TD>
+<TD>2014-05-14 23:16:48</TD>
+<TD>hlsp_frontier_hst_acs-30mas-selfcal_abell2744_f606w_v1.0-epoch2_drz</TD>
+<TD>13495</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:27:59</TD>
+<TD>HLSP</TD>
+<TD>5921.85009766</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-30mas-selfcal_abell2744 ACS/WFC F606W (hlsp) ABELL-2744</TD>
+<TD>10700 12300</TD>
+<TD>8.3334E-06</TD>
+<TD>2</TD>
+<TD>5350.000 6150.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-8.3334E-06 0 -0 8.3334E-06</TD>
+<TD>hlsp_frontier_hst_acs-30mas-selfcal_abell2744_f606w_v1.0-epoch2_drz</TD>
+<TD>Polygon J2000     3.634969   -30.439240    3.634915   -30.336739    3.531602   -30.336740    3.531547   -30.439240</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hlsp_frontier_hst_acs-30mas-selfcal_abell2744_f814w_v1.0-epoch2_drz]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>5</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>166</TD>
+<TD>104270.000000</TD>
+<TD>2014-05-15 20:21:26</TD>
+<TD>hlsp_frontier_hst_acs-30mas-selfcal_abell2744_f814w_v1.0-epoch2_drz</TD>
+<TD>13495</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:27:59</TD>
+<TD>HLSP</TD>
+<TD>8059.35009766</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-30mas-selfcal_abell2744 ACS/WFC F814W (hlsp) ABELL-2744</TD>
+<TD>10700 12300</TD>
+<TD>8.3334E-06</TD>
+<TD>2</TD>
+<TD>5350.000 6150.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-8.3334E-06 0 -0 8.3334E-06</TD>
+<TD>hlsp_frontier_hst_acs-30mas-selfcal_abell2744_f814w_v1.0-epoch2_drz</TD>
+<TD>Polygon J2000     3.634969   -30.439240    3.634915   -30.336739    3.531602   -30.336740    3.531547   -30.439240</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/fitscut.cgi?red=hlsp_frontier_hst_acs-30mas-selfcal_abell2744_f814w_v1.0-epoch2_drz&amp;green=hlsp_frontier_hst_acs-30mas-selfcal_abell2744_f606w_v1.0-epoch2_drz&amp;blue=hlsp_frontier_hst_acs-30mas-selfcal_abell2744_f435w_v1.0-epoch2_drz&amp;size=ALL&amp;format=fits&amp;config=ops]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>4</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W/F606W/F435W</TD>
+<TD>276</TD>
+<TD>173649.088000</TD>
+<TD>2014-05-14 23:16:48</TD>
+<TD>hlsp_frontier_hst_acs-30mas-selfcal_abell2744_f814w_f606w_f435w_v1.0-epoch2_drz</TD>
+<TD>13495</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:27:59</TD>
+<TD>HLSP</TD>
+<TD>345.443396226</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-30mas-selfcal_abell2744 ACS/WFC F814W/F606W/F435W (color) ABELL-2744</TD>
+<TD>10700 12300</TD>
+<TD>8.3334E-06</TD>
+<TD>2</TD>
+<TD>5350.000 6150.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-8.3334E-06 0 -0 8.3334E-06</TD>
+<TD>hlsp_frontier_hst_acs-30mas-selfcal_abell2744_f814w_v1.0-epoch2_drz,hlsp_frontier_hst_acs-30mas-selfcal_abell2744_f606w_v1.0-epoch2_drz,hlsp_frontier_hst_acs-30mas-selfcal_abell2744_f435w_v1.0-epoch2_drz</TD>
+<TD>Polygon J2000     3.634969   -30.439240    3.634915   -30.336739    3.531602   -30.336740    3.531547   -30.439240</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hlsp_frontier_hst_acs-30mas_abell2744_f435w_v1.0-epoch2_drz]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>5</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F435W</TD>
+<TD>72</TD>
+<TD>45747.000000</TD>
+<TD>2014-06-11 20:17:30</TD>
+<TD>hlsp_frontier_hst_acs-30mas_abell2744_f435w_v1.0-epoch2_drz</TD>
+<TD>13495</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:27:59</TD>
+<TD>HLSP</TD>
+<TD>4327.29980469</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-30mas_abell2744 ACS/WFC F435W (hlsp) ABELL-2744</TD>
+<TD>10700 12300</TD>
+<TD>8.3334E-06</TD>
+<TD>2</TD>
+<TD>5350.000 6150.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-8.3334E-06 0 -0 8.3334E-06</TD>
+<TD>hlsp_frontier_hst_acs-30mas_abell2744_f435w_v1.0-epoch2_drz</TD>
+<TD>Polygon J2000     3.634969   -30.439240    3.634915   -30.336739    3.531602   -30.336740    3.531547   -30.439240</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hlsp_frontier_hst_acs-30mas_abell2744_f435w_v1.0_drz]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>5</TD>
+<TD>ABELL-2744-SOUTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F435W</TD>
+<TD>24</TD>
+<TD>16162.000000</TD>
+<TD>2009-10-29 13:42:35</TD>
+<TD>hlsp_frontier_hst_acs-30mas_abell2744_f435w_v1.0_drz</TD>
+<TD>11689</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:27:59</TD>
+<TD>HLSP</TD>
+<TD>4327.29980469</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-30mas_abell2744 ACS/WFC F435W (hlsp) ABELL-2744-SOUTH</TD>
+<TD>10700 12300</TD>
+<TD>8.3334E-06 8.3335E-06</TD>
+<TD>2</TD>
+<TD>5350.000 6150.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-8.3334E-06 1E-10 -2E-10 8.3335E-06</TD>
+<TD>hlsp_frontier_hst_acs-30mas_abell2744_f435w_v1.0_drz</TD>
+<TD>Polygon J2000     3.634969   -30.439240    3.634916   -30.336738    3.531602   -30.336739    3.531546   -30.439242</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hlsp_frontier_hst_acs-30mas_abell2744_f606w_v1.0-epoch2_drz]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>5</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F606W</TD>
+<TD>38</TD>
+<TD>23632.088000</TD>
+<TD>2014-05-14 23:16:48</TD>
+<TD>hlsp_frontier_hst_acs-30mas_abell2744_f606w_v1.0-epoch2_drz</TD>
+<TD>13495</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:27:59</TD>
+<TD>HLSP</TD>
+<TD>5921.85009766</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-30mas_abell2744 ACS/WFC F606W (hlsp) ABELL-2744</TD>
+<TD>10700 12300</TD>
+<TD>8.3334E-06</TD>
+<TD>2</TD>
+<TD>5350.000 6150.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-8.3334E-06 0 -0 8.3334E-06</TD>
+<TD>hlsp_frontier_hst_acs-30mas_abell2744_f606w_v1.0-epoch2_drz</TD>
+<TD>Polygon J2000     3.634969   -30.439240    3.634915   -30.336739    3.531602   -30.336740    3.531547   -30.439240</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hlsp_frontier_hst_acs-30mas_abell2744_f606w_v1.0_drz]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>5</TD>
+<TD>ABELL-2744-SOUTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F606W</TD>
+<TD>20</TD>
+<TD>13250.000000</TD>
+<TD>2009-10-27 10:33:00</TD>
+<TD>hlsp_frontier_hst_acs-30mas_abell2744_f606w_v1.0_drz</TD>
+<TD>11689</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:27:59</TD>
+<TD>HLSP</TD>
+<TD>5921.85009766</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-30mas_abell2744 ACS/WFC F606W (hlsp) ABELL-2744-SOUTH</TD>
+<TD>10700 12300</TD>
+<TD>8.3334E-06 8.3335E-06</TD>
+<TD>2</TD>
+<TD>5350.000 6150.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-8.3334E-06 1E-10 -1E-10 8.3335E-06</TD>
+<TD>hlsp_frontier_hst_acs-30mas_abell2744_f606w_v1.0_drz</TD>
+<TD>Polygon J2000     3.634969   -30.439240    3.634916   -30.336738    3.531602   -30.336739    3.531546   -30.439241</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hlsp_frontier_hst_acs-30mas_abell2744_f814w_v1.0-epoch2_drz]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>5</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>166</TD>
+<TD>104270.000000</TD>
+<TD>2014-05-15 20:21:26</TD>
+<TD>hlsp_frontier_hst_acs-30mas_abell2744_f814w_v1.0-epoch2_drz</TD>
+<TD>13495</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:27:59</TD>
+<TD>HLSP</TD>
+<TD>8059.35009766</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-30mas_abell2744 ACS/WFC F814W (hlsp) ABELL-2744</TD>
+<TD>10700 12300</TD>
+<TD>8.3334E-06</TD>
+<TD>2</TD>
+<TD>5350.000 6150.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-8.3334E-06 0 -0 8.3334E-06</TD>
+<TD>hlsp_frontier_hst_acs-30mas_abell2744_f814w_v1.0-epoch2_drz</TD>
+<TD>Polygon J2000     3.634969   -30.439240    3.634915   -30.336739    3.531602   -30.336740    3.531547   -30.439240</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hlsp_frontier_hst_acs-30mas_abell2744_f814w_v1.0_drz]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>5</TD>
+<TD>ABELL-2744-SOUTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F814W</TD>
+<TD>20</TD>
+<TD>13248.000000</TD>
+<TD>2009-10-27 04:09:22</TD>
+<TD>hlsp_frontier_hst_acs-30mas_abell2744_f814w_v1.0_drz</TD>
+<TD>11689</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:27:59</TD>
+<TD>HLSP</TD>
+<TD>8059.35009766</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-30mas_abell2744 ACS/WFC F814W (hlsp) ABELL-2744-SOUTH</TD>
+<TD>10700 12300</TD>
+<TD>8.3334E-06 8.3335E-06</TD>
+<TD>2</TD>
+<TD>5350.000 6150.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-8.3334E-06 1E-10 -1E-10 8.3335E-06</TD>
+<TD>hlsp_frontier_hst_acs-30mas_abell2744_f814w_v1.0_drz</TD>
+<TD>Polygon J2000     3.634969   -30.439240    3.634916   -30.336738    3.531602   -30.336739    3.531546   -30.439241</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/fitscut.cgi?red=hlsp_frontier_hst_acs-30mas_abell2744_f814w_v1.0-epoch2_drz&amp;green=hlsp_frontier_hst_acs-30mas_abell2744_f606w_v1.0_drz&amp;blue=hlsp_frontier_hst_acs-30mas_abell2744_f435w_v1.0_drz&amp;size=ALL&amp;format=fits&amp;config=ops]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>4</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>multi</TD>
+<TD>F814W/F606W/F435W</TD>
+<TD>340</TD>
+<TD>216309.088000</TD>
+<TD>2009-10-27 04:09:22</TD>
+<TD>hlsp_frontier_hst_acs-30mas_abell2744_f814w_v1.0-epoch2_f606w_v1.0_f435w_v1.0_drz</TD>
+<TD></TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:27:59</TD>
+<TD>HLSP</TD>
+<TD>690.886792453</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-30mas_abell2744 ACS/WFC F814W/F606W/F435W (color) ABELL-2744</TD>
+<TD>10700 12300</TD>
+<TD>8.3334E-06</TD>
+<TD>2</TD>
+<TD>5350.000 6150.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-8.3334E-06 0 -0 8.3334E-06</TD>
+<TD>hlsp_frontier_hst_acs-30mas_abell2744_f814w_v1.0-epoch2_drz,hlsp_frontier_hst_acs-30mas_abell2744_f814w_v1.0_drz,hlsp_frontier_hst_acs-30mas_abell2744_f606w_v1.0-epoch2_drz,hlsp_frontier_hst_acs-30mas_abell2744_f606w_v1.0_drz,hlsp_frontier_hst_acs-30mas_abell2744_f435w_v1.0-epoch2_drz,hlsp_frontier_hst_acs-30mas_abell2744_f435w_v1.0_drz</TD>
+<TD>Polygon J2000     3.634969   -30.439240    3.634915   -30.336739    3.531602   -30.336740    3.531547   -30.439240</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hlsp_frontier_hst_acs-60mas-selfcal_abell2744_f435w_v1.0-epoch2_drz]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>5</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F435W</TD>
+<TD>72</TD>
+<TD>45747.000000</TD>
+<TD>2014-06-11 20:17:30</TD>
+<TD>hlsp_frontier_hst_acs-60mas-selfcal_abell2744_f435w_v1.0-epoch2_drz</TD>
+<TD>13495</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:28:00</TD>
+<TD>HLSP</TD>
+<TD>4327.29980469</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-60mas-selfcal_abell2744 ACS/WFC F435W (hlsp) ABELL-2744</TD>
+<TD>5350 6150</TD>
+<TD>1.66668E-05 1.66667E-05</TD>
+<TD>2</TD>
+<TD>2675.000 3075.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-1.66668E-05 1E-10 -1E-10 1.66667E-05</TD>
+<TD>hlsp_frontier_hst_acs-60mas-selfcal_abell2744_f435w_v1.0-epoch2_drz</TD>
+<TD>Polygon J2000     3.634959   -30.439231    3.634906   -30.336731    3.531592   -30.336731    3.531537   -30.439232</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hlsp_frontier_hst_acs-60mas-selfcal_abell2744_f606w_v1.0-epoch2_drz]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>5</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F606W</TD>
+<TD>38</TD>
+<TD>23632.088000</TD>
+<TD>2014-05-14 23:16:48</TD>
+<TD>hlsp_frontier_hst_acs-60mas-selfcal_abell2744_f606w_v1.0-epoch2_drz</TD>
+<TD>13495</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:28:00</TD>
+<TD>HLSP</TD>
+<TD>5921.85009766</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-60mas-selfcal_abell2744 ACS/WFC F606W (hlsp) ABELL-2744</TD>
+<TD>5350 6150</TD>
+<TD>1.66668E-05 1.66667E-05</TD>
+<TD>2</TD>
+<TD>2675.000 3075.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-1.66668E-05 1E-10 -1E-10 1.66667E-05</TD>
+<TD>hlsp_frontier_hst_acs-60mas-selfcal_abell2744_f606w_v1.0-epoch2_drz</TD>
+<TD>Polygon J2000     3.634959   -30.439231    3.634906   -30.336731    3.531592   -30.336731    3.531537   -30.439232</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hlsp_frontier_hst_acs-60mas-selfcal_abell2744_f814w_v1.0-epoch2_drz]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>5</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>166</TD>
+<TD>104270.000000</TD>
+<TD>2014-05-15 20:21:26</TD>
+<TD>hlsp_frontier_hst_acs-60mas-selfcal_abell2744_f814w_v1.0-epoch2_drz</TD>
+<TD>13495</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:28:00</TD>
+<TD>HLSP</TD>
+<TD>8059.35009766</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-60mas-selfcal_abell2744 ACS/WFC F814W (hlsp) ABELL-2744</TD>
+<TD>5350 6150</TD>
+<TD>1.66668E-05 1.66667E-05</TD>
+<TD>2</TD>
+<TD>2675.000 3075.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-1.66668E-05 1E-10 -1E-10 1.66667E-05</TD>
+<TD>hlsp_frontier_hst_acs-60mas-selfcal_abell2744_f814w_v1.0-epoch2_drz</TD>
+<TD>Polygon J2000     3.634959   -30.439231    3.634906   -30.336731    3.531592   -30.336731    3.531537   -30.439232</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/fitscut.cgi?red=hlsp_frontier_hst_acs-60mas-selfcal_abell2744_f814w_v1.0-epoch2_drz&amp;green=hlsp_frontier_hst_acs-60mas-selfcal_abell2744_f606w_v1.0-epoch2_drz&amp;blue=hlsp_frontier_hst_acs-60mas-selfcal_abell2744_f435w_v1.0-epoch2_drz&amp;size=ALL&amp;format=fits&amp;config=ops]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>4</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W/F606W/F435W</TD>
+<TD>276</TD>
+<TD>173649.088000</TD>
+<TD>2014-05-14 23:16:48</TD>
+<TD>hlsp_frontier_hst_acs-60mas-selfcal_abell2744_f814w_f606w_f435w_v1.0-epoch2_drz</TD>
+<TD>13495</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:28:00</TD>
+<TD>HLSP</TD>
+<TD>345.443396226</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-60mas-selfcal_abell2744 ACS/WFC F814W/F606W/F435W (color) ABELL-2744</TD>
+<TD>5350 6150</TD>
+<TD>1.66668E-05 1.66667E-05</TD>
+<TD>2</TD>
+<TD>2675.000 3075.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-1.66668E-05 1E-10 -1E-10 1.66667E-05</TD>
+<TD>hlsp_frontier_hst_acs-60mas-selfcal_abell2744_f814w_v1.0-epoch2_drz,hlsp_frontier_hst_acs-60mas-selfcal_abell2744_f606w_v1.0-epoch2_drz,hlsp_frontier_hst_acs-60mas-selfcal_abell2744_f435w_v1.0-epoch2_drz</TD>
+<TD>Polygon J2000     3.634959   -30.439231    3.634906   -30.336731    3.531592   -30.336731    3.531537   -30.439232</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hlsp_frontier_hst_acs-60mas_abell2744_f435w_v1.0-epoch2_drz]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>5</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F435W</TD>
+<TD>72</TD>
+<TD>45747.000000</TD>
+<TD>2014-06-11 20:17:30</TD>
+<TD>hlsp_frontier_hst_acs-60mas_abell2744_f435w_v1.0-epoch2_drz</TD>
+<TD>13495</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:28:00</TD>
+<TD>HLSP</TD>
+<TD>4327.29980469</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-60mas_abell2744 ACS/WFC F435W (hlsp) ABELL-2744</TD>
+<TD>5350 6150</TD>
+<TD>1.66668E-05 1.66667E-05</TD>
+<TD>2</TD>
+<TD>2675.000 3075.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-1.66668E-05 1E-10 -1E-10 1.66667E-05</TD>
+<TD>hlsp_frontier_hst_acs-60mas_abell2744_f435w_v1.0-epoch2_drz</TD>
+<TD>Polygon J2000     3.634959   -30.439231    3.634906   -30.336731    3.531592   -30.336731    3.531537   -30.439232</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hlsp_frontier_hst_acs-60mas_abell2744_f435w_v1.0_drz]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>5</TD>
+<TD>ABELL-2744-SOUTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F435W</TD>
+<TD>24</TD>
+<TD>16162.000000</TD>
+<TD>2009-10-29 13:42:35</TD>
+<TD>hlsp_frontier_hst_acs-60mas_abell2744_f435w_v1.0_drz</TD>
+<TD>11689</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:28:00</TD>
+<TD>HLSP</TD>
+<TD>4327.29980469</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-60mas_abell2744 ACS/WFC F435W (hlsp) ABELL-2744-SOUTH</TD>
+<TD>5350 6150</TD>
+<TD>1.66669E-05 1.66671E-05</TD>
+<TD>2</TD>
+<TD>2675.000 3075.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-1.66669E-05 3E-10 -3E-10 1.66671E-05</TD>
+<TD>hlsp_frontier_hst_acs-60mas_abell2744_f435w_v1.0_drz</TD>
+<TD>Polygon J2000     3.634959   -30.439232    3.634907   -30.336729    3.531592   -30.336731    3.531536   -30.439233</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hlsp_frontier_hst_acs-60mas_abell2744_f606w_v1.0-epoch2_drz]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>5</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F606W</TD>
+<TD>38</TD>
+<TD>23632.088000</TD>
+<TD>2014-05-14 23:16:48</TD>
+<TD>hlsp_frontier_hst_acs-60mas_abell2744_f606w_v1.0-epoch2_drz</TD>
+<TD>13495</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:28:00</TD>
+<TD>HLSP</TD>
+<TD>5921.85009766</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-60mas_abell2744 ACS/WFC F606W (hlsp) ABELL-2744</TD>
+<TD>5350 6150</TD>
+<TD>1.66668E-05 1.66667E-05</TD>
+<TD>2</TD>
+<TD>2675.000 3075.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-1.66668E-05 1E-10 -1E-10 1.66667E-05</TD>
+<TD>hlsp_frontier_hst_acs-60mas_abell2744_f606w_v1.0-epoch2_drz</TD>
+<TD>Polygon J2000     3.634959   -30.439231    3.634906   -30.336731    3.531592   -30.336731    3.531537   -30.439232</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hlsp_frontier_hst_acs-60mas_abell2744_f606w_v1.0_drz]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>5</TD>
+<TD>ABELL-2744-SOUTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F606W</TD>
+<TD>20</TD>
+<TD>13250.000000</TD>
+<TD>2009-10-27 10:33:00</TD>
+<TD>hlsp_frontier_hst_acs-60mas_abell2744_f606w_v1.0_drz</TD>
+<TD>11689</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:28:00</TD>
+<TD>HLSP</TD>
+<TD>5921.85009766</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-60mas_abell2744 ACS/WFC F606W (hlsp) ABELL-2744-SOUTH</TD>
+<TD>5350 6150</TD>
+<TD>1.66668E-05 1.66669E-05</TD>
+<TD>2</TD>
+<TD>2675.000 3075.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-1.66668E-05 2E-10 -2E-10 1.66669E-05</TD>
+<TD>hlsp_frontier_hst_acs-60mas_abell2744_f606w_v1.0_drz</TD>
+<TD>Polygon J2000     3.634959   -30.439232    3.634906   -30.336730    3.531592   -30.336731    3.531537   -30.439233</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hlsp_frontier_hst_acs-60mas_abell2744_f814w_v1.0-epoch2_drz]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>5</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>166</TD>
+<TD>104270.000000</TD>
+<TD>2014-05-15 20:21:26</TD>
+<TD>hlsp_frontier_hst_acs-60mas_abell2744_f814w_v1.0-epoch2_drz</TD>
+<TD>13495</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:28:00</TD>
+<TD>HLSP</TD>
+<TD>8059.35009766</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-60mas_abell2744 ACS/WFC F814W (hlsp) ABELL-2744</TD>
+<TD>5350 6150</TD>
+<TD>1.66668E-05 1.66667E-05</TD>
+<TD>2</TD>
+<TD>2675.000 3075.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-1.66668E-05 1E-10 -1E-10 1.66667E-05</TD>
+<TD>hlsp_frontier_hst_acs-60mas_abell2744_f814w_v1.0-epoch2_drz</TD>
+<TD>Polygon J2000     3.634959   -30.439231    3.634906   -30.336731    3.531592   -30.336731    3.531537   -30.439232</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hlsp_frontier_hst_acs-60mas_abell2744_f814w_v1.0_drz]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>5</TD>
+<TD>ABELL-2744-SOUTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F814W</TD>
+<TD>20</TD>
+<TD>13248.000000</TD>
+<TD>2009-10-27 04:09:22</TD>
+<TD>hlsp_frontier_hst_acs-60mas_abell2744_f814w_v1.0_drz</TD>
+<TD>11689</TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:28:00</TD>
+<TD>HLSP</TD>
+<TD>8059.35009766</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-60mas_abell2744 ACS/WFC F814W (hlsp) ABELL-2744-SOUTH</TD>
+<TD>5350 6150</TD>
+<TD>1.66668E-05 1.6667E-05</TD>
+<TD>2</TD>
+<TD>2675.000 3075.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-1.66668E-05 2E-10 -2E-10 1.6667E-05</TD>
+<TD>hlsp_frontier_hst_acs-60mas_abell2744_f814w_v1.0_drz</TD>
+<TD>Polygon J2000     3.634959   -30.439232    3.634906   -30.336730    3.531592   -30.336731    3.531537   -30.439233</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/fitscut.cgi?red=hlsp_frontier_hst_acs-60mas_abell2744_f814w_v1.0-epoch2_drz&amp;green=hlsp_frontier_hst_acs-60mas_abell2744_f606w_v1.0_drz&amp;blue=hlsp_frontier_hst_acs-60mas_abell2744_f435w_v1.0_drz&amp;size=ALL&amp;format=fits&amp;config=ops]]></TD>
+<TD>3.583270</TD>
+<TD>-30.388000</TD>
+<TD>4</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>multi</TD>
+<TD>F814W/F606W/F435W</TD>
+<TD>340</TD>
+<TD>216309.088000</TD>
+<TD>2009-10-27 04:09:22</TD>
+<TD>hlsp_frontier_hst_acs-60mas_abell2744_f814w_v1.0-epoch2_f606w_v1.0_f435w_v1.0_drz</TD>
+<TD></TD>
+<TD>abell2744</TD>
+<TD> </TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2015-10-30 15:28:00</TD>
+<TD>HLSP</TD>
+<TD>690.886792453</TD>
+<TD>image/fits</TD>
+<TD>1900-01-01 00:00:00</TD>
+<TD>-2208988800</TD>
+<TD>frontier_hst_acs-60mas_abell2744 ACS/WFC F814W/F606W/F435W (color) ABELL-2744</TD>
+<TD>5350 6150</TD>
+<TD>1.66668E-05 1.66667E-05</TD>
+<TD>2</TD>
+<TD>2675.000 3075.000</TD>
+<TD>3.583270 -30.388000</TD>
+<TD>-1.66668E-05 1E-10 -1E-10 1.66667E-05</TD>
+<TD>hlsp_frontier_hst_acs-60mas_abell2744_f814w_v1.0-epoch2_drz,hlsp_frontier_hst_acs-60mas_abell2744_f814w_v1.0_drz,hlsp_frontier_hst_acs-60mas_abell2744_f606w_v1.0-epoch2_drz,hlsp_frontier_hst_acs-60mas_abell2744_f606w_v1.0_drz,hlsp_frontier_hst_acs-60mas_abell2744_f435w_v1.0-epoch2_drz,hlsp_frontier_hst_acs-60mas_abell2744_f435w_v1.0_drz</TD>
+<TD>Polygon J2000     3.634959   -30.439231    3.634906   -30.336731    3.531592   -30.336731    3.531537   -30.439232</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_01_acs_wfc_f814w]]></TD>
+<TD>3.589851</TD>
+<TD>-30.381006</TD>
+<TD>2</TD>
+<TD>ABELL-2744-NORTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5356.000000</TD>
+<TD>2009-10-27 04:09:22</TD>
+<TD>hst_11689_01_acs_wfc_f814w</TD>
+<TD>11689</TD>
+<TD>01</TD>
+<TD>Dupke</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-25 08:06:44</TD>
+<TD>HLA</TD>
+<TD>8044.9888</TD>
+<TD>image/fits</TD>
+<TD>2010-10-27 11:12:25</TD>
+<TD>1288177945</TD>
+<TD>11689_01 ACS/WFC F814W (combined) ABELL-2744-NORTH</TD>
+<TD>5939 5996</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2970.000 2998.500</TD>
+<TD>3.589851 -30.381006</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_01_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.63241479 -30.37356389 3.63289010 -30.37284310 3.63282602 -30.37280469 3.63329940 -30.37208680 3.63323733 -30.37204960 3.63371250 -30.37132900 3.58038850 -30.33934470 3.57943933 -30.34078301 3.56452920 -30.36337030 3.56459260 -30.36340836 3.56411710 -30.36412850 3.56417961 -30.36416602 3.56400628 -30.36442852 3.56348160 -30.36412250 3.56251874 -30.36555519 3.54684740 -30.38886650 3.54691790 -30.38890762 3.54643570 -30.38962470 3.54650449 -30.38966483 3.54602330 -30.39038040 3.54609369 -30.39042146 3.54561170 -30.39113820 3.60001191 -30.42284841 3.60008090 -30.42288860 3.61670710 -30.39813830 3.61663797 -30.39809804 3.61712010 -30.39738010 3.61704967 -30.39733908 3.61753000 -30.39662380 3.61746093 -30.39658357 3.61794280 -30.39586600 3.61783320 -30.39580216 3.63247720 -30.37360130</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_01_acs_wfc_total]]></TD>
+<TD>3.589851</TD>
+<TD>-30.381006</TD>
+<TD>2</TD>
+<TD>ABELL-2744-NORTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>detection</TD>
+<TD>4</TD>
+<TD>5356.000000</TD>
+<TD>2009-10-27 04:09:22</TD>
+<TD>hst_11689_01_acs_wfc_total</TD>
+<TD>11689</TD>
+<TD>01</TD>
+<TD>Dupke</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-25 08:06:44</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2010-10-27 11:12:25</TD>
+<TD>1288177945</TD>
+<TD>11689_01 ACS/WFC detection (combined) ABELL-2744-NORTH</TD>
+<TD>5939 5996</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2970.000 2998.500</TD>
+<TD>3.589851 -30.381006</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_01_acs_wfc_total</TD>
+<TD>Polygon J2000 3.63289010 -30.37284310 3.63282602 -30.37280469 3.63329940 -30.37208680 3.63323733 -30.37204960 3.63371250 -30.37132900 3.58038850 -30.33934470 3.57943933 -30.34078301 3.56452920 -30.36337030 3.56459260 -30.36340836 3.56411710 -30.36412850 3.56417961 -30.36416602 3.56400628 -30.36442852 3.56348160 -30.36412250 3.56251874 -30.36555519 3.54684740 -30.38886650 3.54691790 -30.38890762 3.54643570 -30.38962470 3.54650449 -30.38966483 3.54602330 -30.39038040 3.54609369 -30.39042146 3.54561170 -30.39113820 3.60001191 -30.42284841 3.60008090 -30.42288860 3.61670710 -30.39813830 3.61663797 -30.39809804 3.61712010 -30.39738010 3.61704967 -30.39733908 3.61753000 -30.39662380 3.61746093 -30.39658357 3.61794280 -30.39586600 3.61783320 -30.39580216 3.63247720 -30.37360130 3.63241479 -30.37356389</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_02_acs_wfc_f814w]]></TD>
+<TD>3.576093</TD>
+<TD>-30.398023</TD>
+<TD>2</TD>
+<TD>ABELL-2744-SOUTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5356.000000</TD>
+<TD>2009-10-27 07:21:10</TD>
+<TD>hst_11689_02_acs_wfc_f814w</TD>
+<TD>11689</TD>
+<TD>02</TD>
+<TD>Dupke</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-23 13:06:20</TD>
+<TD>HLA</TD>
+<TD>8044.9888</TD>
+<TD>image/fits</TD>
+<TD>2010-10-27 15:27:02</TD>
+<TD>1288193222</TD>
+<TD>11689_02 ACS/WFC F814W (combined) ABELL-2744-SOUTH</TD>
+<TD>5704 5792</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2852.500 2896.500</TD>
+<TD>3.576093 -30.398023</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_02_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.61751185 -30.38515730 3.61787490 -30.38439390 3.61780746 -30.38436367 3.61817250 -30.38359610 3.56054690 -30.35774270 3.55981778 -30.35927399 3.54836620 -30.38331780 3.54843524 -30.38334880 3.54806970 -30.38411610 3.54813627 -30.38414599 3.54800335 -30.38442501 3.54743820 -30.38417950 3.54669523 -30.38570579 3.53459680 -30.41055240 3.53467288 -30.41058545 3.53430070 -30.41134960 3.53437393 -30.41138141 3.53400270 -30.41214360 3.53407874 -30.41217663 3.53370620 -30.41294150 3.59236574 -30.43840340 3.59244020 -30.43843570 3.60526900 -30.41205760 3.60519460 -30.41202533 3.60556690 -30.41125960 3.60549201 -30.41122712 3.60586230 -30.41046550 3.60578776 -30.41043317 3.60615940 -30.40966880 3.60604066 -30.40961730 3.61728210 -30.38598600 3.61721488 -30.38595586 3.61758010 -30.38518790</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_02_acs_wfc_total]]></TD>
+<TD>3.576093</TD>
+<TD>-30.398023</TD>
+<TD>2</TD>
+<TD>ABELL-2744-SOUTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>detection</TD>
+<TD>4</TD>
+<TD>5356.000000</TD>
+<TD>2009-10-27 07:21:10</TD>
+<TD>hst_11689_02_acs_wfc_total</TD>
+<TD>11689</TD>
+<TD>02</TD>
+<TD>Dupke</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-23 13:06:20</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2010-10-27 15:27:02</TD>
+<TD>1288193222</TD>
+<TD>11689_02 ACS/WFC detection (combined) ABELL-2744-SOUTH</TD>
+<TD>5704 5792</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2852.500 2896.500</TD>
+<TD>3.576093 -30.398023</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_02_acs_wfc_total</TD>
+<TD>Polygon J2000 3.54843524 -30.38334880 3.54806970 -30.38411610 3.54813627 -30.38414599 3.54800335 -30.38442501 3.54743820 -30.38417950 3.54669523 -30.38570579 3.53459680 -30.41055240 3.53467288 -30.41058545 3.53430070 -30.41134960 3.53437393 -30.41138141 3.53400270 -30.41214360 3.53407874 -30.41217663 3.53370620 -30.41294150 3.59236574 -30.43840340 3.59244020 -30.43843570 3.60526900 -30.41205760 3.60519460 -30.41202533 3.60556690 -30.41125960 3.60549201 -30.41122712 3.60586230 -30.41046550 3.60578776 -30.41043317 3.60615940 -30.40966880 3.60604066 -30.40961730 3.61728210 -30.38598600 3.61721488 -30.38595586 3.61758010 -30.38518790 3.61751185 -30.38515730 3.61787490 -30.38439390 3.61780746 -30.38436367 3.61817250 -30.38359610 3.56054690 -30.35774270 3.55981778 -30.35927399 3.54836620 -30.38331780</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_03_acs_wfc_f606w]]></TD>
+<TD>3.589843</TD>
+<TD>-30.381006</TD>
+<TD>2</TD>
+<TD>ABELL-2744-NORTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F606W</TD>
+<TD>4</TD>
+<TD>5356.000000</TD>
+<TD>2009-10-27 10:33:00</TD>
+<TD>hst_11689_03_acs_wfc_f606w</TD>
+<TD>11689</TD>
+<TD>03</TD>
+<TD>Dupke</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-20 10:57:24</TD>
+<TD>HLA</TD>
+<TD>5921.9482</TD>
+<TD>image/fits</TD>
+<TD>2010-10-27 17:17:08</TD>
+<TD>1288199828</TD>
+<TD>11689_03 ACS/WFC F606W (combined) ABELL-2744-NORTH</TD>
+<TD>5940 5995</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2970.500 2998.000</TD>
+<TD>3.589843 -30.381006</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_03_acs_wfc_f606w</TD>
+<TD>Polygon J2000 3.60009420 -30.42288220 3.61670880 -30.39812530 3.61663927 -30.39808483 3.61712060 -30.39736740 3.61704994 -30.39732628 3.61752950 -30.39661150 3.61746057 -30.39657138 3.61794210 -30.39585360 3.61783323 -30.39579024 3.63246700 -30.37358260 3.63240455 -30.37354520 3.63287920 -30.37282470 3.63281516 -30.37278634 3.63328780 -30.37206890 3.63322462 -30.37203106 3.63369960 -30.37131000 3.58035980 -30.33934490 3.57941223 -30.34078226 3.56451230 -30.36337740 3.56457602 -30.36341561 3.56410180 -30.36413450 3.56416461 -30.36417217 3.56399054 -30.36443606 3.56346550 -30.36413010 3.56250456 -30.36556136 3.54684330 -30.38888090 3.54691277 -30.38892139 3.54643200 -30.38963700 3.54650137 -30.38967743 3.54602050 -30.39039320 3.54609146 -30.39043455 3.54561000 -30.39115120 3.60002461 -30.42284170</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_03_acs_wfc_total]]></TD>
+<TD>3.589843</TD>
+<TD>-30.381006</TD>
+<TD>2</TD>
+<TD>ABELL-2744-NORTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>detection</TD>
+<TD>4</TD>
+<TD>5356.000000</TD>
+<TD>2009-10-27 10:33:00</TD>
+<TD>hst_11689_03_acs_wfc_total</TD>
+<TD>11689</TD>
+<TD>03</TD>
+<TD>Dupke</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-20 10:57:24</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2010-10-27 17:17:08</TD>
+<TD>1288199828</TD>
+<TD>11689_03 ACS/WFC detection (combined) ABELL-2744-NORTH</TD>
+<TD>5940 5995</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2970.500 2998.000</TD>
+<TD>3.589843 -30.381006</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_03_acs_wfc_total</TD>
+<TD>Polygon J2000 3.56410180 -30.36413450 3.56416461 -30.36417217 3.56399054 -30.36443606 3.56346550 -30.36413010 3.56250456 -30.36556136 3.54684330 -30.38888090 3.54691277 -30.38892139 3.54643200 -30.38963700 3.54650137 -30.38967743 3.54602050 -30.39039320 3.54609146 -30.39043455 3.54561000 -30.39115120 3.60002461 -30.42284170 3.60009420 -30.42288220 3.61670880 -30.39812530 3.61663927 -30.39808483 3.61712060 -30.39736740 3.61704994 -30.39732628 3.61752950 -30.39661150 3.61746057 -30.39657138 3.61794210 -30.39585360 3.61783323 -30.39579024 3.63246700 -30.37358260 3.63240455 -30.37354520 3.63287920 -30.37282470 3.63281516 -30.37278634 3.63328780 -30.37206890 3.63322462 -30.37203106 3.63369960 -30.37131000 3.58035980 -30.33934490 3.57941223 -30.34078226 3.56451230 -30.36337740 3.56457602 -30.36341561</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_04_acs_wfc_f606w]]></TD>
+<TD>3.576084</TD>
+<TD>-30.398023</TD>
+<TD>2</TD>
+<TD>ABELL-2744-SOUTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F606W</TD>
+<TD>4</TD>
+<TD>5356.000000</TD>
+<TD>2009-10-29 10:30:42</TD>
+<TD>hst_11689_04_acs_wfc_f606w</TD>
+<TD>11689</TD>
+<TD>04</TD>
+<TD>Dupke</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-28 22:55:48</TD>
+<TD>HLA</TD>
+<TD>5921.9482</TD>
+<TD>image/fits</TD>
+<TD>2010-10-29 17:56:55</TD>
+<TD>1288375015</TD>
+<TD>11689_04 ACS/WFC F606W (combined) ABELL-2744-SOUTH</TD>
+<TD>5705 5791</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2853.000 2896.000</TD>
+<TD>3.576084 -30.398023</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_04_acs_wfc_f606w</TD>
+<TD>Polygon J2000 3.60578779 -30.41042025 3.60615930 -30.40965520 3.60604099 -30.40960394 3.61727080 -30.38596810 3.61720264 -30.38593758 3.61756740 -30.38516970 3.61749950 -30.38513929 3.61786200 -30.38437610 3.61779453 -30.38434588 3.61815930 -30.38357790 3.56052090 -30.35774560 3.55979347 -30.35927529 3.54835310 -30.38332610 3.54842163 -30.38335684 3.54805670 -30.38412380 3.54812268 -30.38415339 3.54798989 -30.38443244 3.54742590 -30.38418770 3.54668402 -30.38571361 3.53459750 -30.41056600 3.53467270 -30.41059863 3.53430100 -30.41136270 3.53437357 -30.41139419 3.53400290 -30.41215610 3.53408027 -30.41218968 3.53370810 -30.41295470 3.59237810 -30.43839489 3.59245430 -30.43842790 3.60527050 -30.41204450 3.60519490 -30.41201175 3.60556630 -30.41124700 3.60549180 -30.41121472 3.60586200 -30.41045240</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_04_acs_wfc_total]]></TD>
+<TD>3.576084</TD>
+<TD>-30.398023</TD>
+<TD>2</TD>
+<TD>ABELL-2744-SOUTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>detection</TD>
+<TD>4</TD>
+<TD>5356.000000</TD>
+<TD>2009-10-29 10:30:42</TD>
+<TD>hst_11689_04_acs_wfc_total</TD>
+<TD>11689</TD>
+<TD>04</TD>
+<TD>Dupke</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-28 22:55:48</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2010-10-29 17:56:55</TD>
+<TD>1288375015</TD>
+<TD>11689_04 ACS/WFC detection (combined) ABELL-2744-SOUTH</TD>
+<TD>5705 5791</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2853.000 2896.000</TD>
+<TD>3.576084 -30.398023</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_04_acs_wfc_total</TD>
+<TD>Polygon J2000 3.61727080 -30.38596810 3.61720264 -30.38593758 3.61756740 -30.38516970 3.61749950 -30.38513929 3.61786200 -30.38437610 3.61779453 -30.38434588 3.61815930 -30.38357790 3.56052090 -30.35774560 3.55979347 -30.35927529 3.54835310 -30.38332610 3.54842163 -30.38335684 3.54805670 -30.38412380 3.54812268 -30.38415339 3.54798989 -30.38443244 3.54742590 -30.38418770 3.54668402 -30.38571361 3.53459750 -30.41056600 3.53467270 -30.41059863 3.53430100 -30.41136270 3.53437357 -30.41139419 3.53400290 -30.41215610 3.53408027 -30.41218968 3.53370810 -30.41295470 3.59237810 -30.43839489 3.59245430 -30.43842790 3.60527050 -30.41204450 3.60519490 -30.41201175 3.60556630 -30.41124700 3.60549180 -30.41121472 3.60586200 -30.41045240 3.60578779 -30.41042025 3.60615930 -30.40965520 3.60604099 -30.40960394</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_05_acs_wfc_f435w]]></TD>
+<TD>3.589847</TD>
+<TD>-30.381008</TD>
+<TD>2</TD>
+<TD>ABELL-2744-NORTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F435W</TD>
+<TD>4</TD>
+<TD>5356.000000</TD>
+<TD>2009-10-29 13:42:35</TD>
+<TD>hst_11689_05_acs_wfc_f435w</TD>
+<TD>11689</TD>
+<TD>05</TD>
+<TD>Dupke</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-13 15:44:12</TD>
+<TD>HLA</TD>
+<TD>4329.1904</TD>
+<TD>image/fits</TD>
+<TD>2010-10-30 01:43:44</TD>
+<TD>1288403024</TD>
+<TD>11689_05 ACS/WFC F435W (combined) ABELL-2744-NORTH</TD>
+<TD>5940 5995</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2970.500 2998.000</TD>
+<TD>3.589847 -30.381008</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_05_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.56347120 -30.36412600 3.56250979 -30.36555721 3.54684240 -30.38887370 3.54691285 -30.38891478 3.54643210 -30.38963000 3.54650118 -30.38967028 3.54601990 -30.39038630 3.54609060 -30.39042752 3.54560900 -30.39114400 3.60001896 -30.42284591 3.60008850 -30.42288640 3.61670970 -30.39813260 3.61663991 -30.39809196 3.61712170 -30.39737420 3.61705181 -30.39733351 3.61753170 -30.39661860 3.61746171 -30.39657785 3.61794300 -30.39586080 3.61783536 -30.39579813 3.63247550 -30.37359170 3.63241189 -30.37355358 3.63288720 -30.37283240 3.63282493 -30.37279509 3.63329710 -30.37207870 3.63323267 -30.37204009 3.63370790 -30.37131900 3.58037210 -30.33934180 3.57942446 -30.34077858 3.56451830 -30.36337240 3.56458326 -30.36341138 3.56410860 -30.36413060 3.56416999 -30.36416744 3.56399559 -30.36443171</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_05_acs_wfc_total]]></TD>
+<TD>3.589847</TD>
+<TD>-30.381008</TD>
+<TD>2</TD>
+<TD>ABELL-2744-NORTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>detection</TD>
+<TD>4</TD>
+<TD>5356.000000</TD>
+<TD>2009-10-29 13:42:35</TD>
+<TD>hst_11689_05_acs_wfc_total</TD>
+<TD>11689</TD>
+<TD>05</TD>
+<TD>Dupke</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-13 15:44:12</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2010-10-30 01:43:44</TD>
+<TD>1288403024</TD>
+<TD>11689_05 ACS/WFC detection (combined) ABELL-2744-NORTH</TD>
+<TD>5940 5995</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2970.500 2998.000</TD>
+<TD>3.589847 -30.381008</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_05_acs_wfc_total</TD>
+<TD>Polygon J2000 3.54601990 -30.39038630 3.54609060 -30.39042752 3.54560900 -30.39114400 3.60001896 -30.42284591 3.60008850 -30.42288640 3.61670970 -30.39813260 3.61663991 -30.39809196 3.61712170 -30.39737420 3.61705181 -30.39733351 3.61753170 -30.39661860 3.61746171 -30.39657785 3.61794300 -30.39586080 3.61783536 -30.39579813 3.63247550 -30.37359170 3.63241189 -30.37355358 3.63288720 -30.37283240 3.63282493 -30.37279509 3.63329710 -30.37207870 3.63323267 -30.37204009 3.63370790 -30.37131900 3.58037210 -30.33934180 3.57942446 -30.34077858 3.56451830 -30.36337240 3.56458326 -30.36341138 3.56410860 -30.36413060 3.56416999 -30.36416744 3.56399559 -30.36443171 3.56347120 -30.36412600 3.56250979 -30.36555721 3.54684240 -30.38887370 3.54691285 -30.38891478 3.54643210 -30.38963000 3.54650118 -30.38967028</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_06_acs_wfc_f435w]]></TD>
+<TD>3.576093</TD>
+<TD>-30.398019</TD>
+<TD>2</TD>
+<TD>ABELL-2744-SOUTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F435W</TD>
+<TD>4</TD>
+<TD>5356.000000</TD>
+<TD>2009-10-30 07:17:56</TD>
+<TD>hst_11689_06_acs_wfc_f435w</TD>
+<TD>11689</TD>
+<TD>06</TD>
+<TD>Dupke</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-09-02 10:59:46</TD>
+<TD>HLA</TD>
+<TD>4329.1904</TD>
+<TD>image/fits</TD>
+<TD>2010-10-30 17:39:37</TD>
+<TD>1288460377</TD>
+<TD>11689_06 ACS/WFC F435W (combined) ABELL-2744-SOUTH</TD>
+<TD>5704 5792</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2852.500 2896.500</TD>
+<TD>3.576093 -30.398019</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_06_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.53370570 -30.41294810 3.59237317 -30.43840134 3.59244850 -30.43843400 3.60527230 -30.41205300 3.60519666 -30.41202021 3.60556870 -30.41125460 3.60549356 -30.41122203 3.60586410 -30.41045950 3.60578919 -30.41042703 3.60615980 -30.40966440 3.60604346 -30.40961396 3.61728070 -30.38597750 3.61721167 -30.38594657 3.61757690 -30.38517810 3.61750888 -30.38514762 3.61787180 -30.38438400 3.61780445 -30.38435382 3.61816850 -30.38358790 3.56053340 -30.35774110 3.55980495 -30.35927188 3.54835790 -30.38332000 3.54842701 -30.38335102 3.54806190 -30.38411790 3.54812846 -30.38414777 3.54799489 -30.38442831 3.54743040 -30.38418320 3.54668774 -30.38570957 3.53459380 -30.41055870 3.53467059 -30.41059204 3.53429890 -30.41135560 3.53437250 -30.41138756 3.53400110 -30.41215050 3.53407778 -30.41218379</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_06_acs_wfc_total]]></TD>
+<TD>3.576093</TD>
+<TD>-30.398019</TD>
+<TD>2</TD>
+<TD>ABELL-2744-SOUTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>detection</TD>
+<TD>4</TD>
+<TD>5356.000000</TD>
+<TD>2009-10-30 07:17:56</TD>
+<TD>hst_11689_06_acs_wfc_total</TD>
+<TD>11689</TD>
+<TD>06</TD>
+<TD>Dupke</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-09-02 10:59:46</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2010-10-30 17:39:37</TD>
+<TD>1288460377</TD>
+<TD>11689_06 ACS/WFC detection (combined) ABELL-2744-SOUTH</TD>
+<TD>5704 5792</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2852.500 2896.500</TD>
+<TD>3.576093 -30.398019</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_06_acs_wfc_total</TD>
+<TD>Polygon J2000 3.60549356 -30.41122203 3.60586410 -30.41045950 3.60578919 -30.41042703 3.60615980 -30.40966440 3.60604346 -30.40961396 3.61728070 -30.38597750 3.61721167 -30.38594657 3.61757690 -30.38517810 3.61750888 -30.38514762 3.61787180 -30.38438400 3.61780445 -30.38435382 3.61816850 -30.38358790 3.56053340 -30.35774110 3.55980495 -30.35927188 3.54835790 -30.38332000 3.54842701 -30.38335102 3.54806190 -30.38411790 3.54812846 -30.38414777 3.54799489 -30.38442831 3.54743040 -30.38418320 3.54668774 -30.38570957 3.53459380 -30.41055870 3.53467059 -30.41059204 3.53429890 -30.41135560 3.53437250 -30.41138756 3.53400110 -30.41215050 3.53407778 -30.41218379 3.53370570 -30.41294810 3.59237317 -30.43840134 3.59244850 -30.43843400 3.60527230 -30.41205300 3.60519666 -30.41202021 3.60556870 -30.41125460</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_07_acs_wfc_f435w]]></TD>
+<TD>3.591100</TD>
+<TD>-30.378744</TD>
+<TD>2</TD>
+<TD>ABELL-2744-NORTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F435W</TD>
+<TD>2</TD>
+<TD>2725.000000</TD>
+<TD>2009-10-30 11:57:45</TD>
+<TD>hst_11689_07_acs_wfc_f435w</TD>
+<TD>11689</TD>
+<TD>07</TD>
+<TD>Dupke</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-20 04:00:41</TD>
+<TD>HLA</TD>
+<TD>4329.1904</TD>
+<TD>image/fits</TD>
+<TD>2010-10-30 18:10:20</TD>
+<TD>1288462220</TD>
+<TD>11689_07 ACS/WFC F435W (combined) ABELL-2744-NORTH</TD>
+<TD>5855 5879</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2928.000 2940.000</TD>
+<TD>3.591100 -30.378744</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_07_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.56372330 -30.36348334 3.54775070 -30.38760490 3.54781776 -30.38764347 3.54734300 -30.38836010 3.60205170 -30.41980820 3.61849260 -30.39496450 3.61842236 -30.39492415 3.61889890 -30.39420370 3.61866304 -30.39406825 3.63407970 -30.37033880 3.63401371 -30.37029979 3.63448300 -30.36957710 3.58091570 -30.33789210 3.58044892 -30.33861036 3.56523880 -30.36200830 3.56530185 -30.36204562 3.56483430 -30.36276450 3.58660392 -30.37564933 3.56419730 -30.36276730</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_07_acs_wfc_f606w]]></TD>
+<TD>3.591100</TD>
+<TD>-30.378744</TD>
+<TD>2</TD>
+<TD>ABELL-2744-NORTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F606W</TD>
+<TD>1</TD>
+<TD>1269.000000</TD>
+<TD>2009-10-30 10:54:12</TD>
+<TD>hst_11689_07_acs_wfc_f606w</TD>
+<TD>11689</TD>
+<TD>07</TD>
+<TD>Dupke</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-20 04:00:41</TD>
+<TD>HLA</TD>
+<TD>5921.9482</TD>
+<TD>image/fits</TD>
+<TD>2010-10-30 17:49:43</TD>
+<TD>1288460983</TD>
+<TD>11689_07 ACS/WFC F606W (combined) ABELL-2744-NORTH</TD>
+<TD>5855 5879</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2928.000 2940.000</TD>
+<TD>3.591100 -30.378744</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_07_acs_wfc_f606w</TD>
+<TD>Polygon J2000 3.54734200 -30.38836120 3.60205010 -30.41980200 3.61848690 -30.39495730 3.56378740 -30.36352340 Polygon J2000  3.56482880 -30.36276560 3.61840120 -30.39445340 3.63406900 -30.37033180 3.58050480 -30.33865030</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_07_acs_wfc_f814w]]></TD>
+<TD>3.591100</TD>
+<TD>-30.378744</TD>
+<TD>2</TD>
+<TD>ABELL-2744-NORTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F814W</TD>
+<TD>1</TD>
+<TD>1268.000000</TD>
+<TD>2009-10-30 10:29:51</TD>
+<TD>hst_11689_07_acs_wfc_f814w</TD>
+<TD>11689</TD>
+<TD>07</TD>
+<TD>Dupke</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-20 04:00:41</TD>
+<TD>HLA</TD>
+<TD>8044.9888</TD>
+<TD>image/fits</TD>
+<TD>2010-10-30 17:39:48</TD>
+<TD>1288460388</TD>
+<TD>11689_07 ACS/WFC F814W (combined) ABELL-2744-NORTH</TD>
+<TD>5855 5879</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2928.000 2940.000</TD>
+<TD>3.591100 -30.378744</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_07_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.61840350 -30.39446020 3.63407640 -30.37034140 3.58051770 -30.33865160 3.56483660 -30.36276390 Polygon J2000  3.54734410 -30.38835740 3.60204690 -30.41980700 3.61848880 -30.39496520 3.56379460 -30.36352240</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_07_acs_wfc_total]]></TD>
+<TD>3.591100</TD>
+<TD>-30.378744</TD>
+<TD>2</TD>
+<TD>ABELL-2744-NORTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>detection</TD>
+<TD>2</TD>
+<TD>2725.000000</TD>
+<TD>2009-10-30 11:57:45</TD>
+<TD>hst_11689_07_acs_wfc_total</TD>
+<TD>11689</TD>
+<TD>07</TD>
+<TD>Dupke</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-20 04:00:41</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2010-10-30 18:10:20</TD>
+<TD>1288462220</TD>
+<TD>11689_07 ACS/WFC detection (combined) ABELL-2744-NORTH</TD>
+<TD>5855 5879</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2928.000 2940.000</TD>
+<TD>3.591100 -30.378744</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_07_acs_wfc_total</TD>
+<TD>Polygon J2000 3.56372330 -30.36348334 3.54775070 -30.38760490 3.54781776 -30.38764347 3.54734300 -30.38836010 3.60205170 -30.41980820 3.61849260 -30.39496450 3.61842236 -30.39492415 3.61889890 -30.39420370 3.61866304 -30.39406825 3.63407970 -30.37033880 3.63401371 -30.37029979 3.63448300 -30.36957710 3.58091570 -30.33789210 3.58044892 -30.33861036 3.56523880 -30.36200830 3.56530185 -30.36204562 3.56483430 -30.36276450 3.58660392 -30.37564933 3.56419730 -30.36276730</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/fitscut.cgi?red=hst_11689_07_acs_wfc_f814w&amp;green=hst_11689_07_acs_wfc_f606w&amp;blue=hst_11689_07_acs_wfc_f435w&amp;size=ALL&amp;format=fits&amp;config=ops]]></TD>
+<TD>3.591100</TD>
+<TD>-30.378744</TD>
+<TD>4</TD>
+<TD>ABELL-2744-NORTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F814W/F606W/F435W</TD>
+<TD>4</TD>
+<TD>5262.000000</TD>
+<TD>2009-10-30 10:29:51</TD>
+<TD>hst_11689_07_acs_wfc_f814w_f606w_f435w</TD>
+<TD>11689</TD>
+<TD>07</TD>
+<TD>Dupke</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-20 04:00:41</TD>
+<TD>HLA</TD>
+<TD>345.209950943</TD>
+<TD>image/fits</TD>
+<TD>2010-10-30 17:39:48</TD>
+<TD>1288460388</TD>
+<TD>11689_07 ACS/WFC F814W/F606W/F435W (color) ABELL-2744-NORTH</TD>
+<TD>5855 5879</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2928.000 2940.000</TD>
+<TD>3.591100 -30.378744</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_07_acs_wfc_f814w,hst_11689_07_acs_wfc_f606w,hst_11689_07_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.61840350 -30.39446020 3.63407640 -30.37034140 3.58051770 -30.33865160 3.56483660 -30.36276390 Polygon J2000  3.54734410 -30.38835740 3.60204690 -30.41980700 3.61848880 -30.39496520 3.56379460 -30.36352240</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_08_acs_wfc_f435w]]></TD>
+<TD>3.576982</TD>
+<TD>-30.395638</TD>
+<TD>2</TD>
+<TD>ABELL-2744-SOUTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F435W</TD>
+<TD>2</TD>
+<TD>2725.000000</TD>
+<TD>2009-10-30 15:13:02</TD>
+<TD>hst_11689_08_acs_wfc_f435w</TD>
+<TD>11689</TD>
+<TD>08</TD>
+<TD>Dupke</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-17 02:11:16</TD>
+<TD>HLA</TD>
+<TD>4329.1904</TD>
+<TD>image/fits</TD>
+<TD>2010-10-30 23:23:56</TD>
+<TD>1288481036</TD>
+<TD>11689_08 ACS/WFC F435W (combined) ABELL-2744-SOUTH</TD>
+<TD>5640 5677</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2820.500 2839.000</TD>
+<TD>3.576982 -30.395638</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_08_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.56112680 -30.35615130 3.56076362 -30.35691459 3.54895280 -30.38173020 3.54901803 -30.38175947 3.54865440 -30.38252330 3.57212914 -30.39305438 3.54802550 -30.38259240 3.54765471 -30.38335457 3.53519050 -30.40896790 3.53526302 -30.40899939 3.53489180 -30.40976200 3.59363460 -30.43524690 3.60645740 -30.40886510 3.60638371 -30.40883316 3.60675390 -30.40807130 3.60649866 -30.40796065 3.61846470 -30.38278860 3.61839831 -30.38275885 3.61876100 -30.38199570</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_08_acs_wfc_f606w]]></TD>
+<TD>3.576982</TD>
+<TD>-30.395638</TD>
+<TD>2</TD>
+<TD>ABELL-2744-SOUTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F606W</TD>
+<TD>1</TD>
+<TD>1269.000000</TD>
+<TD>2009-10-30 14:06:05</TD>
+<TD>hst_11689_08_acs_wfc_f606w</TD>
+<TD>11689</TD>
+<TD>08</TD>
+<TD>Dupke</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-17 02:11:16</TD>
+<TD>HLA</TD>
+<TD>5921.9482</TD>
+<TD>image/fits</TD>
+<TD>2010-10-30 22:52:52</TD>
+<TD>1288479172</TD>
+<TD>11689_08 ACS/WFC F606W (combined) ABELL-2744-SOUTH</TD>
+<TD>5640 5677</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2820.500 2839.000</TD>
+<TD>3.576982 -30.395638</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_08_acs_wfc_f606w</TD>
+<TD>Polygon J2000 3.60629360 -30.40837120 3.61845520 -30.38278800 3.56082460 -30.35694610 3.54865110 -30.38252390 Polygon J2000  3.60644950 -30.40886140 3.54772370 -30.38338420 3.53488950 -30.40975970 3.59362780 -30.43524260</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_08_acs_wfc_f814w]]></TD>
+<TD>3.576982</TD>
+<TD>-30.395638</TD>
+<TD>2</TD>
+<TD>ABELL-2744-SOUTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F814W</TD>
+<TD>1</TD>
+<TD>1268.000000</TD>
+<TD>2009-10-30 13:41:44</TD>
+<TD>hst_11689_08_acs_wfc_f814w</TD>
+<TD>11689</TD>
+<TD>08</TD>
+<TD>Dupke</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-17 02:11:16</TD>
+<TD>HLA</TD>
+<TD>8044.9888</TD>
+<TD>image/fits</TD>
+<TD>2010-10-30 17:49:51</TD>
+<TD>1288460991</TD>
+<TD>11689_08 ACS/WFC F814W (combined) ABELL-2744-SOUTH</TD>
+<TD>5640 5677</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2820.500 2839.000</TD>
+<TD>3.576982 -30.395638</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_08_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.54772730 -30.38338650 3.53489200 -30.40976130 3.59363060 -30.43524640 3.60645340 -30.40886580 Polygon J2000  3.54865510 -30.38252460 3.60629760 -30.40837360 3.61846050 -30.38279130 3.56082990 -30.35694760</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_11689_08_acs_wfc_total]]></TD>
+<TD>3.576982</TD>
+<TD>-30.395638</TD>
+<TD>2</TD>
+<TD>ABELL-2744-SOUTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>detection</TD>
+<TD>2</TD>
+<TD>2725.000000</TD>
+<TD>2009-10-30 15:13:02</TD>
+<TD>hst_11689_08_acs_wfc_total</TD>
+<TD>11689</TD>
+<TD>08</TD>
+<TD>Dupke</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-17 02:11:16</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2010-10-30 23:23:56</TD>
+<TD>1288481036</TD>
+<TD>11689_08 ACS/WFC detection (combined) ABELL-2744-SOUTH</TD>
+<TD>5640 5677</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2820.500 2839.000</TD>
+<TD>3.576982 -30.395638</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_08_acs_wfc_total</TD>
+<TD>Polygon J2000 3.60638371 -30.40883316 3.60675390 -30.40807130 3.60649866 -30.40796065 3.61846470 -30.38278860 3.61839831 -30.38275885 3.61876100 -30.38199570 3.56112680 -30.35615130 3.56076362 -30.35691459 3.54895280 -30.38173020 3.54901803 -30.38175947 3.54865440 -30.38252330 3.57212914 -30.39305438 3.54802550 -30.38259240 3.54765471 -30.38335457 3.53519050 -30.40896790 3.53526302 -30.40899939 3.53489180 -30.40976200 3.59363460 -30.43524690 3.60645740 -30.40886510</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/fitscut.cgi?red=hst_11689_08_acs_wfc_f814w&amp;green=hst_11689_08_acs_wfc_f606w&amp;blue=hst_11689_08_acs_wfc_f435w&amp;size=ALL&amp;format=fits&amp;config=ops]]></TD>
+<TD>3.576982</TD>
+<TD>-30.395638</TD>
+<TD>4</TD>
+<TD>ABELL-2744-SOUTH</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC</TD>
+<TD>F814W/F606W/F435W</TD>
+<TD>4</TD>
+<TD>5262.000000</TD>
+<TD>2009-10-30 13:41:44</TD>
+<TD>hst_11689_08_acs_wfc_f814w_f606w_f435w</TD>
+<TD>11689</TD>
+<TD>08</TD>
+<TD>Dupke</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-17 02:11:16</TD>
+<TD>HLA</TD>
+<TD>345.209950943</TD>
+<TD>image/fits</TD>
+<TD>2010-10-30 17:49:51</TD>
+<TD>1288460991</TD>
+<TD>11689_08 ACS/WFC F814W/F606W/F435W (color) ABELL-2744-SOUTH</TD>
+<TD>5640 5677</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2820.500 2839.000</TD>
+<TD>3.576982 -30.395638</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_11689_08_acs_wfc_f814w,hst_11689_08_acs_wfc_f606w,hst_11689_08_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.54772730 -30.38338650 3.53489200 -30.40976130 3.59363060 -30.43524640 3.60645340 -30.40886580 Polygon J2000  3.54865510 -30.38252460 3.60629760 -30.40837360 3.61846050 -30.38279130 3.56082990 -30.35694760</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13386_t1_acs_wfc_f814w]]></TD>
+<TD>3.591570</TD>
+<TD>-30.371988</TD>
+<TD>2</TD>
+<TD>A2744-GRISM</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC1-CTE</TD>
+<TD>F814W</TD>
+<TD>3</TD>
+<TD>637.000000</TD>
+<TD>2014-06-04 00:22:57</TD>
+<TD>hst_13386_t1_acs_wfc_f814w</TD>
+<TD>13386</TD>
+<TD>t1</TD>
+<TD>Rodney</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-12 16:30:20</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-06-04 04:16:04</TD>
+<TD>1401855364</TD>
+<TD>13386_t1 ACS/WFC F814W (combined) A2744-GRISM</TD>
+<TD>5832 5777</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2916.500 2889.000</TD>
+<TD>3.591570 -30.371988</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13386_t1_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.63384940 -30.38325690 3.63381616 -30.38319889 3.63464140 -30.38278350 3.63460534 -30.38272057 3.63543260 -30.38230410 3.60631520 -30.33146870 3.57767870 -30.34587900 3.57771427 -30.34594117 3.57689030 -30.34635560 3.57692376 -30.34641409 3.57609650 -30.34683020 3.57619394 -30.34700050 3.54989440 -30.36045760 3.54992500 -30.36051296 3.54910510 -30.36093230 3.54913506 -30.36098652 3.54831140 -30.36140780 3.57628250 -30.41198980 3.57792776 -30.41114824 3.60385910 -30.39787950 3.60382926 -30.39782559 3.60465100 -30.39740500 3.60462006 -30.39734910 3.60492642 -30.39719228 3.60520160 -30.39767270 3.60571306 -30.39741542 3.60685449 -30.39684124</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13386_t1_acs_wfc_g800l_01]]></TD>
+<TD>3.590804</TD>
+<TD>-30.372435</TD>
+<TD>1</TD>
+<TD>A2744-GRISM</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC1-CTE</TD>
+<TD>G800L</TD>
+<TD>1</TD>
+<TD>722.000000</TD>
+<TD>2014-06-04 00:51:37</TD>
+<TD>hst_13386_t1_acs_wfc_g800l_01</TD>
+<TD>13386</TD>
+<TD>t1</TD>
+<TD>Rodney</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-12 16:30:20</TD>
+<TD>HLA</TD>
+<TD>7471.3774</TD>
+<TD>image/fits</TD>
+<TD>2014-06-04 04:30:38</TD>
+<TD>1401856238</TD>
+<TD>13386_t1_01 ACS/WFC G800L (exposure) A2744-GRISM</TD>
+<TD>5728 5719</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2864.201 2859.656</TD>
+<TD>3.590804 -30.372435</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13386_t1_acs_wfc_g800l_01</TD>
+<TD>Polygon J2000 3.60385560 -30.39779810 3.57585040 -30.34723450 3.54829170 -30.36134930 3.57628670 -30.41191880 Polygon J2000  3.60520280 -30.39759540 3.63384270 -30.38316900 3.60470310 -30.33234610 3.57607370 -30.34676610</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13386_t1_acs_wfc_g800l_02]]></TD>
+<TD>3.590804</TD>
+<TD>-30.372435</TD>
+<TD>1</TD>
+<TD>A2744-GRISM</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC1-CTE</TD>
+<TD>G800L</TD>
+<TD>1</TD>
+<TD>1025.000000</TD>
+<TD>2014-06-04 01:59:13</TD>
+<TD>hst_13386_t1_acs_wfc_g800l_02</TD>
+<TD>13386</TD>
+<TD>t1</TD>
+<TD>Rodney</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-12 16:30:20</TD>
+<TD>HLA</TD>
+<TD>7471.3774</TD>
+<TD>image/fits</TD>
+<TD>2014-06-04 04:30:38</TD>
+<TD>1401856238</TD>
+<TD>13386_t1_02 ACS/WFC G800L (exposure) A2744-GRISM</TD>
+<TD>5728 5719</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2864.201 2859.656</TD>
+<TD>3.590804 -30.372435</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13386_t1_acs_wfc_g800l_02</TD>
+<TD>Polygon J2000 3.63390200 -30.38317970 3.60476130 -30.33235490 3.57613090 -30.34677540 3.60526100 -30.39760660 Polygon J2000  3.60391390 -30.39780970 3.57590750 -30.34724430 3.54834780 -30.36135960 3.57634400 -30.41193100</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13386_t1_acs_wfc_g800l_03]]></TD>
+<TD>3.590804</TD>
+<TD>-30.372435</TD>
+<TD>1</TD>
+<TD>A2744-GRISM</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC1-CTE</TD>
+<TD>G800L</TD>
+<TD>1</TD>
+<TD>1043.000000</TD>
+<TD>2014-06-04 02:18:56</TD>
+<TD>hst_13386_t1_acs_wfc_g800l_03</TD>
+<TD>13386</TD>
+<TD>t1</TD>
+<TD>Rodney</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-12 16:30:20</TD>
+<TD>HLA</TD>
+<TD>7471.3774</TD>
+<TD>image/fits</TD>
+<TD>2014-06-04 04:30:38</TD>
+<TD>1401856238</TD>
+<TD>13386_t1_03 ACS/WFC G800L (exposure) A2744-GRISM</TD>
+<TD>5728 5719</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2864.201 2859.656</TD>
+<TD>3.590804 -30.372435</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13386_t1_acs_wfc_g800l_03</TD>
+<TD>Polygon J2000 3.60477510 -30.33242890 3.57614550 -30.34684900 3.60527480 -30.39767860 3.63391490 -30.38325210 Polygon J2000  3.57635860 -30.41200200 3.60392770 -30.39788120 3.57592220 -30.34731730 3.54836330 -30.36143220</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13386_t1_acs_wfc_g800l_04]]></TD>
+<TD>3.590804</TD>
+<TD>-30.372435</TD>
+<TD>1</TD>
+<TD>A2744-GRISM</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC1-CTE</TD>
+<TD>G800L</TD>
+<TD>1</TD>
+<TD>700.000000</TD>
+<TD>2014-06-04 00:37:19</TD>
+<TD>hst_13386_t1_acs_wfc_g800l_04</TD>
+<TD>13386</TD>
+<TD>t1</TD>
+<TD>Rodney</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-12 16:30:20</TD>
+<TD>HLA</TD>
+<TD>7471.3774</TD>
+<TD>image/fits</TD>
+<TD>2014-06-04 04:30:38</TD>
+<TD>1401856238</TD>
+<TD>13386_t1_04 ACS/WFC G800L (exposure) A2744-GRISM</TD>
+<TD>5728 5719</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2864.201 2859.656</TD>
+<TD>3.590804 -30.372435</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13386_t1_acs_wfc_g800l_04</TD>
+<TD>Polygon J2000 3.60521640 -30.39766800 3.63385690 -30.38324140 3.60471670 -30.33241740 3.57608680 -30.34683770 Polygon J2000  3.57629970 -30.41199240 3.60386920 -30.39787140 3.57586340 -30.34730680 3.54830410 -30.36142190</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13386_t1_acs_wfc_total]]></TD>
+<TD>3.591570</TD>
+<TD>-30.371988</TD>
+<TD>2</TD>
+<TD>A2744-GRISM</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC1-CTE</TD>
+<TD>detection</TD>
+<TD>3</TD>
+<TD>637.000000</TD>
+<TD>2014-06-04 00:22:57</TD>
+<TD>hst_13386_t1_acs_wfc_total</TD>
+<TD>13386</TD>
+<TD>t1</TD>
+<TD>Rodney</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-12 16:30:20</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-06-04 04:16:04</TD>
+<TD>1401855364</TD>
+<TD>13386_t1 ACS/WFC detection (combined) A2744-GRISM</TD>
+<TD>5832 5777</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2916.500 2889.000</TD>
+<TD>3.591570 -30.371988</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13386_t1_acs_wfc_total</TD>
+<TD>Polygon J2000 3.63381616 -30.38319889 3.63464140 -30.38278350 3.63460534 -30.38272057 3.63543260 -30.38230410 3.60631520 -30.33146870 3.57767870 -30.34587900 3.57771427 -30.34594117 3.57689030 -30.34635560 3.57692376 -30.34641409 3.57609650 -30.34683020 3.57619394 -30.34700050 3.54989440 -30.36045760 3.54992500 -30.36051296 3.54910510 -30.36093230 3.54913506 -30.36098652 3.54831140 -30.36140780 3.57628250 -30.41198980 3.57792776 -30.41114824 3.60385910 -30.39787950 3.60382926 -30.39782559 3.60465100 -30.39740500 3.60462006 -30.39734910 3.60492642 -30.39719228 3.60520160 -30.39767270 3.60571306 -30.39741542 3.60685449 -30.39684124 3.63384940 -30.38325690</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13386_t2_acs_wfc_f814w]]></TD>
+<TD>3.594470</TD>
+<TD>-30.372902</TD>
+<TD>2</TD>
+<TD>A2744-GRISM</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC1-CTE</TD>
+<TD>F814W</TD>
+<TD>3</TD>
+<TD>446.000000</TD>
+<TD>2014-06-07 19:10:26</TD>
+<TD>hst_13386_t2_acs_wfc_f814w</TD>
+<TD>13386</TD>
+<TD>t2</TD>
+<TD>Rodney</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-18 09:29:09</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-06-08 03:53:17</TD>
+<TD>1402199597</TD>
+<TD>13386_t2 ACS/WFC F814W (combined) A2744-GRISM</TD>
+<TD>5700 5633</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2850.500 2817.000</TD>
+<TD>3.594470 -30.372902</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13386_t2_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.63653917 -30.38620352 3.63739220 -30.38584040 3.61245540 -30.33337580 3.58272370 -30.34602690 3.58274981 -30.34608189 3.58189410 -30.34644590 3.58192217 -30.34650502 3.58106530 -30.34686950 3.58115350 -30.34705527 3.55382860 -30.35889700 3.55385218 -30.35894866 3.55299970 -30.35931800 3.55302385 -30.35937090 3.55217050 -30.35974060 3.57598420 -30.41188200 3.57683869 -30.41151181 3.60463500 -30.39946500 3.60461076 -30.39941198 3.60546500 -30.39904160 3.60544185 -30.39899098 3.60575989 -30.39885310 3.60599090 -30.39933910 3.60651711 -30.39911527 3.60684883 -30.39897416 3.63573520 -30.38668180 3.63570703 -30.38662257 3.63656480 -30.38625740</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13386_t2_acs_wfc_g800l_01]]></TD>
+<TD>3.593715</TD>
+<TD>-30.373201</TD>
+<TD>1</TD>
+<TD>A2744-GRISM</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC1-CTE</TD>
+<TD>G800L</TD>
+<TD>1</TD>
+<TD>1046.000000</TD>
+<TD>2014-06-07 21:06:05</TD>
+<TD>hst_13386_t2_acs_wfc_g800l_01</TD>
+<TD>13386</TD>
+<TD>t2</TD>
+<TD>Rodney</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-18 09:29:09</TD>
+<TD>HLA</TD>
+<TD>7471.3774</TD>
+<TD>image/fits</TD>
+<TD>2014-06-09 15:46:09</TD>
+<TD>1402328769</TD>
+<TD>13386_t2_01 ACS/WFC G800L (exposure) A2744-GRISM</TD>
+<TD>5608 5596</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2804.055 2798.484</TD>
+<TD>3.593715 -30.373201</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13386_t2_acs_wfc_g800l_01</TD>
+<TD>Polygon J2000 3.55222200 -30.35977330 3.57606050 -30.41190410 3.60470470 -30.39947630 3.58085400 -30.34735060 Polygon J2000  3.61083950 -30.33423400 3.58111470 -30.34689660 3.60606510 -30.39935500 3.63580260 -30.38668670</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13386_t2_acs_wfc_g800l_02]]></TD>
+<TD>3.593715</TD>
+<TD>-30.373201</TD>
+<TD>1</TD>
+<TD>A2744-GRISM</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC1-CTE</TD>
+<TD>G800L</TD>
+<TD>1</TD>
+<TD>1025.000000</TD>
+<TD>2014-06-07 22:21:58</TD>
+<TD>hst_13386_t2_acs_wfc_g800l_02</TD>
+<TD>13386</TD>
+<TD>t2</TD>
+<TD>Rodney</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-18 09:29:09</TD>
+<TD>HLA</TD>
+<TD>7471.3774</TD>
+<TD>image/fits</TD>
+<TD>2014-06-09 15:46:09</TD>
+<TD>1402328769</TD>
+<TD>13386_t2_02 ACS/WFC G800L (exposure) A2744-GRISM</TD>
+<TD>5608 5596</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2804.055 2798.484</TD>
+<TD>3.593715 -30.373201</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13386_t2_acs_wfc_g800l_02</TD>
+<TD>Polygon J2000 3.55213410 -30.35952660 3.57597320 -30.41165910 3.60461820 -30.39923090 3.58076690 -30.34710360 Polygon J2000  3.63571700 -30.38644130 3.61075320 -30.33398700 3.58102750 -30.34665000 3.60597860 -30.39911000</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13386_t2_acs_wfc_g800l_03]]></TD>
+<TD>3.593715</TD>
+<TD>-30.373201</TD>
+<TD>1</TD>
+<TD>A2744-GRISM</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC1-CTE</TD>
+<TD>G800L</TD>
+<TD>1</TD>
+<TD>1025.000000</TD>
+<TD>2014-06-07 20:46:22</TD>
+<TD>hst_13386_t2_acs_wfc_g800l_03</TD>
+<TD>13386</TD>
+<TD>t2</TD>
+<TD>Rodney</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-18 09:29:09</TD>
+<TD>HLA</TD>
+<TD>7471.3774</TD>
+<TD>image/fits</TD>
+<TD>2014-06-09 15:46:09</TD>
+<TD>1402328769</TD>
+<TD>13386_t2_03 ACS/WFC G800L (exposure) A2744-GRISM</TD>
+<TD>5608 5596</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2804.055 2798.484</TD>
+<TD>3.593715 -30.373201</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13386_t2_acs_wfc_g800l_03</TD>
+<TD>Polygon J2000 3.58110590 -30.34682300 3.60605710 -30.39928300 3.63579560 -30.38661430 3.61083170 -30.33416000 Polygon J2000  3.57605170 -30.41183210 3.60469680 -30.39940390 3.58084530 -30.34727660 3.55221250 -30.35969960</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13386_t2_acs_wfc_g800l_04]]></TD>
+<TD>3.593715</TD>
+<TD>-30.373201</TD>
+<TD>1</TD>
+<TD>A2744-GRISM</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC1-CTE</TD>
+<TD>G800L</TD>
+<TD>1</TD>
+<TD>1007.000000</TD>
+<TD>2014-06-07 19:34:21</TD>
+<TD>hst_13386_t2_acs_wfc_g800l_04</TD>
+<TD>13386</TD>
+<TD>t2</TD>
+<TD>Rodney</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-18 09:29:09</TD>
+<TD>HLA</TD>
+<TD>7471.3774</TD>
+<TD>image/fits</TD>
+<TD>2014-06-09 15:46:09</TD>
+<TD>1402328769</TD>
+<TD>13386_t2_04 ACS/WFC G800L (exposure) A2744-GRISM</TD>
+<TD>5608 5596</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2804.055 2798.484</TD>
+<TD>3.593715 -30.373201</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13386_t2_acs_wfc_g800l_04</TD>
+<TD>Polygon J2000 3.57599550 -30.41181700 3.60463960 -30.39938920 3.58078900 -30.34726370 3.55215710 -30.35968630 Polygon J2000  3.63573730 -30.38659960 3.61077430 -30.33414710 3.58104960 -30.34680970 3.60599980 -30.39926780</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13386_t2_acs_wfc_g800l_05]]></TD>
+<TD>3.593715</TD>
+<TD>-30.373201</TD>
+<TD>1</TD>
+<TD>A2744-GRISM</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC1-CTE</TD>
+<TD>G800L</TD>
+<TD>1</TD>
+<TD>940.000000</TD>
+<TD>2014-06-07 19:16:03</TD>
+<TD>hst_13386_t2_acs_wfc_g800l_05</TD>
+<TD>13386</TD>
+<TD>t2</TD>
+<TD>Rodney</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-18 09:29:09</TD>
+<TD>HLA</TD>
+<TD>7471.3774</TD>
+<TD>image/fits</TD>
+<TD>2014-06-09 15:46:09</TD>
+<TD>1402328769</TD>
+<TD>13386_t2_05 ACS/WFC G800L (exposure) A2744-GRISM</TD>
+<TD>5608 5596</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2804.055 2798.484</TD>
+<TD>3.593715 -30.373201</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13386_t2_acs_wfc_g800l_05</TD>
+<TD>Polygon J2000 3.61078210 -30.33421920 3.58105650 -30.34688210 3.60600750 -30.39934180 3.63574580 -30.38667320 Polygon J2000  3.60464710 -30.39946280 3.58079580 -30.34733580 3.55216320 -30.35975880 3.57600220 -30.41189090</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13386_t2_acs_wfc_g800l_06]]></TD>
+<TD>3.593715</TD>
+<TD>-30.373201</TD>
+<TD>1</TD>
+<TD>A2744-GRISM</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC1-CTE</TD>
+<TD>G800L</TD>
+<TD>1</TD>
+<TD>1043.000000</TD>
+<TD>2014-06-07 22:41:41</TD>
+<TD>hst_13386_t2_acs_wfc_g800l_06</TD>
+<TD>13386</TD>
+<TD>t2</TD>
+<TD>Rodney</TD>
+<TD></TD>
+<TD></TD>
+<TD>ACCUM</TD>
+<TD>2017-08-18 09:29:09</TD>
+<TD>HLA</TD>
+<TD>7471.3774</TD>
+<TD>image/fits</TD>
+<TD>2014-06-09 15:46:09</TD>
+<TD>1402328769</TD>
+<TD>13386_t2_06 ACS/WFC G800L (exposure) A2744-GRISM</TD>
+<TD>5608 5596</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2804.055 2798.484</TD>
+<TD>3.593715 -30.373201</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13386_t2_acs_wfc_g800l_06</TD>
+<TD>Polygon J2000 3.60625650 -30.39928900 3.63599410 -30.38662060 3.61103090 -30.33416800 3.58130600 -30.34683070 Polygon J2000  3.60489620 -30.39941030 3.58104540 -30.34728460 3.55241350 -30.35970730 3.57625210 -30.41183810</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13386_t2_acs_wfc_total]]></TD>
+<TD>3.594470</TD>
+<TD>-30.372902</TD>
+<TD>2</TD>
+<TD>A2744-GRISM</TD>
+<TD>ACS/WFC</TD>
+<TD>WFC1-CTE</TD>
+<TD>detection</TD>
+<TD>3</TD>
+<TD>446.000000</TD>
+<TD>2014-06-07 19:10:26</TD>
+<TD>hst_13386_t2_acs_wfc_total</TD>
+<TD>13386</TD>
+<TD>t2</TD>
+<TD>Rodney</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-18 09:29:09</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-06-08 03:53:17</TD>
+<TD>1402199597</TD>
+<TD>13386_t2 ACS/WFC detection (combined) A2744-GRISM</TD>
+<TD>5700 5633</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>2850.500 2817.000</TD>
+<TD>3.594470 -30.372902</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13386_t2_acs_wfc_total</TD>
+<TD>Polygon J2000 3.55382860 -30.35889700 3.55385218 -30.35894866 3.55299970 -30.35931800 3.55302385 -30.35937090 3.55217050 -30.35974060 3.57598420 -30.41188200 3.57683869 -30.41151181 3.60463500 -30.39946500 3.60461076 -30.39941198 3.60546500 -30.39904160 3.60544185 -30.39899098 3.60575989 -30.39885310 3.60599090 -30.39933910 3.60651711 -30.39911527 3.60684883 -30.39897416 3.63573520 -30.38668180 3.63570703 -30.38662257 3.63656480 -30.38625740 3.63653917 -30.38620352 3.63739220 -30.38584040 3.61245540 -30.33337580 3.58272370 -30.34602690 3.58274981 -30.34608189 3.58189410 -30.34644590 3.58192217 -30.34650502 3.58106530 -30.34686950 3.58115350 -30.34705527</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_38_acs_wfc_f814w]]></TD>
+<TD>3.587794</TD>
+<TD>-30.397179</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-21 19:40:18</TD>
+<TD>hst_13495_38_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>38</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-24 02:54:51</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-05-22 13:19:29</TD>
+<TD>1400764769</TD>
+<TD>13495_38 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6000 5977</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.000</TD>
+<TD>3.587794 -30.397179</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_38_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.58124404 -30.43777845 3.58127310 -30.43781490 3.60579920 -30.42027323 3.60598210 -30.42049610 3.60599710 -30.42048553 3.60606150 -30.42056400 3.60618142 -30.42047952 3.60720427 -30.41975894 3.60722285 -30.41974585 3.60724620 -30.41977430 3.63291547 -30.40168581 3.63293350 -30.40167310 3.59496130 -30.35538960 3.59494217 -30.35540308 3.59487240 -30.35531800 3.59371697 -30.35613232 3.59369850 -30.35610980 3.56801510 -30.37420340 3.56824973 -30.37448965 3.56791057 -30.37473225 3.56788480 -30.37469990 3.54320410 -30.39234790 3.58000770 -30.43853580 3.58002417 -30.43852402 3.58008850 -30.43860470 3.58122363 -30.43779305</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_38_acs_wfc_total]]></TD>
+<TD>3.587794</TD>
+<TD>-30.397179</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-21 19:40:18</TD>
+<TD>hst_13495_38_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>38</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-24 02:54:51</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-05-22 13:19:29</TD>
+<TD>1400764769</TD>
+<TD>13495_38 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6000 5977</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.000</TD>
+<TD>3.587794 -30.397179</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_38_acs_wfc_total</TD>
+<TD>Polygon J2000 3.60618142 -30.42047952 3.60720427 -30.41975894 3.60722285 -30.41974585 3.60724620 -30.41977430 3.63291547 -30.40168581 3.63293350 -30.40167310 3.59496130 -30.35538960 3.59494217 -30.35540308 3.59487240 -30.35531800 3.59371697 -30.35613232 3.59369850 -30.35610980 3.56801510 -30.37420340 3.56824973 -30.37448965 3.56791057 -30.37473225 3.56788480 -30.37469990 3.54320410 -30.39234790 3.58000770 -30.43853580 3.58002417 -30.43852402 3.58008850 -30.43860470 3.58122363 -30.43779305 3.58124404 -30.43777845 3.58127310 -30.43781490 3.60579920 -30.42027323 3.60598210 -30.42049610 3.60599710 -30.42048553 3.60606150 -30.42056400</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_40_acs_wfc_f814w]]></TD>
+<TD>3.587895</TD>
+<TD>-30.397155</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-23 22:22:09</TD>
+<TD>hst_13495_40_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>40</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-15 04:33:13</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-05-24 08:50:23</TD>
+<TD>1400921423</TD>
+<TD>13495_40 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6000 5977</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.000</TD>
+<TD>3.587895 -30.397155</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_40_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.59380983 -30.35611710 3.59378670 -30.35608890 3.56810500 -30.37418300 3.56816990 -30.37426218 3.56834320 -30.37447358 3.56800372 -30.37471642 3.56797470 -30.37468000 3.54329550 -30.39232840 3.54335961 -30.39240889 3.58010020 -30.43851360 3.58011688 -30.43850168 3.58018220 -30.43858360 3.58134645 -30.43775111 3.58137690 -30.43778930 3.60489711 -30.42096535 3.60589253 -30.42025310 3.60607300 -30.42047300 3.60608963 -30.42046128 3.60615580 -30.42054190 3.60732512 -30.41971812 3.60734940 -30.41974770 3.63186718 -30.40246879 3.63303600 -30.40164480 3.59505990 -30.35536220 3.59503914 -30.35537683 3.59501528 -30.35534772 3.59497360 -30.35529690</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_40_acs_wfc_total]]></TD>
+<TD>3.587895</TD>
+<TD>-30.397155</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-23 22:22:09</TD>
+<TD>hst_13495_40_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>40</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-15 04:33:13</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-05-24 08:50:23</TD>
+<TD>1400921423</TD>
+<TD>13495_40 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6000 5977</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.000</TD>
+<TD>3.587895 -30.397155</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_40_acs_wfc_total</TD>
+<TD>Polygon J2000 3.60607300 -30.42047300 3.60608963 -30.42046128 3.60615580 -30.42054190 3.60732512 -30.41971812 3.60734940 -30.41974770 3.63186718 -30.40246879 3.63303600 -30.40164480 3.59505990 -30.35536220 3.59503914 -30.35537683 3.59501528 -30.35534772 3.59497360 -30.35529690 3.59380983 -30.35611710 3.59378670 -30.35608890 3.56810500 -30.37418300 3.56816990 -30.37426218 3.56834320 -30.37447358 3.56800372 -30.37471642 3.56797470 -30.37468000 3.54329550 -30.39232840 3.54335961 -30.39240889 3.58010020 -30.43851360 3.58011688 -30.43850168 3.58018220 -30.43858360 3.58134645 -30.43775111 3.58137690 -30.43778930 3.60489711 -30.42096535 3.60589253 -30.42025310</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_45_acs_wfc_f814w]]></TD>
+<TD>3.587709</TD>
+<TD>-30.397202</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-24 17:38:56</TD>
+<TD>hst_13495_45_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>45</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-22 12:29:10</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-05-25 01:40:12</TD>
+<TD>1400982012</TD>
+<TD>13495_45 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6000 5978</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.500</TD>
+<TD>3.587709 -30.397202</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_45_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.54319723 -30.39248648 3.57990940 -30.43855570 3.57992693 -30.43854317 3.57999050 -30.43862290 3.58115270 -30.43779195 3.58118280 -30.43782970 3.60570046 -30.42029356 3.60588220 -30.42051500 3.60589920 -30.42050302 3.60596500 -30.42058320 3.60611172 -30.42047985 3.60713297 -30.41976045 3.60715640 -30.41978900 3.63284400 -30.40168700 3.59487000 -30.35540280 3.59485017 -30.35541678 3.59478410 -30.35533620 3.59361813 -30.35615789 3.59359600 -30.35613090 3.56791420 -30.37422490 3.56800218 -30.37433223 3.56815107 -30.37451386 3.56781155 -30.37475671 3.56778390 -30.37472200 3.54310470 -30.39237030</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_45_acs_wfc_total]]></TD>
+<TD>3.587709</TD>
+<TD>-30.397202</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-24 17:38:56</TD>
+<TD>hst_13495_45_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>45</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-22 12:29:10</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-05-25 01:40:12</TD>
+<TD>1400982012</TD>
+<TD>13495_45 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6000 5978</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.500</TD>
+<TD>3.587709 -30.397202</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_45_acs_wfc_total</TD>
+<TD>Polygon J2000 3.59359600 -30.35613090 3.56791420 -30.37422490 3.56800218 -30.37433223 3.56815107 -30.37451386 3.56781155 -30.37475671 3.56778390 -30.37472200 3.54310470 -30.39237030 3.54319723 -30.39248648 3.57990940 -30.43855570 3.57992693 -30.43854317 3.57999050 -30.43862290 3.58115270 -30.43779195 3.58118280 -30.43782970 3.60570046 -30.42029356 3.60588220 -30.42051500 3.60589920 -30.42050302 3.60596500 -30.42058320 3.60611172 -30.42047985 3.60713297 -30.41976045 3.60715640 -30.41978900 3.63284400 -30.40168700 3.59487000 -30.35540280 3.59485017 -30.35541678 3.59478410 -30.35533620 3.59361813 -30.35615789</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_50_acs_wfc_f814w]]></TD>
+<TD>3.587735</TD>
+<TD>-30.397085</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-24 22:15:43</TD>
+<TD>hst_13495_50_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>50</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-19 06:38:54</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-05-25 05:12:09</TD>
+<TD>1400994729</TD>
+<TD>13495_50 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6000 5978</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.500</TD>
+<TD>3.587735 -30.397085</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_50_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.56780950 -30.37460400 3.54313040 -30.39225230 3.54319279 -30.39233064 3.57993500 -30.43843770 3.57995415 -30.43842400 3.58001770 -30.43850370 3.58117986 -30.43767273 3.58121070 -30.43771140 3.60473329 -30.42088623 3.60572624 -30.42017578 3.60590780 -30.42039700 3.60592651 -30.42038382 3.60599150 -30.42046300 3.60715937 -30.41964028 3.60718360 -30.41966980 3.63170315 -30.40239013 3.63287050 -30.40156720 3.59489520 -30.35528410 3.59487337 -30.35529948 3.59484959 -30.35527047 3.59480820 -30.35522000 3.59364415 -30.35604040 3.59362160 -30.35601290 3.56793980 -30.37410690 3.56800361 -30.37418474 3.56817750 -30.37439687 3.56783797 -30.37463974</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_50_acs_wfc_total]]></TD>
+<TD>3.587735</TD>
+<TD>-30.397085</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-24 22:15:43</TD>
+<TD>hst_13495_50_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>50</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-19 06:38:54</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-05-25 05:12:09</TD>
+<TD>1400994729</TD>
+<TD>13495_50 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6000 5978</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.500</TD>
+<TD>3.587735 -30.397085</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_50_acs_wfc_total</TD>
+<TD>Polygon J2000 3.54313040 -30.39225230 3.54319279 -30.39233064 3.57993500 -30.43843770 3.57995415 -30.43842400 3.58001770 -30.43850370 3.58117986 -30.43767273 3.58121070 -30.43771140 3.60473329 -30.42088623 3.60572624 -30.42017578 3.60590780 -30.42039700 3.60592651 -30.42038382 3.60599150 -30.42046300 3.60715937 -30.41964028 3.60718360 -30.41966980 3.63170315 -30.40239013 3.63287050 -30.40156720 3.59489520 -30.35528410 3.59487337 -30.35529948 3.59484959 -30.35527047 3.59480820 -30.35522000 3.59364415 -30.35604040 3.59362160 -30.35601290 3.56793980 -30.37410690 3.56800361 -30.37418474 3.56817750 -30.37439687 3.56783797 -30.37463974 3.56780950 -30.37460400</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_51_acs_wfc_f814w]]></TD>
+<TD>3.587841</TD>
+<TD>-30.397104</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-25 20:32:52</TD>
+<TD>hst_13495_51_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>51</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-20 18:34:54</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-05-26 05:01:29</TD>
+<TD>1401080489</TD>
+<TD>13495_51 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6000 5978</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.500</TD>
+<TD>3.587841 -30.397104</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_51_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.63295664 -30.40160157 3.63297560 -30.40158820 3.59500220 -30.35530600 3.59498286 -30.35531963 3.59495694 -30.35528802 3.59491510 -30.35523700 3.59375053 -30.35605779 3.59372930 -30.35603190 3.56804750 -30.37412600 3.56811094 -30.37420339 3.56828421 -30.37441476 3.56794476 -30.37465759 3.56791720 -30.37462300 3.54323810 -30.39227140 3.54330024 -30.39234942 3.58004270 -30.43845670 3.58006044 -30.43844402 3.58012390 -30.43852360 3.58128633 -30.43769239 3.58131680 -30.43773060 3.60483929 -30.42090600 3.60583372 -30.42019450 3.60601550 -30.42041600 3.60603248 -30.42040404 3.60609720 -30.42048290 3.60726482 -30.41966031 3.60728910 -30.41968990 3.63180919 -30.40241045</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_51_acs_wfc_total]]></TD>
+<TD>3.587841</TD>
+<TD>-30.397104</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-25 20:32:52</TD>
+<TD>hst_13495_51_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>51</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-20 18:34:54</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-05-26 05:01:29</TD>
+<TD>1401080489</TD>
+<TD>13495_51 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6000 5978</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.500</TD>
+<TD>3.587841 -30.397104</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_51_acs_wfc_total</TD>
+<TD>Polygon J2000 3.56804750 -30.37412600 3.56811094 -30.37420339 3.56828421 -30.37441476 3.56794476 -30.37465759 3.56791720 -30.37462300 3.54323810 -30.39227140 3.54330024 -30.39234942 3.58004270 -30.43845670 3.58006044 -30.43844402 3.58012390 -30.43852360 3.58128633 -30.43769239 3.58131680 -30.43773060 3.60483929 -30.42090600 3.60583372 -30.42019450 3.60601550 -30.42041600 3.60603248 -30.42040404 3.60609720 -30.42048290 3.60726482 -30.41966031 3.60728910 -30.41968990 3.63180919 -30.40241045 3.63295664 -30.40160157 3.63297560 -30.40158820 3.59500220 -30.35530600 3.59498286 -30.35531963 3.59495694 -30.35528802 3.59491510 -30.35523700 3.59375053 -30.35605779 3.59372930 -30.35603190</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_55_acs_wfc_f814w]]></TD>
+<TD>3.587775</TD>
+<TD>-30.397153</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-26 01:19:37</TD>
+<TD>hst_13495_55_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>55</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-19 23:25:24</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-05-26 06:40:25</TD>
+<TD>1401086425</TD>
+<TD>13495_55 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6000 5978</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.500</TD>
+<TD>3.587775 -30.397153</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_55_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.56821648 -30.37446263 3.56787705 -30.37470545 3.56785040 -30.37467200 3.54317130 -30.39232030 3.54323429 -30.39239939 3.57997590 -30.43850570 3.57999480 -30.43849219 3.58005900 -30.43857270 3.58122061 -30.43774211 3.58125050 -30.43777960 3.60477388 -30.42095436 3.60576710 -30.42024373 3.60594870 -30.42046500 3.60596708 -30.42045205 3.60603270 -30.42053200 3.60719931 -30.41971015 3.60722290 -30.41973890 3.63174405 -30.40245869 3.63289130 -30.40164996 3.63290940 -30.40163720 3.59493610 -30.35535500 3.59491761 -30.35536803 3.59489279 -30.35533777 3.59484870 -30.35528400 3.59368283 -30.35610570 3.59366250 -30.35608090 3.56798070 -30.37417500 3.56804503 -30.37425348</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_55_acs_wfc_total]]></TD>
+<TD>3.587775</TD>
+<TD>-30.397153</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-26 01:19:37</TD>
+<TD>hst_13495_55_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>55</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-19 23:25:24</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-05-26 06:40:25</TD>
+<TD>1401086425</TD>
+<TD>13495_55 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6000 5978</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.500</TD>
+<TD>3.587775 -30.397153</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_55_acs_wfc_total</TD>
+<TD>Polygon J2000 3.54317130 -30.39232030 3.54323429 -30.39239939 3.57997590 -30.43850570 3.57999480 -30.43849219 3.58005900 -30.43857270 3.58122061 -30.43774211 3.58125050 -30.43777960 3.60477388 -30.42095436 3.60576710 -30.42024373 3.60594870 -30.42046500 3.60596708 -30.42045205 3.60603270 -30.42053200 3.60719931 -30.41971015 3.60722290 -30.41973890 3.63174405 -30.40245869 3.63289130 -30.40164996 3.63290940 -30.40163720 3.59493610 -30.35535500 3.59491761 -30.35536803 3.59489279 -30.35533777 3.59484870 -30.35528400 3.59368283 -30.35610570 3.59366250 -30.35608090 3.56798070 -30.37417500 3.56804503 -30.37425348 3.56821648 -30.37446263 3.56787705 -30.37470545 3.56785040 -30.37467200</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_60_acs_wfc_f814w]]></TD>
+<TD>3.587833</TD>
+<TD>-30.397210</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-26 04:30:45</TD>
+<TD>hst_13495_60_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>60</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-09-02 11:32:34</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-05-26 13:08:12</TD>
+<TD>1401109692</TD>
+<TD>13495_60 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6000 5978</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.500</TD>
+<TD>3.587833 -30.397210</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_60_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.59372020 -30.35613790 3.56803850 -30.37423200 3.56810358 -30.37431139 3.56827579 -30.37452147 3.56793632 -30.37476430 3.56790820 -30.37472900 3.54322900 -30.39237740 3.54329257 -30.39245722 3.58003370 -30.43856270 3.58005204 -30.43854958 3.58011680 -30.43863080 3.58127911 -30.43779974 3.58130850 -30.43783660 3.60483133 -30.42101182 3.60582501 -30.42030086 3.60600650 -30.42052200 3.60602457 -30.42050927 3.60609090 -30.42059010 3.60725854 -30.41976756 3.60728180 -30.41979590 3.63180210 -30.40251642 3.63296920 -30.40169370 3.59499470 -30.35540990 3.59497196 -30.35542593 3.59494897 -30.35539789 3.59490560 -30.35534500 3.59374232 -30.35616487</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_60_acs_wfc_total]]></TD>
+<TD>3.587833</TD>
+<TD>-30.397210</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-26 04:30:45</TD>
+<TD>hst_13495_60_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>60</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-09-02 11:32:34</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-05-26 13:08:12</TD>
+<TD>1401109692</TD>
+<TD>13495_60 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6000 5978</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.500</TD>
+<TD>3.587833 -30.397210</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_60_acs_wfc_total</TD>
+<TD>Polygon J2000 3.59494897 -30.35539789 3.59490560 -30.35534500 3.59374232 -30.35616487 3.59372020 -30.35613790 3.56803850 -30.37423200 3.56810358 -30.37431139 3.56827579 -30.37452147 3.56793632 -30.37476430 3.56790820 -30.37472900 3.54322900 -30.39237740 3.54329257 -30.39245722 3.58003370 -30.43856270 3.58005204 -30.43854958 3.58011680 -30.43863080 3.58127911 -30.43779974 3.58130850 -30.43783660 3.60483133 -30.42101182 3.60582501 -30.42030086 3.60600650 -30.42052200 3.60602457 -30.42050927 3.60609090 -30.42059010 3.60725854 -30.41976756 3.60728180 -30.41979590 3.63180210 -30.40251642 3.63296920 -30.40169370 3.59499470 -30.35540990 3.59497196 -30.35542593</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_63_acs_wfc_f814w]]></TD>
+<TD>3.587869</TD>
+<TD>-30.397273</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-26 19:07:38</TD>
+<TD>hst_13495_63_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>63</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-11 21:42:47</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-05-27 02:55:55</TD>
+<TD>1401159355</TD>
+<TD>13495_63 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6000 5977</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.000</TD>
+<TD>3.587869 -30.397273</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_63_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.56832467 -30.37458636 3.56798518 -30.37482920 3.56795770 -30.37479470 3.54327690 -30.39244290 3.58008080 -30.43863090 3.58009828 -30.43861841 3.58016230 -30.43869870 3.58132061 -30.43787047 3.58134950 -30.43790670 3.60485901 -30.42109168 3.60587198 -30.42036694 3.60605520 -30.42059020 3.60607063 -30.42057933 3.60613520 -30.42065800 3.60627854 -30.42055702 3.60730018 -30.41983730 3.60732300 -30.41986510 3.63301060 -30.40176290 3.59503640 -30.35547880 3.59501400 -30.35549458 3.59494850 -30.35541470 3.59379248 -30.35622943 3.59377130 -30.35620360 3.56808790 -30.37429750 3.56817503 -30.37440380</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_63_acs_wfc_total]]></TD>
+<TD>3.587869</TD>
+<TD>-30.397273</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-26 19:07:38</TD>
+<TD>hst_13495_63_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>63</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-11 21:42:47</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-05-27 02:55:55</TD>
+<TD>1401159355</TD>
+<TD>13495_63 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6000 5977</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.000</TD>
+<TD>3.587869 -30.397273</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_63_acs_wfc_total</TD>
+<TD>Polygon J2000 3.60613520 -30.42065800 3.60627854 -30.42055702 3.60730018 -30.41983730 3.60732300 -30.41986510 3.63301060 -30.40176290 3.59503640 -30.35547880 3.59501400 -30.35549458 3.59494850 -30.35541470 3.59379248 -30.35622943 3.59377130 -30.35620360 3.56808790 -30.37429750 3.56817503 -30.37440380 3.56832467 -30.37458636 3.56798518 -30.37482920 3.56795770 -30.37479470 3.54327690 -30.39244290 3.58008080 -30.43863090 3.58009828 -30.43861841 3.58016230 -30.43869870 3.58132061 -30.43787047 3.58134950 -30.43790670 3.60485901 -30.42109168 3.60587198 -30.42036694 3.60605520 -30.42059020 3.60607063 -30.42057933</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_65_acs_wfc_f814w]]></TD>
+<TD>3.587692</TD>
+<TD>-30.397165</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-26 23:37:34</TD>
+<TD>hst_13495_65_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>65</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-23 12:54:03</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-05-27 08:35:41</TD>
+<TD>1401179741</TD>
+<TD>13495_65 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6000 5978</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.500</TD>
+<TD>3.587692 -30.397165</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_65_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.57997240 -30.43858790 3.58113860 -30.43775410 3.58116850 -30.43779160 3.60468749 -30.42096950 3.60568460 -30.42025609 3.60586590 -30.42047700 3.60588067 -30.42046659 3.60594690 -30.42054730 3.60711773 -30.41972254 3.60714100 -30.41975090 3.63165817 -30.40247350 3.63280856 -30.40166255 3.63282750 -30.40164920 3.59485420 -30.35536700 3.59483398 -30.35538125 3.59481022 -30.35535226 3.59476580 -30.35529810 3.59360110 -30.35611900 3.59357970 -30.35609290 3.56789790 -30.37418690 3.56796292 -30.37426622 3.56813494 -30.37447607 3.56779550 -30.37471889 3.56776770 -30.37468400 3.54308850 -30.39233230 3.54315185 -30.39241184 3.57989300 -30.43851770 3.57990792 -30.43850703</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_65_acs_wfc_total]]></TD>
+<TD>3.587692</TD>
+<TD>-30.397165</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-26 23:37:34</TD>
+<TD>hst_13495_65_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>65</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-23 12:54:03</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-05-27 08:35:41</TD>
+<TD>1401179741</TD>
+<TD>13495_65 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6000 5978</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.500</TD>
+<TD>3.587692 -30.397165</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_65_acs_wfc_total</TD>
+<TD>Polygon J2000 3.56776770 -30.37468400 3.54308850 -30.39233230 3.54315185 -30.39241184 3.57989300 -30.43851770 3.57990792 -30.43850703 3.57997240 -30.43858790 3.58113860 -30.43775410 3.58116850 -30.43779160 3.60468749 -30.42096950 3.60568460 -30.42025609 3.60586590 -30.42047700 3.60588067 -30.42046659 3.60594690 -30.42054730 3.60711773 -30.41972254 3.60714100 -30.41975090 3.63165817 -30.40247350 3.63280856 -30.40166255 3.63282750 -30.40164920 3.59485420 -30.35536700 3.59483398 -30.35538125 3.59481022 -30.35535226 3.59476580 -30.35529810 3.59360110 -30.35611900 3.59357970 -30.35609290 3.56789790 -30.37418690 3.56796292 -30.37426622 3.56813494 -30.37447607 3.56779550 -30.37471889</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_67_acs_wfc_f606w]]></TD>
+<TD>3.587756</TD>
+<TD>-30.397118</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F606W</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-27 20:42:47</TD>
+<TD>hst_13495_67_acs_wfc_f606w</TD>
+<TD>13495</TD>
+<TD>67</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-24 00:59:49</TD>
+<TD>HLA</TD>
+<TD>5921.9507</TD>
+<TD>image/fits</TD>
+<TD>2014-05-28 07:45:06</TD>
+<TD>1401263106</TD>
+<TD>13495_67 ACS/WFC F606W (combined) ABELL-2744</TD>
+<TD>6000 5978</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.500</TD>
+<TD>3.587756 -30.397118</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_67_acs_wfc_f606w</TD>
+<TD>Polygon J2000 3.60595170 -30.42042630 3.60597002 -30.42041338 3.60603550 -30.42049310 3.60617988 -30.42039130 3.60720034 -30.41967179 3.60722360 -30.41970010 3.63290280 -30.40158800 3.59490600 -30.35531770 3.59488400 -30.35533322 3.59481890 -30.35525390 3.59365968 -30.35607160 3.59363670 -30.35604360 3.56796170 -30.37414750 3.56805028 -30.37425547 3.56820048 -30.37443856 3.56786198 -30.37468091 3.56783200 -30.37464330 3.54315960 -30.39230150 3.54325371 -30.39241957 3.57998630 -30.43847630 3.58000603 -30.43846218 3.58007140 -30.43854410 3.58123009 -30.43771487 3.58125900 -30.43775110 3.60576938 -30.42020433</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_67_acs_wfc_total]]></TD>
+<TD>3.587756</TD>
+<TD>-30.397118</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>4</TD>
+<TD>5046.000000</TD>
+<TD>2014-05-27 20:42:47</TD>
+<TD>hst_13495_67_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>67</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-24 00:59:49</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-05-28 07:45:06</TD>
+<TD>1401263106</TD>
+<TD>13495_67 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6000 5978</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3000.500 2989.500</TD>
+<TD>3.587756 -30.397118</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_67_acs_wfc_total</TD>
+<TD>Polygon J2000 3.60720034 -30.41967179 3.60722360 -30.41970010 3.63290280 -30.40158800 3.59490600 -30.35531770 3.59488400 -30.35533322 3.59481890 -30.35525390 3.59365968 -30.35607160 3.59363670 -30.35604360 3.56796170 -30.37414750 3.56805028 -30.37425547 3.56820048 -30.37443856 3.56786198 -30.37468091 3.56783200 -30.37464330 3.54315960 -30.39230150 3.54325371 -30.39241957 3.57998630 -30.43847630 3.58000603 -30.43846218 3.58007140 -30.43854410 3.58123009 -30.43771487 3.58125900 -30.43775110 3.60576938 -30.42020433 3.60595170 -30.42042630 3.60597002 -30.42041338 3.60603550 -30.42049310 3.60617988 -30.42039130</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_81_acs_wfc_f606w]]></TD>
+<TD>3.587714</TD>
+<TD>-30.397220</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F606W</TD>
+<TD>1</TD>
+<TD>1113.090000</TD>
+<TD>2014-05-15 21:29:34</TD>
+<TD>hst_13495_81_acs_wfc_f606w</TD>
+<TD>13495</TD>
+<TD>81</TD>
+<TD>Lotz</TD>
+<TD></TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-10-11 05:12:33</TD>
+<TD>HLA</TD>
+<TD>5921.9507</TD>
+<TD>image/fits</TD>
+<TD>2014-05-16 04:04:24</TD>
+<TD>1400213064</TD>
+<TD>13495_81 ACS/WFC F606W (combined) ABELL-2744</TD>
+<TD>6006 5982</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3003.500 2991.500</TD>
+<TD>3.587714 -30.397220</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_81_acs_wfc_f606w</TD>
+<TD>Polygon J2000 3.63291160 -30.40164680 3.59491520 -30.35537710 3.56924130 -30.37348160 3.60723260 -30.41975870 Polygon J2000  3.54444040 -30.39163660 3.58126840 -30.43780970 3.60594470 -30.42014410 3.56911170 -30.37397790</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_81_acs_wfc_f814w]]></TD>
+<TD>3.587714</TD>
+<TD>-30.397220</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>2</TD>
+<TD>2500.000000</TD>
+<TD>2014-05-15 21:53:59</TD>
+<TD>hst_13495_81_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>81</TD>
+<TD>Lotz</TD>
+<TD></TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-10-11 05:12:33</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-05-16 05:48:15</TD>
+<TD>1400219295</TD>
+<TD>13495_81 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6006 5982</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3003.500 2991.500</TD>
+<TD>3.587714 -30.397220</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_81_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.56794730 -30.37435690 3.56814319 -30.37459586 3.54423930 -30.39168780 3.54425302 -30.39170503 3.54313780 -30.39250230 3.57994260 -30.43868770 3.60462690 -30.42103240 3.60461409 -30.42101634 3.60562507 -30.42029310 3.60591560 -30.42064710 3.60703409 -30.41985915 3.63160260 -30.40254550 3.63158439 -30.40252332 3.63270270 -30.40173510 3.59473270 -30.35545050 3.56904980 -30.37354330 3.56906907 -30.37356681</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_81_acs_wfc_total]]></TD>
+<TD>3.587714</TD>
+<TD>-30.397220</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>2</TD>
+<TD>2500.000000</TD>
+<TD>2014-05-15 21:53:59</TD>
+<TD>hst_13495_81_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>81</TD>
+<TD>Lotz</TD>
+<TD></TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-10-11 05:12:33</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-05-16 05:48:15</TD>
+<TD>1400219295</TD>
+<TD>13495_81 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6006 5982</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3003.500 2991.500</TD>
+<TD>3.587714 -30.397220</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_81_acs_wfc_total</TD>
+<TD>Polygon J2000 3.60591560 -30.42064710 3.60703409 -30.41985915 3.63160260 -30.40254550 3.63158439 -30.40252332 3.63270270 -30.40173510 3.59473270 -30.35545050 3.56904980 -30.37354330 3.56906907 -30.37356681 3.56794730 -30.37435690 3.56814319 -30.37459586 3.54423930 -30.39168780 3.54425302 -30.39170503 3.54313780 -30.39250230 3.57994260 -30.43868770 3.60462690 -30.42103240 3.60461409 -30.42101634 3.60562507 -30.42029310</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/fitscut.cgi?red=hst_13495_81_acs_wfc_f814w&amp;blue=hst_13495_81_acs_wfc_f606w&amp;size=ALL&amp;format=fits&amp;config=ops]]></TD>
+<TD>3.587714</TD>
+<TD>-30.397220</TD>
+<TD>4</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W/F606W</TD>
+<TD>3</TD>
+<TD>3613.090000</TD>
+<TD>2014-05-15 21:29:34</TD>
+<TD>hst_13495_81_acs_wfc_f814w_f606w</TD>
+<TD>13495</TD>
+<TD>81</TD>
+<TD>Lotz</TD>
+<TD></TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-10-11 05:12:33</TD>
+<TD>HLA</TD>
+<TD>263.527224528</TD>
+<TD>image/fits</TD>
+<TD>2014-05-16 05:48:15</TD>
+<TD>1400219295</TD>
+<TD>13495_81 ACS/WFC F814W/F606W (color) ABELL-2744</TD>
+<TD>6006 5982</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3003.500 2991.500</TD>
+<TD>3.587714 -30.397220</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_81_acs_wfc_f814w,hst_13495_81_acs_wfc_f606w</TD>
+<TD>Polygon J2000 3.56794730 -30.37435690 3.56814319 -30.37459586 3.54423930 -30.39168780 3.54425302 -30.39170503 3.54313780 -30.39250230 3.57994260 -30.43868770 3.60462690 -30.42103240 3.60461409 -30.42101634 3.60562507 -30.42029310 3.60591560 -30.42064710 3.60703409 -30.41985915 3.63160260 -30.40254550 3.63158439 -30.40252332 3.63270270 -30.40173510 3.59473270 -30.35545050 3.56904980 -30.37354330 3.56906907 -30.37356681</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_82_acs_wfc_f606w]]></TD>
+<TD>3.587746</TD>
+<TD>-30.397203</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F606W</TD>
+<TD>4</TD>
+<TD>4977.000000</TD>
+<TD>2014-05-19 21:11:41</TD>
+<TD>hst_13495_82_acs_wfc_f606w</TD>
+<TD>13495</TD>
+<TD>82</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-09-11 02:13:41</TD>
+<TD>HLA</TD>
+<TD>5921.9507</TD>
+<TD>image/fits</TD>
+<TD>2014-05-20 07:22:03</TD>
+<TD>1400570523</TD>
+<TD>13495_82 ACS/WFC F606W (combined) ABELL-2744</TD>
+<TD>6006 5983</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3003.500 2992.000</TD>
+<TD>3.587746 -30.397203</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_82_acs_wfc_f606w</TD>
+<TD>Polygon J2000 3.59482125 -30.35545531 3.59479738 -30.35542623 3.59475370 -30.35537300 3.59359108 -30.35619310 3.59356720 -30.35616400 3.56789280 -30.37426830 3.56796007 -30.37435029 3.56813188 -30.37455970 3.56779306 -30.37480228 3.56776310 -30.37476470 3.54309130 -30.39242320 3.54315739 -30.39250612 3.57991900 -30.43859690 3.57994099 -30.43858116 3.58000710 -30.43866400 3.58116432 -30.43783586 3.58119460 -30.43787380 3.60471423 -30.42103640 3.60570432 -30.42032739 3.60588380 -30.42054590 3.60590488 -30.42053104 3.60597220 -30.42061300 3.60713478 -30.41979331 3.60715900 -30.41982280 3.63167588 -30.40253066 3.63281764 -30.40172510 3.63283790 -30.40171080 3.59484140 -30.35544110</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_82_acs_wfc_f814w]]></TD>
+<TD>3.587746</TD>
+<TD>-30.397203</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>4904.000000</TD>
+<TD>2014-05-19 21:35:39</TD>
+<TD>hst_13495_82_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>82</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-09-11 02:13:41</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-05-20 08:26:53</TD>
+<TD>1400574413</TD>
+<TD>13495_82 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6006 5983</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3003.500 2992.000</TD>
+<TD>3.587746 -30.397203</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_82_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.56798360 -30.37419640 3.56807458 -30.37430730 3.56822378 -30.37448918 3.56788419 -30.37473229 3.56785350 -30.37469380 3.54318140 -30.39234950 3.54327797 -30.39247067 3.58000440 -30.43852380 3.58002827 -30.43850672 3.58009520 -30.43859060 3.58125158 -30.43776311 3.58128150 -30.43780060 3.60579058 -30.42025652 3.60597010 -30.42047510 3.60599235 -30.42045942 3.60606010 -30.42054190 3.60620127 -30.42044238 3.60722248 -30.41972239 3.60724590 -30.41975090 3.63292450 -30.40164080 3.59493070 -30.35537100 3.59490922 -30.35538615 3.59484270 -30.35530510 3.59368199 -30.35612382 3.59365810 -30.35609470</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_82_acs_wfc_total]]></TD>
+<TD>3.587746</TD>
+<TD>-30.397203</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>8</TD>
+<TD>9881.000000</TD>
+<TD>2014-05-19 21:11:41</TD>
+<TD>hst_13495_82_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>82</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-09-11 02:13:41</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-05-20 08:26:53</TD>
+<TD>1400574413</TD>
+<TD>13495_82 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6006 5983</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3003.500 2992.000</TD>
+<TD>3.587746 -30.397203</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_82_acs_wfc_total</TD>
+<TD>Polygon J2000 3.56798770 -30.37420140 3.56789280 -30.37426830 3.56796007 -30.37435029 3.56812943 -30.37455672 3.56788419 -30.37473229 3.56785350 -30.37469380 3.54318140 -30.39234950 3.54318609 -30.39235538 3.54309130 -30.39242320 3.54315739 -30.39250612 3.57991900 -30.43859690 3.57994099 -30.43858116 3.58000710 -30.43866400 3.58116432 -30.43783586 3.58119460 -30.43787380 3.60471423 -30.42103640 3.60570432 -30.42032739 3.60588380 -30.42054590 3.60590488 -30.42053104 3.60597220 -30.42061300 3.60713478 -30.41979331 3.60715900 -30.41982280 3.63167588 -30.40253066 3.63281764 -30.40172510 3.63283790 -30.40171080 3.63283327 -30.40170516 3.63292450 -30.40164080 3.59493070 -30.35537100 3.59490922 -30.35538615 3.59488904 -30.35536157 3.59484270 -30.35530510 3.59368199 -30.35612382 3.59365810 -30.35609470 3.56798360 -30.37419640</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/fitscut.cgi?red=hst_13495_82_acs_wfc_f814w&amp;blue=hst_13495_82_acs_wfc_f606w&amp;size=ALL&amp;format=fits&amp;config=ops]]></TD>
+<TD>3.587746</TD>
+<TD>-30.397203</TD>
+<TD>4</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W/F606W</TD>
+<TD>8</TD>
+<TD>9881.000000</TD>
+<TD>2014-05-19 21:11:41</TD>
+<TD>hst_13495_82_acs_wfc_f814w_f606w</TD>
+<TD>13495</TD>
+<TD>82</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-09-11 02:13:41</TD>
+<TD>HLA</TD>
+<TD>263.527224528</TD>
+<TD>image/fits</TD>
+<TD>2014-05-20 08:26:53</TD>
+<TD>1400574413</TD>
+<TD>13495_82 ACS/WFC F814W/F606W (color) ABELL-2744</TD>
+<TD>6006 5983</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3003.500 2992.000</TD>
+<TD>3.587746 -30.397203</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_82_acs_wfc_f814w,hst_13495_82_acs_wfc_f606w</TD>
+<TD>Polygon J2000 3.56798360 -30.37419640 3.56807458 -30.37430730 3.56822378 -30.37448918 3.56788419 -30.37473229 3.56785350 -30.37469380 3.54318140 -30.39234950 3.54327797 -30.39247067 3.58000440 -30.43852380 3.58002827 -30.43850672 3.58009520 -30.43859060 3.58125158 -30.43776311 3.58128150 -30.43780060 3.60579058 -30.42025652 3.60597010 -30.42047510 3.60599235 -30.42045942 3.60606010 -30.42054190 3.60620127 -30.42044238 3.60722248 -30.41972239 3.60724590 -30.41975090 3.63292450 -30.40164080 3.59493070 -30.35537100 3.59490922 -30.35538615 3.59484270 -30.35530510 3.59368199 -30.35612382 3.59365810 -30.35609470</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_83_acs_wfc_f606w]]></TD>
+<TD>3.587779</TD>
+<TD>-30.397131</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F606W</TD>
+<TD>4</TD>
+<TD>4977.000000</TD>
+<TD>2014-05-22 20:53:05</TD>
+<TD>hst_13495_83_acs_wfc_f606w</TD>
+<TD>13495</TD>
+<TD>83</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-21 10:00:49</TD>
+<TD>HLA</TD>
+<TD>5921.9507</TD>
+<TD>image/fits</TD>
+<TD>2014-05-23 18:49:23</TD>
+<TD>1400870963</TD>
+<TD>13495_83 ACS/WFC F606W (combined) ABELL-2744</TD>
+<TD>6005 5983</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3003.000 2992.000</TD>
+<TD>3.587779 -30.397131</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_83_acs_wfc_f606w</TD>
+<TD>Polygon J2000 3.58011310 -30.43856470 3.58126510 -30.43774079 3.58129310 -30.43777590 3.60482578 -30.42094260 3.60581865 -30.42023217 3.60599990 -30.42045290 3.60601824 -30.42043998 3.60608450 -30.42052070 3.60722670 -30.41971588 3.60724249 -30.41970475 3.60726560 -30.41973290 3.63293698 -30.40164082 3.63295290 -30.40162960 3.59497730 -30.35534690 3.59495595 -30.35536195 3.59488660 -30.35527740 3.59372076 -30.35609930 3.59369590 -30.35606900 3.56801790 -30.37416960 3.56804055 -30.37419721 3.56825584 -30.37445972 3.56791718 -30.37470205 3.56788820 -30.37466570 3.54321280 -30.39232070 3.58003150 -30.43849990 3.58005055 -30.43848627</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_83_acs_wfc_f814w]]></TD>
+<TD>3.587779</TD>
+<TD>-30.397131</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>4904.000000</TD>
+<TD>2014-05-22 21:17:03</TD>
+<TD>hst_13495_83_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>83</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-21 10:00:49</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-05-23 18:52:54</TD>
+<TD>1400871174</TD>
+<TD>13495_83 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6005 5983</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3003.000 2992.000</TD>
+<TD>3.587779 -30.397131</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_83_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.60600460 -30.42048950 3.60716959 -30.41966864 3.60719360 -30.41969790 3.63169956 -30.40242866 3.63288020 -30.40159640 3.59490720 -30.35531390 3.59488435 -30.35533001 3.59481710 -30.35524800 3.59365916 -30.35606412 3.59363520 -30.35603490 3.56795340 -30.37412900 3.56819306 -30.37442136 3.56785355 -30.37466423 3.56782310 -30.37462600 3.54314400 -30.39227430 3.54321140 -30.39235893 3.57994860 -30.43845960 3.57996586 -30.43844726 3.58003360 -30.43853220 3.58119284 -30.43770316 3.58122110 -30.43773860 3.60474596 -30.42091256 3.60574180 -30.42020007 3.60592140 -30.42041890 3.60593740 -30.42040763</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_83_acs_wfc_total]]></TD>
+<TD>3.587779</TD>
+<TD>-30.397131</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>8</TD>
+<TD>9881.000000</TD>
+<TD>2014-05-22 20:53:05</TD>
+<TD>hst_13495_83_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>83</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-21 10:00:49</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-05-23 18:52:54</TD>
+<TD>1400871174</TD>
+<TD>13495_83 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6005 5983</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3003.000 2992.000</TD>
+<TD>3.587779 -30.397131</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_83_acs_wfc_total</TD>
+<TD>Polygon J2000 3.60593740 -30.42040763 3.60600460 -30.42048950 3.60603900 -30.42046527 3.60608450 -30.42052070 3.60722670 -30.41971588 3.60724249 -30.41970475 3.60726560 -30.41973290 3.63293698 -30.40164082 3.63295290 -30.40162960 3.59497730 -30.35534690 3.59495595 -30.35536195 3.59488660 -30.35527740 3.59485784 -30.35529768 3.59481710 -30.35524800 3.59365916 -30.35606412 3.59363520 -30.35603490 3.56795340 -30.37412900 3.56802075 -30.37421116 3.56819306 -30.37442136 3.56785355 -30.37466423 3.56782310 -30.37462600 3.54314400 -30.39227430 3.54319251 -30.39233521 3.57994860 -30.43845960 3.57996586 -30.43844726 3.58003360 -30.43853220 3.58004867 -30.43852142 3.58006772 -30.43850780 3.58011310 -30.43856470 3.58126510 -30.43774079 3.58129310 -30.43777590 3.60482578 -30.42094260 3.60578683 -30.42025493 3.60592140 -30.42041890</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/fitscut.cgi?red=hst_13495_83_acs_wfc_f814w&amp;blue=hst_13495_83_acs_wfc_f606w&amp;size=ALL&amp;format=fits&amp;config=ops]]></TD>
+<TD>3.587779</TD>
+<TD>-30.397131</TD>
+<TD>4</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W/F606W</TD>
+<TD>8</TD>
+<TD>9881.000000</TD>
+<TD>2014-05-22 20:53:05</TD>
+<TD>hst_13495_83_acs_wfc_f814w_f606w</TD>
+<TD>13495</TD>
+<TD>83</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-21 10:00:49</TD>
+<TD>HLA</TD>
+<TD>263.527224528</TD>
+<TD>image/fits</TD>
+<TD>2014-05-23 18:52:54</TD>
+<TD>1400871174</TD>
+<TD>13495_83 ACS/WFC F814W/F606W (color) ABELL-2744</TD>
+<TD>6005 5983</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3003.000 2992.000</TD>
+<TD>3.587779 -30.397131</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_83_acs_wfc_f814w,hst_13495_83_acs_wfc_f606w</TD>
+<TD>Polygon J2000 3.60600460 -30.42048950 3.60716959 -30.41966864 3.60719360 -30.41969790 3.63169956 -30.40242866 3.63288020 -30.40159640 3.59490720 -30.35531390 3.59488435 -30.35533001 3.59481710 -30.35524800 3.59365916 -30.35606412 3.59363520 -30.35603490 3.56795340 -30.37412900 3.56819306 -30.37442136 3.56785355 -30.37466423 3.56782310 -30.37462600 3.54314400 -30.39227430 3.54321140 -30.39235893 3.57994860 -30.43845960 3.57996586 -30.43844726 3.58003360 -30.43853220 3.58119284 -30.43770316 3.58122110 -30.43773860 3.60474596 -30.42091256 3.60574180 -30.42020007 3.60592140 -30.42041890 3.60593740 -30.42040763</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_91_acs_wfc_f435w]]></TD>
+<TD>3.587800</TD>
+<TD>-30.397151</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F435W</TD>
+<TD>4</TD>
+<TD>5083.000000</TD>
+<TD>2014-06-11 20:17:30</TD>
+<TD>hst_13495_91_acs_wfc_f435w</TD>
+<TD>13495</TD>
+<TD>91</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-26 07:04:29</TD>
+<TD>HLA</TD>
+<TD>4329.1885</TD>
+<TD>image/fits</TD>
+<TD>2014-06-12 06:24:20</TD>
+<TD>1402554260</TD>
+<TD>13495_91 ACS/WFC F435W (combined) ABELL-2744</TD>
+<TD>6010 5989</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3005.500 2995.000</TD>
+<TD>3.587800 -30.397151</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_91_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.60578132 -30.42016886 3.60596240 -30.42038940 3.60598267 -30.42037511 3.60604950 -30.42045650 3.60619400 -30.42035467 3.60721620 -30.41963426 3.60723840 -30.41966130 3.63292210 -30.40155320 3.59493260 -30.35527460 3.59491481 -30.35528714 3.59484800 -30.35520570 3.59368054 -30.35602890 3.59365880 -30.35600240 3.56797940 -30.37410240 3.56806825 -30.37421074 3.56821676 -30.37439183 3.56787765 -30.37463454 3.56784860 -30.37459810 3.54317160 -30.39225340 3.57999150 -30.43843760 3.58001274 -30.43842241 3.58007830 -30.43850460 3.58123887 -30.43767438 3.58126840 -30.43771140 3.60476833 -30.42089402</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_91_acs_wfc_f814w]]></TD>
+<TD>3.587800</TD>
+<TD>-30.397151</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5044.000000</TD>
+<TD>2014-06-11 20:40:55</TD>
+<TD>hst_13495_91_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>91</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-26 07:04:29</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-06-12 07:57:51</TD>
+<TD>1402559871</TD>
+<TD>13495_91 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6010 5989</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3005.500 2995.000</TD>
+<TD>3.587800 -30.397151</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_91_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.58013080 -30.43866010 3.58129373 -30.43782836 3.58132000 -30.43786130 3.60484007 -30.42103663 3.60583003 -30.42032826 3.60601350 -30.42055180 3.60603547 -30.42053632 3.60610120 -30.42061640 3.60726956 -30.41979311 3.60729130 -30.41981960 3.63180867 -30.40254017 3.63295389 -30.40173278 3.63297670 -30.40171670 3.59500050 -30.35543620 3.59497480 -30.35545431 3.59495161 -30.35542604 3.59490770 -30.35537250 3.59374450 -30.35619249 3.59372450 -30.35616810 3.56804350 -30.37426300 3.56810892 -30.37434280 3.56827984 -30.37455129 3.56794086 -30.37479382 3.56791320 -30.37475910 3.54323480 -30.39240840 3.58004150 -30.43859250 3.58006403 -30.43857639</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_91_acs_wfc_total]]></TD>
+<TD>3.587800</TD>
+<TD>-30.397151</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>8</TD>
+<TD>10127.000000</TD>
+<TD>2014-06-11 20:17:30</TD>
+<TD>hst_13495_91_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>91</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-26 07:04:29</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-06-12 07:57:51</TD>
+<TD>1402559871</TD>
+<TD>13495_91 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6010 5989</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3005.500 2995.000</TD>
+<TD>3.587800 -30.397151</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_91_acs_wfc_total</TD>
+<TD>Polygon J2000 3.56808635 -30.37423281 3.56804350 -30.37426300 3.56817413 -30.37442234 3.56787765 -30.37463454 3.56784860 -30.37459810 3.54317160 -30.39225340 3.54327322 -30.39238093 3.54323480 -30.39240840 3.58004150 -30.43859250 3.58006403 -30.43857639 3.58013080 -30.43866010 3.58015512 -30.43864271 3.58129373 -30.43782836 3.58132000 -30.43786130 3.60486684 -30.42101747 3.60583003 -30.42032826 3.60601350 -30.42055180 3.60603547 -30.42053632 3.60610120 -30.42061640 3.60726956 -30.41979311 3.60729130 -30.41981960 3.60734013 -30.41978519 3.63297670 -30.40171670 3.63287166 -30.40158877 3.63292210 -30.40155320 3.59493260 -30.35527460 3.59491481 -30.35528714 3.59484800 -30.35520570 3.59368054 -30.35602890 3.59365880 -30.35600240 3.56797940 -30.37410240 3.56806825 -30.37421074</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/fitscut.cgi?red=hst_13495_91_acs_wfc_f814w&amp;blue=hst_13495_91_acs_wfc_f435w&amp;size=ALL&amp;format=fits&amp;config=ops]]></TD>
+<TD>3.587800</TD>
+<TD>-30.397151</TD>
+<TD>4</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W/F435W</TD>
+<TD>8</TD>
+<TD>10127.000000</TD>
+<TD>2014-06-11 20:17:30</TD>
+<TD>hst_13495_91_acs_wfc_f814w_f435w</TD>
+<TD>13495</TD>
+<TD>91</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-26 07:04:29</TD>
+<TD>HLA</TD>
+<TD>233.475107547</TD>
+<TD>image/fits</TD>
+<TD>2014-06-12 07:57:51</TD>
+<TD>1402559871</TD>
+<TD>13495_91 ACS/WFC F814W/F435W (color) ABELL-2744</TD>
+<TD>6010 5989</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3005.500 2995.000</TD>
+<TD>3.587800 -30.397151</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_91_acs_wfc_f814w,hst_13495_91_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.58013080 -30.43866010 3.58129373 -30.43782836 3.58132000 -30.43786130 3.60484007 -30.42103663 3.60583003 -30.42032826 3.60601350 -30.42055180 3.60603547 -30.42053632 3.60610120 -30.42061640 3.60726956 -30.41979311 3.60729130 -30.41981960 3.63180867 -30.40254017 3.63295389 -30.40173278 3.63297670 -30.40171670 3.59500050 -30.35543620 3.59497480 -30.35545431 3.59495161 -30.35542604 3.59490770 -30.35537250 3.59374450 -30.35619249 3.59372450 -30.35616810 3.56804350 -30.37426300 3.56810892 -30.37434280 3.56827984 -30.37455129 3.56794086 -30.37479382 3.56791320 -30.37475910 3.54323480 -30.39240840 3.58004150 -30.43859250 3.58006403 -30.43857639</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_92_acs_wfc_f435w]]></TD>
+<TD>3.587813</TD>
+<TD>-30.397201</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F435W</TD>
+<TD>4</TD>
+<TD>5083.000000</TD>
+<TD>2014-06-13 15:17:42</TD>
+<TD>hst_13495_92_acs_wfc_f435w</TD>
+<TD>13495</TD>
+<TD>92</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-19 20:33:32</TD>
+<TD>HLA</TD>
+<TD>4329.1885</TD>
+<TD>image/fits</TD>
+<TD>2014-06-13 23:55:19</TD>
+<TD>1402703719</TD>
+<TD>13495_92 ACS/WFC F435W (combined) ABELL-2744</TD>
+<TD>6009 5986</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3005.000 2993.500</TD>
+<TD>3.587813 -30.397201</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_92_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.58010753 -30.43855034 3.58017330 -30.43863280 3.58133168 -30.43780421 3.58136230 -30.43784260 3.60488664 -30.42100948 3.60588177 -30.42029718 3.60606020 -30.42051450 3.60607760 -30.42050224 3.60614530 -30.42058470 3.60730944 -30.41976434 3.60733330 -30.41979340 3.63185440 -30.40250699 3.63299764 -30.40170079 3.63301790 -30.40168650 3.59503110 -30.35540640 3.59501220 -30.35541973 3.59498876 -30.35539116 3.59494450 -30.35533720 3.59378186 -30.35615687 3.59375760 -30.35612730 3.56807790 -30.37422700 3.56814564 -30.37430961 3.56831625 -30.37451764 3.56797643 -30.37476081 3.56794710 -30.37472400 3.54326980 -30.39237900 3.54333567 -30.39246168 3.58008900 -30.43856360</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_92_acs_wfc_f814w]]></TD>
+<TD>3.587813</TD>
+<TD>-30.397201</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5044.000000</TD>
+<TD>2014-06-13 15:41:07</TD>
+<TD>hst_13495_92_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>92</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-19 20:33:32</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-06-14 00:55:44</TD>
+<TD>1402707344</TD>
+<TD>13495_92 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6009 5986</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3005.000 2993.500</TD>
+<TD>3.587813 -30.397201</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_92_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.56785188 -30.37475278 3.56782400 -30.37471780 3.54314810 -30.39236960 3.57996130 -30.43854980 3.57997936 -30.43853688 3.58004270 -30.43861630 3.58120164 -30.43778751 3.58123170 -30.43782520 3.60475564 -30.42099736 3.60575049 -30.42028548 3.60593080 -30.42050510 3.60594751 -30.42049333 3.60601430 -30.42057470 3.60717867 -30.41975432 3.60720270 -30.41978360 3.63172396 -30.40250101 3.63286871 -30.40169393 3.63288790 -30.40168040 3.59491110 -30.35540030 3.59488997 -30.35541520 3.59486587 -30.35538582 3.59482050 -30.35533050 3.59365609 -30.35615133 3.59363260 -30.35612270 3.56795420 -30.37422040 3.56802110 -30.37430199 3.56819150 -30.37450978</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_92_acs_wfc_total]]></TD>
+<TD>3.587813</TD>
+<TD>-30.397201</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>8</TD>
+<TD>10127.000000</TD>
+<TD>2014-06-13 15:17:42</TD>
+<TD>hst_13495_92_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>92</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-19 20:33:32</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-06-14 00:55:44</TD>
+<TD>1402707344</TD>
+<TD>13495_92 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6009 5986</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3005.000 2993.500</TD>
+<TD>3.587813 -30.397201</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_92_acs_wfc_total</TD>
+<TD>Polygon J2000 3.57996130 -30.43854980 3.57997936 -30.43853688 3.58004270 -30.43861630 3.58011748 -30.43856282 3.58017330 -30.43863280 3.58133168 -30.43780421 3.58136230 -30.43784260 3.60488664 -30.42100948 3.60580514 -30.42035204 3.60593080 -30.42050510 3.60594751 -30.42049333 3.60601430 -30.42057470 3.60609209 -30.42051989 3.60614530 -30.42058470 3.60730944 -30.41976434 3.60733330 -30.41979340 3.63185440 -30.40250699 3.63299764 -30.40170079 3.63301790 -30.40168650 3.59503110 -30.35540640 3.59501220 -30.35541973 3.59498876 -30.35539116 3.59494450 -30.35533720 3.59486941 -30.35539014 3.59482050 -30.35533050 3.59365609 -30.35615133 3.59363260 -30.35612270 3.56795420 -30.37422040 3.56807067 -30.37436243 3.56819150 -30.37450978 3.56785188 -30.37475278 3.56782400 -30.37471780 3.54314810 -30.39236960 3.54326291 -30.39251371</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/fitscut.cgi?red=hst_13495_92_acs_wfc_f814w&amp;blue=hst_13495_92_acs_wfc_f435w&amp;size=ALL&amp;format=fits&amp;config=ops]]></TD>
+<TD>3.587813</TD>
+<TD>-30.397201</TD>
+<TD>4</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W/F435W</TD>
+<TD>8</TD>
+<TD>10127.000000</TD>
+<TD>2014-06-13 15:17:42</TD>
+<TD>hst_13495_92_acs_wfc_f814w_f435w</TD>
+<TD>13495</TD>
+<TD>92</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-19 20:33:32</TD>
+<TD>HLA</TD>
+<TD>233.475107547</TD>
+<TD>image/fits</TD>
+<TD>2014-06-14 00:55:44</TD>
+<TD>1402707344</TD>
+<TD>13495_92 ACS/WFC F814W/F435W (color) ABELL-2744</TD>
+<TD>6009 5986</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3005.000 2993.500</TD>
+<TD>3.587813 -30.397201</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_92_acs_wfc_f814w,hst_13495_92_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.56785188 -30.37475278 3.56782400 -30.37471780 3.54314810 -30.39236960 3.57996130 -30.43854980 3.57997936 -30.43853688 3.58004270 -30.43861630 3.58120164 -30.43778751 3.58123170 -30.43782520 3.60475564 -30.42099736 3.60575049 -30.42028548 3.60593080 -30.42050510 3.60594751 -30.42049333 3.60601430 -30.42057470 3.60717867 -30.41975432 3.60720270 -30.41978360 3.63172396 -30.40250101 3.63286871 -30.40169393 3.63288790 -30.40168040 3.59491110 -30.35540030 3.59488997 -30.35541520 3.59486587 -30.35538582 3.59482050 -30.35533050 3.59365609 -30.35615133 3.59363260 -30.35612270 3.56795420 -30.37422040 3.56802110 -30.37430199 3.56819150 -30.37450978</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_93_acs_wfc_f435w]]></TD>
+<TD>3.587867</TD>
+<TD>-30.397107</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F435W</TD>
+<TD>4</TD>
+<TD>5083.000000</TD>
+<TD>2014-06-15 13:28:55</TD>
+<TD>hst_13495_93_acs_wfc_f435w</TD>
+<TD>13495</TD>
+<TD>93</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-12 00:44:00</TD>
+<TD>HLA</TD>
+<TD>4329.1885</TD>
+<TD>image/fits</TD>
+<TD>2014-06-16 00:21:00</TD>
+<TD>1402878060</TD>
+<TD>13495_93 ACS/WFC F435W (combined) ABELL-2744</TD>
+<TD>6003 5981</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3002.000 2991.000</TD>
+<TD>3.587867 -30.397107</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_93_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.60605522 -30.42041375 3.60612250 -30.42049570 3.60626172 -30.42039759 3.60728323 -30.41967773 3.60730620 -30.41970570 3.63299150 -30.40159930 3.59500610 -30.35531820 3.59498684 -30.35533178 3.59491770 -30.35524750 3.59375379 -30.35606811 3.59373180 -30.35604130 3.56805220 -30.37414100 3.56814241 -30.37425100 3.56828910 -30.37442987 3.56794983 -30.37467267 3.56792140 -30.37463700 3.54324400 -30.39229200 3.54333834 -30.39241041 3.58006310 -30.43847660 3.58008468 -30.43846116 3.58015060 -30.43854380 3.58130626 -30.43771715 3.58133470 -30.43775280 3.60585380 -30.42020867 3.60603430 -30.42042850</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_93_acs_wfc_f814w]]></TD>
+<TD>3.587867</TD>
+<TD>-30.397107</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5044.000000</TD>
+<TD>2014-06-15 13:52:20</TD>
+<TD>hst_13495_93_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>93</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-12 00:44:00</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-06-16 04:10:29</TD>
+<TD>1402891829</TD>
+<TD>13495_93 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6003 5981</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3002.000 2991.000</TD>
+<TD>3.587867 -30.397107</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_93_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.59377140 -30.35602840 3.56809190 -30.37412490 3.56815881 -30.37420651 3.56833038 -30.37441576 3.56799065 -30.37465883 3.56796170 -30.37462250 3.54328470 -30.39227320 3.58009500 -30.43845510 3.58011616 -30.43843997 3.58018110 -30.43852140 3.58133944 -30.43769304 3.58136900 -30.43773010 3.60489281 -30.42090092 3.60588473 -30.42019107 3.60606560 -30.42041140 3.60608572 -30.42039722 3.60615260 -30.42047870 3.60731599 -30.41965901 3.60733930 -30.41968740 3.63186079 -30.40240319 3.63302360 -30.40158330 3.59504470 -30.35530450 3.59502466 -30.35531863 3.59500234 -30.35529141 3.59495730 -30.35523650 3.59379432 -30.35605634</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_93_acs_wfc_total]]></TD>
+<TD>3.587867</TD>
+<TD>-30.397107</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>8</TD>
+<TD>10127.000000</TD>
+<TD>2014-06-15 13:28:55</TD>
+<TD>hst_13495_93_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>93</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-12 00:44:00</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-06-16 04:10:29</TD>
+<TD>1402891829</TD>
+<TD>13495_93 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6003 5981</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3002.000 2991.000</TD>
+<TD>3.587867 -30.397107</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_93_acs_wfc_total</TD>
+<TD>Polygon J2000 3.63299495 -30.40160350 3.63302360 -30.40158330 3.59504470 -30.35530450 3.59502466 -30.35531863 3.59501764 -30.35531007 3.59495730 -30.35523650 3.59492649 -30.35525822 3.59491770 -30.35524750 3.59378558 -30.35604570 3.59377140 -30.35602840 3.59373960 -30.35605081 3.59373180 -30.35604130 3.56805220 -30.37414100 3.56814241 -30.37425100 3.56828910 -30.37442987 3.56798285 -30.37464904 3.56796170 -30.37462250 3.56792868 -30.37464613 3.56792140 -30.37463700 3.54324400 -30.39229200 3.54333834 -30.39241041 3.58006310 -30.43847660 3.58008468 -30.43846116 3.58015060 -30.43854380 3.58130626 -30.43771715 3.58133470 -30.43775280 3.58136807 -30.43772893 3.58136900 -30.43773010 3.60585615 -30.42021153 3.60603430 -30.42042850 3.60605522 -30.42041375 3.60612250 -30.42049570 3.60615041 -30.42047603 3.60615260 -30.42047870 3.60626388 -30.42040030 3.60728551 -30.41968049 3.60730620 -30.41970570 3.60733669 -30.41968422 3.60733930 -30.41968740</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/fitscut.cgi?red=hst_13495_93_acs_wfc_f814w&amp;blue=hst_13495_93_acs_wfc_f435w&amp;size=ALL&amp;format=fits&amp;config=ops]]></TD>
+<TD>3.587867</TD>
+<TD>-30.397107</TD>
+<TD>4</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W/F435W</TD>
+<TD>8</TD>
+<TD>10127.000000</TD>
+<TD>2014-06-15 13:28:55</TD>
+<TD>hst_13495_93_acs_wfc_f814w_f435w</TD>
+<TD>13495</TD>
+<TD>93</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-12 00:44:00</TD>
+<TD>HLA</TD>
+<TD>233.475107547</TD>
+<TD>image/fits</TD>
+<TD>2014-06-16 04:10:29</TD>
+<TD>1402891829</TD>
+<TD>13495_93 ACS/WFC F814W/F435W (color) ABELL-2744</TD>
+<TD>6003 5981</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3002.000 2991.000</TD>
+<TD>3.587867 -30.397107</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_93_acs_wfc_f814w,hst_13495_93_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.59377140 -30.35602840 3.56809190 -30.37412490 3.56815881 -30.37420651 3.56833038 -30.37441576 3.56799065 -30.37465883 3.56796170 -30.37462250 3.54328470 -30.39227320 3.58009500 -30.43845510 3.58011616 -30.43843997 3.58018110 -30.43852140 3.58133944 -30.43769304 3.58136900 -30.43773010 3.60489281 -30.42090092 3.60588473 -30.42019107 3.60606560 -30.42041140 3.60608572 -30.42039722 3.60615260 -30.42047870 3.60731599 -30.41965901 3.60733930 -30.41968740 3.63186079 -30.40240319 3.63302360 -30.40158330 3.59504470 -30.35530450 3.59502466 -30.35531863 3.59500234 -30.35529141 3.59495730 -30.35523650 3.59379432 -30.35605634</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_94_acs_wfc_f435w]]></TD>
+<TD>3.587694</TD>
+<TD>-30.397142</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F435W</TD>
+<TD>4</TD>
+<TD>5083.000000</TD>
+<TD>2014-06-16 18:08:54</TD>
+<TD>hst_13495_94_acs_wfc_f435w</TD>
+<TD>13495</TD>
+<TD>94</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-13 08:02:51</TD>
+<TD>HLA</TD>
+<TD>4329.1885</TD>
+<TD>image/fits</TD>
+<TD>2014-06-17 02:24:58</TD>
+<TD>1402971898</TD>
+<TD>13495_94 ACS/WFC F435W (combined) ABELL-2744</TD>
+<TD>6002 5980</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3001.500 2990.500</TD>
+<TD>3.587694 -30.397142</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_94_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.54313614 -30.39241049 3.57989370 -30.43851230 3.57991389 -30.43849785 3.57997830 -30.43857860 3.58113998 -30.43774759 3.58117390 -30.43779010 3.60469336 -30.42095763 3.60568662 -30.42024655 3.60586370 -30.42046220 3.60588253 -30.42044893 3.60594950 -30.42053050 3.60711673 -30.41970789 3.60714310 -30.41974000 3.63165944 -30.40245399 3.63280560 -30.40164559 3.63282600 -30.40163120 3.59483470 -30.35535390 3.59481577 -30.35536725 3.59479091 -30.35533695 3.59474550 -30.35528160 3.59357990 -30.35610349 3.59355710 -30.35607570 3.56787860 -30.37417650 3.56811576 -30.37446566 3.56777608 -30.37470878 3.56774780 -30.37467330 3.54307160 -30.39232950</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_94_acs_wfc_f814w]]></TD>
+<TD>3.587694</TD>
+<TD>-30.397142</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5044.000000</TD>
+<TD>2014-06-16 18:32:19</TD>
+<TD>hst_13495_94_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>94</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-13 08:02:51</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-06-17 03:51:17</TD>
+<TD>1402977077</TD>
+<TD>13495_94 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6002 5980</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3001.500 2990.500</TD>
+<TD>3.587694 -30.397142</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_94_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.56780826 -30.37469519 3.56777910 -30.37465860 3.54310270 -30.39230990 3.57991440 -30.43849100 3.57993187 -30.43847850 3.57999710 -30.43856030 3.58116062 -30.43772821 3.58119140 -30.43776680 3.60470927 -30.42094034 3.60570451 -30.42022805 3.60588450 -30.42044730 3.60590116 -30.42043556 3.60596850 -30.42051760 3.60713703 -30.41969427 3.60716070 -30.41972310 3.63167616 -30.40244161 3.63282235 -30.40163337 3.63284400 -30.40161810 3.59486270 -30.35534070 3.59484289 -30.35535467 3.59482087 -30.35532782 3.59477550 -30.35527250 3.59361159 -30.35609300 3.59358830 -30.35606460 3.56790930 -30.37416170 3.56797676 -30.37424397 3.56814764 -30.37445236</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_94_acs_wfc_total]]></TD>
+<TD>3.587694</TD>
+<TD>-30.397142</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>8</TD>
+<TD>10127.000000</TD>
+<TD>2014-06-16 18:08:54</TD>
+<TD>hst_13495_94_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>94</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-13 08:02:51</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-06-17 03:51:17</TD>
+<TD>1402977077</TD>
+<TD>13495_94 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6002 5980</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3001.500 2990.500</TD>
+<TD>3.587694 -30.397142</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_94_acs_wfc_total</TD>
+<TD>Polygon J2000 3.54313614 -30.39241049 3.57989370 -30.43851230 3.57991389 -30.43849785 3.57997830 -30.43857860 3.58113998 -30.43774759 3.58117390 -30.43779010 3.60469336 -30.42095763 3.60568662 -30.42024655 3.60586370 -30.42046220 3.60588253 -30.42044893 3.60594950 -30.42053050 3.60711673 -30.41970789 3.60714310 -30.41974000 3.60716304 -30.41972595 3.63164024 -30.40246693 3.63284400 -30.40161810 3.59486270 -30.35534070 3.59484289 -30.35535467 3.59477550 -30.35527250 3.59475176 -30.35528923 3.59474550 -30.35528160 3.59360543 -30.35608549 3.59358830 -30.35606460 3.59356276 -30.35608260 3.59355710 -30.35607570 3.56787860 -30.37417650 3.56811576 -30.37446566 3.56780346 -30.37468917 3.56777910 -30.37465860 3.56775171 -30.37467820 3.56774780 -30.37467330 3.54307160 -30.39232950</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/fitscut.cgi?red=hst_13495_94_acs_wfc_f814w&amp;blue=hst_13495_94_acs_wfc_f435w&amp;size=ALL&amp;format=fits&amp;config=ops]]></TD>
+<TD>3.587694</TD>
+<TD>-30.397142</TD>
+<TD>4</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W/F435W</TD>
+<TD>8</TD>
+<TD>10127.000000</TD>
+<TD>2014-06-16 18:08:54</TD>
+<TD>hst_13495_94_acs_wfc_f814w_f435w</TD>
+<TD>13495</TD>
+<TD>94</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-13 08:02:51</TD>
+<TD>HLA</TD>
+<TD>233.475107547</TD>
+<TD>image/fits</TD>
+<TD>2014-06-17 03:51:17</TD>
+<TD>1402977077</TD>
+<TD>13495_94 ACS/WFC F814W/F435W (color) ABELL-2744</TD>
+<TD>6002 5980</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3001.500 2990.500</TD>
+<TD>3.587694 -30.397142</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_94_acs_wfc_f814w,hst_13495_94_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.56780826 -30.37469519 3.56777910 -30.37465860 3.54310270 -30.39230990 3.57991440 -30.43849100 3.57993187 -30.43847850 3.57999710 -30.43856030 3.58116062 -30.43772821 3.58119140 -30.43776680 3.60470927 -30.42094034 3.60570451 -30.42022805 3.60588450 -30.42044730 3.60590116 -30.42043556 3.60596850 -30.42051760 3.60713703 -30.41969427 3.60716070 -30.41972310 3.63167616 -30.40244161 3.63282235 -30.40163337 3.63284400 -30.40161810 3.59486270 -30.35534070 3.59484289 -30.35535467 3.59482087 -30.35532782 3.59477550 -30.35527250 3.59361159 -30.35609300 3.59358830 -30.35606460 3.56790930 -30.37416170 3.56797676 -30.37424397 3.56814764 -30.37445236</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_95_acs_wfc_f435w]]></TD>
+<TD>3.587792</TD>
+<TD>-30.397267</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F435W</TD>
+<TD>4</TD>
+<TD>5083.000000</TD>
+<TD>2014-06-20 11:19:51</TD>
+<TD>hst_13495_95_acs_wfc_f435w</TD>
+<TD>13495</TD>
+<TD>95</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-09-10 05:05:09</TD>
+<TD>HLA</TD>
+<TD>4329.1885</TD>
+<TD>image/fits</TD>
+<TD>2014-06-21 20:40:14</TD>
+<TD>1403383214</TD>
+<TD>13495_95 ACS/WFC F435W (combined) ABELL-2744</TD>
+<TD>6002 5980</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3001.500 2990.500</TD>
+<TD>3.587792 -30.397267</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_95_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.58123630 -30.43787988 3.58126400 -30.43791460 3.60578119 -30.42037072 3.60596000 -30.42058850 3.60598039 -30.42057413 3.60605040 -30.42065940 3.60619146 -30.42055998 3.60721317 -30.41983991 3.60723500 -30.41986650 3.63291960 -30.40175940 3.59493260 -30.35547940 3.59491635 -30.35549085 3.59485110 -30.35541130 3.59368427 -30.35623391 3.59365760 -30.35620140 3.56797790 -30.37430100 3.56806963 -30.37441286 3.56821874 -30.37459467 3.56787933 -30.37483754 3.56784710 -30.37479710 3.54316970 -30.39245210 3.54326622 -30.39257324 3.57998880 -30.43863660 3.58001047 -30.43862110 3.58007940 -30.43870750</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_95_acs_wfc_f814w]]></TD>
+<TD>3.587792</TD>
+<TD>-30.397267</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5044.000000</TD>
+<TD>2014-06-20 11:43:16</TD>
+<TD>hst_13495_95_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>95</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-09-10 05:05:09</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-06-21 20:54:34</TD>
+<TD>1403384074</TD>
+<TD>13495_95 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6002 5980</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3001.500 2990.500</TD>
+<TD>3.587792 -30.397267</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_95_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.60580403 -30.42035530 3.60598240 -30.42057260 3.60600364 -30.42055764 3.60607150 -30.42064030 3.60723478 -30.41982055 3.60725920 -30.41985030 3.63178056 -30.40256601 3.63292213 -30.40176110 3.63294340 -30.40174610 3.59496400 -30.35546750 3.59494297 -30.35548232 3.59491785 -30.35545169 3.59487340 -30.35539750 3.59371198 -30.35621623 3.59368990 -30.35618930 3.56800990 -30.37428530 3.56807752 -30.37436778 3.56824782 -30.37457548 3.56790836 -30.37481836 3.56787970 -30.37478240 3.54320230 -30.39243260 3.58001140 -30.43861530 3.58003406 -30.43859910 3.58010170 -30.43868390 3.58125895 -30.43785619 3.58128910 -30.43789400 3.60481367 -30.42106405</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_95_acs_wfc_total]]></TD>
+<TD>3.587792</TD>
+<TD>-30.397267</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>8</TD>
+<TD>10127.000000</TD>
+<TD>2014-06-20 11:19:51</TD>
+<TD>hst_13495_95_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>95</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-09-10 05:05:09</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-06-21 20:54:34</TD>
+<TD>1403384074</TD>
+<TD>13495_95 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6002 5980</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3001.500 2990.500</TD>
+<TD>3.587792 -30.397267</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_95_acs_wfc_total</TD>
+<TD>Polygon J2000 3.57998880 -30.43863660 3.58001047 -30.43862110 3.58007940 -30.43870750 3.58123630 -30.43787988 3.58126400 -30.43791460 3.60578119 -30.42037072 3.60596000 -30.42058850 3.60598039 -30.42057413 3.60605040 -30.42065940 3.60619146 -30.42055998 3.60721317 -30.41983991 3.60723500 -30.41986650 3.60725876 -30.41984976 3.63292141 -30.40176160 3.63294340 -30.40174610 3.59496400 -30.35546750 3.59494297 -30.35548232 3.59493765 -30.35547584 3.59487340 -30.35539750 3.59485210 -30.35541252 3.59485110 -30.35541130 3.59371102 -30.35621505 3.59368990 -30.35618930 3.59366315 -30.35620816 3.59365760 -30.35620140 3.56797790 -30.37430100 3.56806963 -30.37441286 3.56821874 -30.37459467 3.56790755 -30.37481735 3.56787970 -30.37478240 3.56785148 -30.37480259 3.56784710 -30.37479710 3.54316970 -30.39245210 3.54326622 -30.39257324</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/fitscut.cgi?red=hst_13495_95_acs_wfc_f814w&amp;blue=hst_13495_95_acs_wfc_f435w&amp;size=ALL&amp;format=fits&amp;config=ops]]></TD>
+<TD>3.587792</TD>
+<TD>-30.397267</TD>
+<TD>4</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W/F435W</TD>
+<TD>8</TD>
+<TD>10127.000000</TD>
+<TD>2014-06-20 11:19:51</TD>
+<TD>hst_13495_95_acs_wfc_f814w_f435w</TD>
+<TD>13495</TD>
+<TD>95</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-09-10 05:05:09</TD>
+<TD>HLA</TD>
+<TD>233.475107547</TD>
+<TD>image/fits</TD>
+<TD>2014-06-21 20:54:34</TD>
+<TD>1403384074</TD>
+<TD>13495_95 ACS/WFC F814W/F435W (color) ABELL-2744</TD>
+<TD>6002 5980</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3001.500 2990.500</TD>
+<TD>3.587792 -30.397267</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_95_acs_wfc_f814w,hst_13495_95_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.60580403 -30.42035530 3.60598240 -30.42057260 3.60600364 -30.42055764 3.60607150 -30.42064030 3.60723478 -30.41982055 3.60725920 -30.41985030 3.63178056 -30.40256601 3.63292213 -30.40176110 3.63294340 -30.40174610 3.59496400 -30.35546750 3.59494297 -30.35548232 3.59491785 -30.35545169 3.59487340 -30.35539750 3.59371198 -30.35621623 3.59368990 -30.35618930 3.56800990 -30.37428530 3.56807752 -30.37436778 3.56824782 -30.37457548 3.56790836 -30.37481836 3.56787970 -30.37478240 3.54320230 -30.39243260 3.58001140 -30.43861530 3.58003406 -30.43859910 3.58010170 -30.43868390 3.58125895 -30.43785619 3.58128910 -30.43789400 3.60481367 -30.42106405</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_96_acs_wfc_f435w]]></TD>
+<TD>3.587725</TD>
+<TD>-30.397248</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F435W</TD>
+<TD>4</TD>
+<TD>5083.000000</TD>
+<TD>2014-06-22 15:53:35</TD>
+<TD>hst_13495_96_acs_wfc_f435w</TD>
+<TD>13495</TD>
+<TD>96</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-30 21:02:57</TD>
+<TD>HLA</TD>
+<TD>4329.1885</TD>
+<TD>image/fits</TD>
+<TD>2014-06-22 23:40:54</TD>
+<TD>1403480454</TD>
+<TD>13495_96 ACS/WFC F435W (combined) ABELL-2744</TD>
+<TD>6002 5980</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3001.500 2990.500</TD>
+<TD>3.587725 -30.397248</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_96_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.60571970 -30.42035489 3.60590150 -30.42057630 3.60592018 -30.42056314 3.60598690 -30.42064440 3.60715043 -30.41982440 3.60717260 -30.41985140 3.63169390 -30.40256443 3.63285700 -30.40174420 3.59486980 -30.35546450 3.59485134 -30.35547752 3.59482909 -30.35545039 3.59478390 -30.35539530 3.59361975 -30.35621601 3.59359800 -30.35618950 3.56791870 -30.37428940 3.56798537 -30.37437069 3.56815435 -30.37457674 3.56781475 -30.37481976 3.56778800 -30.37478620 3.54311090 -30.39244150 3.57993070 -30.43862550 3.57995028 -30.43861149 3.58001570 -30.43869350 3.58117407 -30.43786486 3.58120170 -30.43789950 3.60472580 -30.42106632</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_96_acs_wfc_f814w]]></TD>
+<TD>3.587725</TD>
+<TD>-30.397248</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5044.000000</TD>
+<TD>2014-06-22 16:17:00</TD>
+<TD>hst_13495_96_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>96</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-30 21:02:57</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-06-23 00:26:41</TD>
+<TD>1403483201</TD>
+<TD>13495_96 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6002 5980</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3001.500 2990.500</TD>
+<TD>3.587725 -30.397248</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_96_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.56817482 -30.37455283 3.56783531 -30.37479575 3.56780730 -30.37476060 3.54313070 -30.39241170 3.54319688 -30.39249477 3.57994200 -30.43859310 3.57996282 -30.43857821 3.58002900 -30.43866120 3.58118789 -30.43783238 3.58121630 -30.43786800 3.60473912 -30.42103872 3.60573116 -30.42032875 3.60591230 -30.42054940 3.60593173 -30.42053571 3.60599970 -30.42061850 3.60716431 -30.41979788 3.60718600 -30.41982430 3.63170579 -30.40254053 3.63286990 -30.40171970 3.59488970 -30.35544160 3.59487118 -30.35545466 3.59484995 -30.35542877 3.59480380 -30.35537250 3.59363895 -30.35619363 3.59361670 -30.35616650 3.56793750 -30.37426340</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_96_acs_wfc_total]]></TD>
+<TD>3.587725</TD>
+<TD>-30.397248</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>8</TD>
+<TD>10127.000000</TD>
+<TD>2014-06-22 15:53:35</TD>
+<TD>hst_13495_96_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>96</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-30 21:02:57</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-06-23 00:26:41</TD>
+<TD>1403483201</TD>
+<TD>13495_96 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6002 5980</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3001.500 2990.500</TD>
+<TD>3.587725 -30.397248</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_96_acs_wfc_total</TD>
+<TD>Polygon J2000 3.56793750 -30.37426340 3.56794413 -30.37427148 3.56791870 -30.37428940 3.56798537 -30.37437069 3.56814957 -30.37457091 3.56783531 -30.37479575 3.56781328 -30.37476811 3.56780730 -30.37476060 3.54313070 -30.39241170 3.54313864 -30.39242166 3.54311090 -30.39244150 3.57993070 -30.43862550 3.57995028 -30.43861149 3.58001570 -30.43869350 3.58117407 -30.43786486 3.58120170 -30.43789950 3.58122699 -30.43788141 3.60470625 -30.42108031 3.60472580 -30.42106632 3.60571970 -30.42035489 3.60590150 -30.42057630 3.60592018 -30.42056314 3.60598690 -30.42064440 3.60715043 -30.41982440 3.60717260 -30.41985140 3.63169390 -30.40256443 3.63285700 -30.40174420 3.63284899 -30.40173445 3.63286990 -30.40171970 3.59488970 -30.35544160 3.59487118 -30.35545466 3.59485355 -30.35543315 3.59480380 -30.35537250 3.59363895 -30.35619363 3.59361670 -30.35616650</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/fitscut.cgi?red=hst_13495_96_acs_wfc_f814w&amp;blue=hst_13495_96_acs_wfc_f435w&amp;size=ALL&amp;format=fits&amp;config=ops]]></TD>
+<TD>3.587725</TD>
+<TD>-30.397248</TD>
+<TD>4</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W/F435W</TD>
+<TD>8</TD>
+<TD>10127.000000</TD>
+<TD>2014-06-22 15:53:35</TD>
+<TD>hst_13495_96_acs_wfc_f814w_f435w</TD>
+<TD>13495</TD>
+<TD>96</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-30 21:02:57</TD>
+<TD>HLA</TD>
+<TD>233.475107547</TD>
+<TD>image/fits</TD>
+<TD>2014-06-23 00:26:41</TD>
+<TD>1403483201</TD>
+<TD>13495_96 ACS/WFC F814W/F435W (color) ABELL-2744</TD>
+<TD>6002 5980</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3001.500 2990.500</TD>
+<TD>3.587725 -30.397248</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_96_acs_wfc_f814w,hst_13495_96_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.56817482 -30.37455283 3.56783531 -30.37479575 3.56780730 -30.37476060 3.54313070 -30.39241170 3.54319688 -30.39249477 3.57994200 -30.43859310 3.57996282 -30.43857821 3.58002900 -30.43866120 3.58118789 -30.43783238 3.58121630 -30.43786800 3.60473912 -30.42103872 3.60573116 -30.42032875 3.60591230 -30.42054940 3.60593173 -30.42053571 3.60599970 -30.42061850 3.60716431 -30.41979788 3.60718600 -30.41982430 3.63170579 -30.40254053 3.63286990 -30.40171970 3.59488970 -30.35544160 3.59487118 -30.35545466 3.59484995 -30.35542877 3.59480380 -30.35537250 3.59363895 -30.35619363 3.59361670 -30.35616650 3.56793750 -30.37426340</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_97_acs_wfc_f435w]]></TD>
+<TD>3.587854</TD>
+<TD>-30.397154</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F435W</TD>
+<TD>4</TD>
+<TD>5083.000000</TD>
+<TD>2014-06-25 15:33:20</TD>
+<TD>hst_13495_97_acs_wfc_f435w</TD>
+<TD>13495</TD>
+<TD>97</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-18 02:28:39</TD>
+<TD>HLA</TD>
+<TD>4329.1885</TD>
+<TD>image/fits</TD>
+<TD>2014-06-26 04:30:24</TD>
+<TD>1403757024</TD>
+<TD>13495_97 ACS/WFC F435W (combined) ABELL-2744</TD>
+<TD>6003 5981</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3002.000 2991.000</TD>
+<TD>3.587854 -30.397154</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_97_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.60725515 -30.41974315 3.60727777 -30.41972721 3.60729960 -30.41975380 3.63296349 -30.40166477 3.63298600 -30.40164890 3.59500440 -30.35536610 3.59498371 -30.35538068 3.59491820 -30.35530080 3.59375938 -30.35611761 3.59373510 -30.35608800 3.56805350 -30.37418540 3.56829205 -30.37447635 3.56795259 -30.37471922 3.56792270 -30.37468170 3.54324350 -30.39233460 3.54330994 -30.39241801 3.58005720 -30.43852200 3.58007579 -30.43850870 3.58014230 -30.43859210 3.58129890 -30.43776491 3.58132680 -30.43779990 3.60485466 -30.42096740 3.60584939 -30.42025552 3.60603030 -30.42047590 3.60604795 -30.42046346 3.60611570 -30.42054600</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_97_acs_wfc_f814w]]></TD>
+<TD>3.587854</TD>
+<TD>-30.397154</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5044.000000</TD>
+<TD>2014-06-25 15:56:45</TD>
+<TD>hst_13495_97_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>97</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-18 02:28:39</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-06-26 06:33:29</TD>
+<TD>1403764409</TD>
+<TD>13495_97 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6003 5981</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3002.000 2991.000</TD>
+<TD>3.587854 -30.397154</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_97_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.54325310 -30.39230130 3.58005760 -30.43848680 3.58007395 -30.43847511 3.58013980 -30.43855770 3.58130006 -30.43772803 3.58132930 -30.43776470 3.60485349 -30.42093937 3.60585013 -30.42022632 3.60603050 -30.42044610 3.60604598 -30.42043519 3.60611230 -30.42051600 3.60727800 -30.41969476 3.60730200 -30.41972400 3.63182357 -30.40244405 3.63296911 -30.40163655 3.63298890 -30.40162260 3.59501640 -30.35533980 3.59499690 -30.35535354 3.59497205 -30.35532323 3.59492980 -30.35527170 3.59376795 -30.35609052 3.59374440 -30.35606180 3.56806260 -30.37415590 3.56812879 -30.37423665 3.56830062 -30.37444627 3.56796114 -30.37468910 3.56793230 -30.37465290</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_97_acs_wfc_total]]></TD>
+<TD>3.587854</TD>
+<TD>-30.397154</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>8</TD>
+<TD>10127.000000</TD>
+<TD>2014-06-25 15:33:20</TD>
+<TD>hst_13495_97_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>97</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-18 02:28:39</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-06-26 06:33:29</TD>
+<TD>1403764409</TD>
+<TD>13495_97 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6003 5981</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3002.000 2991.000</TD>
+<TD>3.587854 -30.397154</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_97_acs_wfc_total</TD>
+<TD>Polygon J2000 3.56807460 -30.37417054 3.56805350 -30.37418540 3.56827968 -30.37446125 3.56796114 -30.37468910 3.56793230 -30.37465290 3.54325310 -30.39230130 3.54326651 -30.39231814 3.54324350 -30.39233460 3.54330994 -30.39241801 3.58005720 -30.43852200 3.58007579 -30.43850870 3.58014230 -30.43859210 3.58129890 -30.43776491 3.58132680 -30.43779990 3.60485466 -30.42096740 3.60584939 -30.42025552 3.60603030 -30.42047590 3.60604795 -30.42046346 3.60611570 -30.42054600 3.60725515 -30.41974315 3.60727777 -30.41972721 3.60729960 -30.41975380 3.60731662 -30.41974181 3.63180677 -30.40248033 3.63296349 -30.40166477 3.63298600 -30.40164890 3.63297338 -30.40163354 3.63298890 -30.40162260 3.59501640 -30.35533980 3.59499690 -30.35535354 3.59492980 -30.35527170 3.59376795 -30.35609052 3.59375461 -30.35607425 3.59374440 -30.35606180 3.56806260 -30.37415590</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/fitscut.cgi?red=hst_13495_97_acs_wfc_f814w&amp;blue=hst_13495_97_acs_wfc_f435w&amp;size=ALL&amp;format=fits&amp;config=ops]]></TD>
+<TD>3.587854</TD>
+<TD>-30.397154</TD>
+<TD>4</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W/F435W</TD>
+<TD>8</TD>
+<TD>10127.000000</TD>
+<TD>2014-06-25 15:33:20</TD>
+<TD>hst_13495_97_acs_wfc_f814w_f435w</TD>
+<TD>13495</TD>
+<TD>97</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-18 02:28:39</TD>
+<TD>HLA</TD>
+<TD>233.475107547</TD>
+<TD>image/fits</TD>
+<TD>2014-06-26 06:33:29</TD>
+<TD>1403764409</TD>
+<TD>13495_97 ACS/WFC F814W/F435W (color) ABELL-2744</TD>
+<TD>6003 5981</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3002.000 2991.000</TD>
+<TD>3.587854 -30.397154</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_97_acs_wfc_f814w,hst_13495_97_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.54325310 -30.39230130 3.58005760 -30.43848680 3.58007395 -30.43847511 3.58013980 -30.43855770 3.58130006 -30.43772803 3.58132930 -30.43776470 3.60485349 -30.42093937 3.60585013 -30.42022632 3.60603050 -30.42044610 3.60604598 -30.42043519 3.60611230 -30.42051600 3.60727800 -30.41969476 3.60730200 -30.41972400 3.63182357 -30.40244405 3.63296911 -30.40163655 3.63298890 -30.40162260 3.59501640 -30.35533980 3.59499690 -30.35535354 3.59497205 -30.35532323 3.59492980 -30.35527170 3.59376795 -30.35609052 3.59374440 -30.35606180 3.56806260 -30.37415590 3.56812879 -30.37423665 3.56830062 -30.37444627 3.56796114 -30.37468910 3.56793230 -30.37465290</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_98_acs_wfc_f435w]]></TD>
+<TD>3.587692</TD>
+<TD>-30.397083</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F435W</TD>
+<TD>4</TD>
+<TD>5083.000000</TD>
+<TD>2014-06-24 15:40:02</TD>
+<TD>hst_13495_98_acs_wfc_f435w</TD>
+<TD>13495</TD>
+<TD>98</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-09-10 20:50:37</TD>
+<TD>HLA</TD>
+<TD>4329.1885</TD>
+<TD>image/fits</TD>
+<TD>2014-06-25 02:07:31</TD>
+<TD>1403662051</TD>
+<TD>13495_98 ACS/WFC F435W (combined) ABELL-2744</TD>
+<TD>6002 5980</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3001.500 2990.500</TD>
+<TD>3.587692 -30.397083</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_98_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.60714140 -30.41967730 3.63282570 -30.40157010 3.59483840 -30.35529050 3.59481746 -30.35530527 3.59474890 -30.35522170 3.59358968 -30.35603905 3.59356790 -30.35601250 3.56788860 -30.37411230 3.56797866 -30.37422211 3.56812588 -30.37440163 3.56778609 -30.37464482 3.56775770 -30.37460920 3.54308070 -30.39226440 3.54314532 -30.39234550 3.57990020 -30.43844840 3.57991785 -30.43843577 3.57998240 -30.43851670 3.58114039 -30.43768840 3.58117070 -30.43772640 3.60469512 -30.42089283 3.60569101 -30.42017997 3.60587110 -30.42039930 3.60588724 -30.42038792 3.60595430 -30.42046960 3.60711839 -30.41964927</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_98_acs_wfc_f814w]]></TD>
+<TD>3.587692</TD>
+<TD>-30.397083</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5044.000000</TD>
+<TD>2014-06-24 16:03:27</TD>
+<TD>hst_13495_98_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>98</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-09-10 20:50:37</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-06-25 02:22:06</TD>
+<TD>1403662926</TD>
+<TD>13495_98 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6002 5980</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3001.500 2990.500</TD>
+<TD>3.587692 -30.397083</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_98_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.56793115 -30.37412291 3.56814683 -30.37438596 3.56780761 -30.37462868 3.56777870 -30.37459240 3.54310170 -30.39224310 3.54313113 -30.39228004 3.57991200 -30.43842520 3.57993139 -30.43841133 3.57999900 -30.43849610 3.58113333 -30.43768481 3.58115641 -30.43766830 3.58118400 -30.43770290 3.60570122 -30.42016154 3.60588260 -30.42038250 3.60590065 -30.42036978 3.60596930 -30.42045340 3.60608829 -30.42036955 3.60711116 -30.41964878 3.60713256 -30.41963370 3.60715350 -30.41965920 3.63281575 -30.40156939 3.63283700 -30.40155440 3.59485630 -30.35527660 3.59483517 -30.35529150 3.59476800 -30.35520960 3.59361025 -30.35602579 3.59358860 -30.35599940 3.56790900 -30.37409590</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_98_acs_wfc_total]]></TD>
+<TD>3.587692</TD>
+<TD>-30.397083</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>8</TD>
+<TD>10127.000000</TD>
+<TD>2014-06-24 15:40:02</TD>
+<TD>hst_13495_98_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>98</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-09-10 20:50:37</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-06-25 02:22:06</TD>
+<TD>1403662926</TD>
+<TD>13495_98 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6002 5980</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3001.500 2990.500</TD>
+<TD>3.587692 -30.397083</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_98_acs_wfc_total</TD>
+<TD>Polygon J2000 3.58117070 -30.43772640 3.60469512 -30.42089283 3.60569101 -30.42017997 3.60587110 -30.42039930 3.60588724 -30.42038792 3.60595430 -30.42046960 3.60711839 -30.41964927 3.60714140 -30.41967730 3.63282570 -30.40157010 3.63282168 -30.40156520 3.63283700 -30.40155440 3.59485630 -30.35527660 3.59483840 -30.35529050 3.59483584 -30.35529231 3.59476800 -30.35520960 3.59361025 -30.35602579 3.59358860 -30.35599940 3.59356868 -30.35601345 3.59356790 -30.35601250 3.58268757 -30.36368283 3.56790900 -30.37409590 3.56791005 -30.37409718 3.56788860 -30.37411230 3.56797866 -30.37422211 3.56812553 -30.37440120 3.56780761 -30.37462868 3.56777870 -30.37459240 3.54310170 -30.39224310 3.54310489 -30.39224710 3.54308070 -30.39226440 3.54314532 -30.39234550 3.57990020 -30.43844840 3.57991785 -30.43843577 3.57998240 -30.43851670 3.58114039 -30.43768840</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/fitscut.cgi?red=hst_13495_98_acs_wfc_f814w&amp;blue=hst_13495_98_acs_wfc_f435w&amp;size=ALL&amp;format=fits&amp;config=ops]]></TD>
+<TD>3.587692</TD>
+<TD>-30.397083</TD>
+<TD>4</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W/F435W</TD>
+<TD>8</TD>
+<TD>10127.000000</TD>
+<TD>2014-06-24 15:40:02</TD>
+<TD>hst_13495_98_acs_wfc_f814w_f435w</TD>
+<TD>13495</TD>
+<TD>98</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-09-10 20:50:37</TD>
+<TD>HLA</TD>
+<TD>233.475107547</TD>
+<TD>image/fits</TD>
+<TD>2014-06-25 02:22:06</TD>
+<TD>1403662926</TD>
+<TD>13495_98 ACS/WFC F814W/F435W (color) ABELL-2744</TD>
+<TD>6002 5980</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3001.500 2990.500</TD>
+<TD>3.587692 -30.397083</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_98_acs_wfc_f814w,hst_13495_98_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.56793115 -30.37412291 3.56814683 -30.37438596 3.56780761 -30.37462868 3.56777870 -30.37459240 3.54310170 -30.39224310 3.54313113 -30.39228004 3.57991200 -30.43842520 3.57993139 -30.43841133 3.57999900 -30.43849610 3.58113333 -30.43768481 3.58115641 -30.43766830 3.58118400 -30.43770290 3.60570122 -30.42016154 3.60588260 -30.42038250 3.60590065 -30.42036978 3.60596930 -30.42045340 3.60608829 -30.42036955 3.60711116 -30.41964878 3.60713256 -30.41963370 3.60715350 -30.41965920 3.63281575 -30.40156939 3.63283700 -30.40155440 3.59485630 -30.35527660 3.59483517 -30.35529150 3.59476800 -30.35520960 3.59361025 -30.35602579 3.59358860 -30.35599940 3.56790900 -30.37409590</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_99_acs_wfc_f435w]]></TD>
+<TD>3.587742</TD>
+<TD>-30.397232</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F435W</TD>
+<TD>4</TD>
+<TD>5083.000000</TD>
+<TD>2014-07-01 06:58:51</TD>
+<TD>hst_13495_99_acs_wfc_f435w</TD>
+<TD>13495</TD>
+<TD>99</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-23 03:08:26</TD>
+<TD>HLA</TD>
+<TD>4329.1885</TD>
+<TD>image/fits</TD>
+<TD>2014-07-01 16:18:31</TD>
+<TD>1404231511</TD>
+<TD>13495_99 ACS/WFC F435W (combined) ABELL-2744</TD>
+<TD>6003 5981</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3002.000 2991.000</TD>
+<TD>3.587742 -30.397232</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_99_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.57995460 -30.43855499 3.58002000 -30.43863700 3.58117598 -30.43781028 3.58120910 -30.43785180 3.60473752 -30.42101892 3.60573176 -30.42030739 3.60590850 -30.42052270 3.60592649 -30.42051002 3.60599370 -30.42059190 3.60715539 -30.41977341 3.60718190 -30.41980570 3.63170708 -30.40251956 3.63286820 -30.40170090 3.59488670 -30.35541820 3.59487027 -30.35542978 3.59484434 -30.35539816 3.59480410 -30.35534910 3.59364153 -30.35616855 3.59361410 -30.35613510 3.56793240 -30.37423220 3.56799962 -30.37431418 3.56817387 -30.37452671 3.56783421 -30.37476972 3.56780160 -30.37472880 3.54312230 -30.39238140 3.54318771 -30.39246352 3.57993530 -30.43856880</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_99_acs_wfc_f814w]]></TD>
+<TD>3.587742</TD>
+<TD>-30.397232</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W</TD>
+<TD>4</TD>
+<TD>5044.000000</TD>
+<TD>2014-07-01 07:22:16</TD>
+<TD>hst_13495_99_acs_wfc_f814w</TD>
+<TD>13495</TD>
+<TD>99</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-23 03:08:26</TD>
+<TD>HLA</TD>
+<TD>8044.9922</TD>
+<TD>image/fits</TD>
+<TD>2014-07-01 16:37:10</TD>
+<TD>1404232630</TD>
+<TD>13495_99 ACS/WFC F814W (combined) ABELL-2744</TD>
+<TD>6003 5981</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3002.000 2991.000</TD>
+<TD>3.587742 -30.397232</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_99_acs_wfc_f814w</TD>
+<TD>Polygon J2000 3.59367908 -30.35621789 3.59365350 -30.35618670 3.56797150 -30.37428090 3.56821216 -30.37457448 3.56787274 -30.37481727 3.56784130 -30.37477780 3.54316200 -30.39242620 3.54322778 -30.39250880 3.57996660 -30.43861180 3.57998441 -30.43859907 3.58005030 -30.43868170 3.58120837 -30.43785362 3.58124120 -30.43789480 3.60476787 -30.42106809 3.60576300 -30.42035613 3.60593950 -30.42057120 3.60595599 -30.42055958 3.60602290 -30.42064110 3.60718708 -30.41982093 3.60721430 -30.41985410 3.63173777 -30.40257331 3.63288222 -30.40176659 3.63290150 -30.40175300 3.59492960 -30.35546970 3.59490919 -30.35548408 3.59488086 -30.35544953 3.59484000 -30.35539970</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/getdata.cgi?config=ops&amp;dataset=hst_13495_99_acs_wfc_total]]></TD>
+<TD>3.587742</TD>
+<TD>-30.397232</TD>
+<TD>2</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>detection</TD>
+<TD>8</TD>
+<TD>10127.000000</TD>
+<TD>2014-07-01 06:58:51</TD>
+<TD>hst_13495_99_acs_wfc_total</TD>
+<TD>13495</TD>
+<TD>99</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-23 03:08:26</TD>
+<TD>HLA</TD>
+<TD></TD>
+<TD>image/fits</TD>
+<TD>2014-07-01 16:37:10</TD>
+<TD>1404232630</TD>
+<TD>13495_99 ACS/WFC detection (combined) ABELL-2744</TD>
+<TD>6003 5981</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3002.000 2991.000</TD>
+<TD>3.587742 -30.397232</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_99_acs_wfc_total</TD>
+<TD>Polygon J2000 3.60477352 -30.42106405 3.60576300 -30.42035613 3.60593950 -30.42057120 3.60595599 -30.42055958 3.60602290 -30.42064110 3.60602999 -30.42063611 3.60718708 -30.41982093 3.60721430 -30.41985410 3.63174628 -30.40256731 3.63290150 -30.40175300 3.63286220 -30.40170513 3.63286820 -30.40170090 3.59488670 -30.35541820 3.59487027 -30.35542978 3.59484434 -30.35539816 3.59480410 -30.35534910 3.59364153 -30.35616855 3.59361410 -30.35613510 3.56793240 -30.37423220 3.56799909 -30.37431456 3.56817332 -30.37452710 3.56783421 -30.37476972 3.56780160 -30.37472880 3.54312230 -30.39238140 3.54318771 -30.39246352 3.56424816 -30.41889356 3.57996660 -30.43861180 3.57996851 -30.43861044 3.57998441 -30.43859907 3.58005030 -30.43868170 3.58005370 -30.43867927 3.58120837 -30.43785362 3.58124120 -30.43789480</TD>
+</TR>
+<TR>
+<TD><![CDATA[http://hla.stsci.edu/cgi-bin/fitscut.cgi?red=hst_13495_99_acs_wfc_f814w&amp;blue=hst_13495_99_acs_wfc_f435w&amp;size=ALL&amp;format=fits&amp;config=ops]]></TD>
+<TD>3.587742</TD>
+<TD>-30.397232</TD>
+<TD>4</TD>
+<TD>ABELL-2744</TD>
+<TD>ACS/WFC</TD>
+<TD>WFCENTER</TD>
+<TD>F814W/F435W</TD>
+<TD>8</TD>
+<TD>10127.000000</TD>
+<TD>2014-07-01 06:58:51</TD>
+<TD>hst_13495_99_acs_wfc_f814w_f435w</TD>
+<TD>13495</TD>
+<TD>99</TD>
+<TD>Lotz</TD>
+<TD>Loaded</TD>
+<TD>Loaded</TD>
+<TD>ACCUM</TD>
+<TD>2017-08-23 03:08:26</TD>
+<TD>HLA</TD>
+<TD>233.475107547</TD>
+<TD>image/fits</TD>
+<TD>2014-07-01 16:37:10</TD>
+<TD>1404232630</TD>
+<TD>13495_99 ACS/WFC F814W/F435W (color) ABELL-2744</TD>
+<TD>6003 5981</TD>
+<TD>1.38889E-05</TD>
+<TD>2</TD>
+<TD>3002.000 2991.000</TD>
+<TD>3.587742 -30.397232</TD>
+<TD>-1.38889E-05 0 0 1.38889E-05</TD>
+<TD>hst_13495_99_acs_wfc_f814w,hst_13495_99_acs_wfc_f435w</TD>
+<TD>Polygon J2000 3.59367908 -30.35621789 3.59365350 -30.35618670 3.56797150 -30.37428090 3.56821216 -30.37457448 3.56787274 -30.37481727 3.56784130 -30.37477780 3.54316200 -30.39242620 3.54322778 -30.39250880 3.57996660 -30.43861180 3.57998441 -30.43859907 3.58005030 -30.43868170 3.58120837 -30.43785362 3.58124120 -30.43789480 3.60476787 -30.42106809 3.60576300 -30.42035613 3.60593950 -30.42057120 3.60595599 -30.42055958 3.60602290 -30.42064110 3.60718708 -30.41982093 3.60721430 -30.41985410 3.63173777 -30.40257331 3.63288222 -30.40176659 3.63290150 -30.40175300 3.59492960 -30.35546970 3.59490919 -30.35548408 3.59488086 -30.35544953 3.59484000 -30.35539970</TD>
+</TR>
+        </TABLEDATA>
+      </DATA>
+    </TABLE>
+  </RESOURCE>
+</VOTABLE>
+
